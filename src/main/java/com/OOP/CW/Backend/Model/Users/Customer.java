@@ -1,4 +1,4 @@
-package com.OOP.CW.Model;
+package com.OOP.CW.Backend.Model.Users;
 
 public class Customer {
     private int customerID;

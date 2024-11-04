@@ -1,4 +1,4 @@
-package com.OOP.CW;
+package com.OOP.CW.Backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
