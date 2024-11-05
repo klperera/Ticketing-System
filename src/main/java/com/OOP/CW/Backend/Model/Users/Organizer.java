@@ -1,48 +1,31 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Organizer {
 
+    //auto generate primary key
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int organizerID;
-    private String organizerName;
-    private String organizerEmail;
-    private String organizerPhone;
+    @OneToOne
+    @JoinColumn(name = "email")
+    private UserCredentials userCredentials;
 
-    public Organizer(int organizerID, String organizerName, String organizerEmail, String organizerPhone) {
-        this.organizerID = organizerID;
-        this.organizerName = organizerName;
-        this.organizerEmail = organizerEmail;
-        this.organizerPhone = organizerPhone;
+    public Organizer() {}
+
+    public Organizer(String email, String username, String password) {
+        this.userCredentials = new UserCredentials(email, username, password);
     }
 
     public int getOrganizerID() {
         return organizerID;
     }
 
-    public void setOrganizerID(int organizerID) {
-        this.organizerID = organizerID;
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
     }
 
-    public String getOrganizerName() {
-        return organizerName;
-    }
 
-    public void setOrganizerName(String organizerName) {
-        this.organizerName = organizerName;
-    }
-
-    public String getOrganizerEmail() {
-        return organizerEmail;
-    }
-
-    public void setOrganizerEmail(String organizerEmail) {
-        this.organizerEmail = organizerEmail;
-    }
-
-    public String getOrganizerPhone() {
-        return organizerPhone;
-    }
-
-    public void setOrganizerPhone(String organizerPhone) {
-        this.organizerPhone = organizerPhone;
-    }
 }
