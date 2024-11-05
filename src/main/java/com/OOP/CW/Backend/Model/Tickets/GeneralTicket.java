@@ -4,7 +4,7 @@ import com.OOP.CW.Backend.Model.Event;
 import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Entity
 public class GeneralTicket extends Ticket {
 

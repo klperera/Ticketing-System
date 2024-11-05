@@ -1,20 +1,34 @@
 package com.OOP.CW.Backend.Model;
 
+import com.OOP.CW.Backend.Model.Tickets.TicketPool;
 import com.OOP.CW.Backend.Model.Users.Organizer;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Duration;
 import java.util.Date;
 
+
+@Entity
 public class Event extends Configuration {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int eventID;
     private String eventName;
     private Date eventDateTime;
     private String eventLocation;
     private Duration eventDuration;
+    @OneToOne
+    @JoinColumn(name = "organizerID", referencedColumnName = "id")
     private Organizer organizer;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticketPoolId", referencedColumnName = "id")
+    private TicketPool ticketPool;
 
-    public Event(int eventID, String eventName, Date eventDateTime, String eventLocation, Duration eventDuration, Organizer organizer, int maxTicketCapacity) {
+    public Event(){}
+
+    public Event(int eventID, String eventName, Date eventDateTime, String eventLocation, Duration eventDuration, Organizer organizer, TicketPool ticketPool, int maxTicketCapacity) {
         super(maxTicketCapacity);
         this.eventID = eventID;
         this.eventName = eventName;
@@ -22,6 +36,7 @@ public class Event extends Configuration {
         this.eventLocation = eventLocation;
         this.eventDuration = eventDuration;
         this.organizer = organizer;
+        this.ticketPool = ticketPool;
     }
 
     public int getEventID() {
@@ -39,7 +54,6 @@ public class Event extends Configuration {
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
-
 
     public Date getEventDateTime() {
         return eventDateTime;
@@ -71,6 +85,14 @@ public class Event extends Configuration {
 
     public void setOrganizer(Organizer organizer) {
         this.organizer = organizer;
+    }
+
+    public TicketPool getTicketPool() {
+        return ticketPool;
+    }
+
+    public void setTicketPool(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
     }
 
     @Override
