@@ -1,11 +1,19 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
+import com.OOP.CW.Backend.Model.Event;
+import jakarta.persistence.Entity;
+import org.springframework.stereotype.Component;
+
+@Component
+@Entity
 public class GeneralTicket extends Ticket {
 
     private float discount;
 
-    public GeneralTicket(int ticketId, double price, float discount) {
-        super(ticketId, price);
+    public GeneralTicket() {}
+
+    public GeneralTicket(double price, float discount, Event event) {
+        super(price, event);
         this.discount = discount;
     }
 
@@ -19,5 +27,10 @@ public class GeneralTicket extends Ticket {
     @Override
     public String getTicketType() {
         return "General Ticket";
+    }
+
+    @Override
+    public double getTicketPrice() {
+        return getPrice() * discount ;
     }
 }

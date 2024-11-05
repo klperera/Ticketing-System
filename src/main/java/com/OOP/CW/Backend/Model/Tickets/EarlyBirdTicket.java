@@ -1,12 +1,20 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
+import com.OOP.CW.Backend.Model.Event;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import org.springframework.stereotype.Component;
 
+
+@Entity
 public class EarlyBirdTicket extends Ticket {
 
     private float discount;
 
-    public EarlyBirdTicket(int ticketId, double price, float discount) {
-        super(ticketId, price);
+    public EarlyBirdTicket() {}
+
+    public EarlyBirdTicket(Event event, double price, float discount) {
+        super(price, event);
         this.discount = discount;
     }
 
@@ -21,5 +29,10 @@ public class EarlyBirdTicket extends Ticket {
     @Override
     public String getTicketType() {
         return "EarlyBird Ticket";
+    }
+
+    @Override
+    public double getTicketPrice() {
+        return getPrice() * discount ;
     }
 }
