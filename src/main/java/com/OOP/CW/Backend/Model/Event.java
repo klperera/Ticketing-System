@@ -1,16 +1,12 @@
 package com.OOP.CW.Backend.Model;
 
-import com.OOP.CW.Backend.Model.Tickets.TicketPool;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.Duration;
 import java.util.Date;
 
-
 @Entity
-public class Event extends Configuration {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,25 +14,23 @@ public class Event extends Configuration {
     private String eventName;
     private Date eventDateTime;
     private String eventLocation;
-    private Duration eventDuration;
     @OneToOne
     @JoinColumn(name = "organizerID", referencedColumnName = "id")
     private Organizer organizer;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ticketPoolId", referencedColumnName = "id")
+    @Embedded
     private TicketPool ticketPool;
+    @Embedded
+    private Configuration configuration;
 
     public Event(){}
 
-    public Event(int eventID, String eventName, Date eventDateTime, String eventLocation, Duration eventDuration, Organizer organizer, TicketPool ticketPool, int maxTicketCapacity) {
-        super(maxTicketCapacity);
-        this.eventID = eventID;
+    public Event(String eventName, Date eventDateTime, String eventLocation, Organizer organizer, TicketPool ticketPool, int maxTicketCapacity ) {
         this.eventName = eventName;
         this.eventDateTime = eventDateTime;
         this.eventLocation = eventLocation;
-        this.eventDuration = eventDuration;
         this.organizer = organizer;
         this.ticketPool = ticketPool;
+        this.configuration = new Configuration(maxTicketCapacity);
     }
 
     public int getEventID() {
@@ -71,14 +65,6 @@ public class Event extends Configuration {
         this.eventLocation = eventLocation;
     }
 
-    public Duration getEventDuration() {
-        return eventDuration;
-    }
-
-    public void setEventDuration(Duration eventDuration) {
-        this.eventDuration = eventDuration;
-    }
-
     public Organizer getOrganizer() {
         return organizer;
     }
@@ -95,13 +81,12 @@ public class Event extends Configuration {
         this.ticketPool = ticketPool;
     }
 
-    @Override
-    public void saveConfig() {
-
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
-    @Override
-    public void loadConfig() {
-
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
+
 }
