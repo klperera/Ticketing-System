@@ -1,10 +1,17 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Vendor {
 
-    //auto generate primary key
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vendorId;
-    private final UserCredentials userCredentials;
+    @Embedded
+    private UserCredentials userCredentials;
+
+    public Vendor() {}
 
     public Vendor(String email, String username, String password) {
         this.userCredentials = new UserCredentials(email, username, password);

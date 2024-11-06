@@ -1,12 +1,19 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Customer {
 
-    //auto generate primary key
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerID;
-    private final UserCredentials usercredentials;
+    @Embedded
+    private UserCredentials usercredentials;
 
-    public Customer(String email, String username, String password){
+    public Customer() {}
+
+    public Customer(String email, String username, String password) {
         this.usercredentials = new UserCredentials(email, username, password);
     }
 

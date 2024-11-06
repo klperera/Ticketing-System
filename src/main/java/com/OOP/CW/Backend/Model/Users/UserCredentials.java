@@ -1,8 +1,8 @@
 package com.OOP.CW.Backend.Model.Users;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class UserCredentials {
 
     private String email;

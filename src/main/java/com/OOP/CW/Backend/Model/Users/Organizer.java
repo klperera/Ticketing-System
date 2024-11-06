@@ -5,12 +5,10 @@ import jakarta.persistence.*;
 @Entity
 public class Organizer {
 
-    //auto generate primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int organizerID;
-    @OneToOne
-    @JoinColumn(name = "email")
+    @Embedded
     private UserCredentials userCredentials;
 
     public Organizer() {}
