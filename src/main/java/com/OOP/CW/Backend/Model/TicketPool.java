@@ -1,16 +1,13 @@
-package com.OOP.CW.Backend.Model.Tickets;
+package com.OOP.CW.Backend.Model;
 
-import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
+@Embeddable
 public class TicketPool {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticketPoolId;
     @OneToMany(mappedBy = "TicketPool", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
@@ -19,14 +16,6 @@ public class TicketPool {
 
     public TicketPool(List<Ticket> tickets) {
         this.tickets = tickets;
-    }
-
-    public int getTicketPoolId() {
-        return ticketPoolId;
-    }
-
-    public void setTicketPoolId(int ticketPoolId) {
-        this.ticketPoolId = ticketPoolId;
     }
 
     public List<Ticket> getTickets() {

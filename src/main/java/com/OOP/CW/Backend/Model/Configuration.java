@@ -1,9 +1,11 @@
 package com.OOP.CW.Backend.Model;
 
+import jakarta.persistence.*;
 
-public abstract class Configuration {
+@Embeddable
+public class Configuration {
 
-    private int maxTicketCapacity;            //total number of tickets for an event
+    private int maxTicketCapacity;                 //total number of tickets for an event
     private int totalNumberOfTickets = 0;          // total number of tickets available at the moment
     private double ticketReleaseRate = 0;          // tickets available in overtime
     private double customerRetrievalRate = 0;     // customer purchase tickets overtime
@@ -11,6 +13,10 @@ public abstract class Configuration {
     public Configuration() {}
 
     public Configuration(int maxTicketCapacity) {
+        this.maxTicketCapacity = maxTicketCapacity;
+    }
+
+    public void setMaxTicketCapacity(int maxTicketCapacity) {
         this.maxTicketCapacity = maxTicketCapacity;
     }
 
@@ -42,8 +48,12 @@ public abstract class Configuration {
         this.customerRetrievalRate = customerRetrievalRate;
     }
 
-    abstract void saveConfig();
+    public void saveConfig(){
+        // need to implement
+    }
 
-    abstract void loadConfig();
+    public void loadConfig(){
+        // need to implement
+    }
 
 }
