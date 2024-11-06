@@ -15,7 +15,7 @@ public class Event {
     private Date eventDateTime;
     private String eventLocation;
     @OneToOne
-    @JoinColumn(name = "organizerID", referencedColumnName = "id")
+    @JoinColumn(name = "organizerID", referencedColumnName = "organizerID")
     private Organizer organizer;
     @Embedded
     private TicketPool ticketPool;
