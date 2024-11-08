@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
 
-@Entity
+
 public class LastMinuteTicket extends Ticket {
 
     private float discount;
