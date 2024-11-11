@@ -9,12 +9,12 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerID;
     @Embedded
-    private UserCredentials usercredentials;
+    private UserCredentials userCredentials;
 
     public Customer() {}
 
-    public Customer(UserCredentials usercredentials) {
-        this.usercredentials = usercredentials;
+    public Customer(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 
     public int getCustomerID() {
@@ -22,7 +22,7 @@ public class Customer {
     }
 
     public UserCredentials getUsercredentials() {
-        return usercredentials;
+        return userCredentials;
     }
 
 }

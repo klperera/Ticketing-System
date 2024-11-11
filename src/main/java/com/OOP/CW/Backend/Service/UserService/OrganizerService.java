@@ -23,7 +23,8 @@ public class OrganizerService implements UserController {
 
     @Override
     public ResponseEntity<String> register(UserCredentials userCredentials) {
-        if (organizerRepo.existsByEmail(userCredentials.getEmail())) {
+        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(userCredentials.getEmail());
+        if (organizer.isPresent()) {
             return ResponseEntity.ok("User already exists, please login.");
         }
         else{
@@ -34,11 +35,11 @@ public class OrganizerService implements UserController {
 
     @Override
     public ResponseEntity<String> login(String email, String password) {
-        Optional<Organizer> organizer = organizerRepo.findByEmail(email);
-        if(organizer.isPresent() && organizer.get().getUserCredentials().getPassword().equals(password) ) {
+        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(email);
+        if(organizer.isPresent() && organizer.get().getPassword().equals(password) ) {
             return ResponseEntity.ok("Login successful.");
             //redirect to home page
-        } else if (organizer.isPresent() && !(organizer.get().getUserCredentials().getPassword().equals(password))) {
+        } else if (organizer.isPresent() && !(organizer.get().getPassword().equals(password))) {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
@@ -47,9 +48,9 @@ public class OrganizerService implements UserController {
 
     @Override
     public ResponseEntity<String> changePassword(String email, String newPassword) {
-        Optional<Organizer> organizer = organizerRepo.findByEmail(email);
+        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(email);
         if (organizer.isPresent()) {
-            organizer.get().getUserCredentials().setPassword(newPassword);
+            organizer.get().setPassword(newPassword);
             return ResponseEntity.ok("Password changed successfully.");
         }else{
             return ResponseEntity.ok("User not exists, please try again.");

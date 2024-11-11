@@ -22,7 +22,8 @@ public class CustomerService implements UserController {
 
     @Override
     public ResponseEntity<String> register(UserCredentials userCredentials) {
-        if (customerRepo.existsByEmail(userCredentials.getEmail())) {
+        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(userCredentials.getEmail());
+        if (customer.isPresent()) {
             return ResponseEntity.ok("User already exists, please login.");
         }
         else{
@@ -34,11 +35,11 @@ public class CustomerService implements UserController {
 
     @Override
     public ResponseEntity<String> login(String email, String password) {
-        Optional<Customer> customer = customerRepo.findByEmail(email);
-        if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(password) ) {
+        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(email);
+        if(customer.isPresent() && customer.get().getPassword().equals(password) ) {
             return ResponseEntity.ok("Login successful.");
             //redirect to home page
-        } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(password))) {
+        } else if (customer.isPresent() && !(customer.get().getPassword().equals(password))) {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
@@ -47,9 +48,9 @@ public class CustomerService implements UserController {
 
     @Override
     public ResponseEntity<String> changePassword(String email, String newPassword) {
-        Optional<Customer> customer = customerRepo.findByEmail(email);
+        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(email);
         if (customer.isPresent()) {
-            customer.get().getUsercredentials().setPassword(newPassword);
+            customer.get().setPassword(newPassword);
             return ResponseEntity.ok("Password changed successfully.");
         }else{
             return ResponseEntity.ok("User not exists, please try again.");

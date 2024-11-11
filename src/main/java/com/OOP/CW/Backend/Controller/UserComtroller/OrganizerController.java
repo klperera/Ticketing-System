@@ -1,7 +1,7 @@
 package com.OOP.CW.Backend.Controller.UserComtroller;
 
-import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Service.UserService.OrganizerService;
+import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

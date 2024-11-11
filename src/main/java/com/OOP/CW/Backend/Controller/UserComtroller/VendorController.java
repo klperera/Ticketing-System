@@ -1,7 +1,6 @@
 package com.OOP.CW.Backend.Controller.UserComtroller;
 
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
-import com.OOP.CW.Backend.Model.Users.Vendor;
 import com.OOP.CW.Backend.Service.UserService.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vendor")
 public class VendorController implements UserController {
 
-    private final VendorService vendorService;
+    private VendorService vendorService;
 
     @Autowired
     public VendorController(VendorService vendorService) {
