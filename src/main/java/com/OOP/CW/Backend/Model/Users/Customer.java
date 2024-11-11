@@ -13,8 +13,8 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String email, String username, String password) {
-        this.usercredentials = new UserCredentials(email, username, password);
+    public Customer(UserCredentials usercredentials) {
+        this.usercredentials = usercredentials;
     }
 
     public int getCustomerID() {

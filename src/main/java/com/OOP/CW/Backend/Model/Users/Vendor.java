@@ -13,8 +13,8 @@ public class Vendor {
 
     public Vendor() {}
 
-    public Vendor(String email, String username, String password) {
-        this.userCredentials = new UserCredentials(email, username, password);
+    public Vendor(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 
     public int getVendorId() {
