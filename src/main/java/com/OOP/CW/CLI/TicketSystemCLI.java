@@ -13,7 +13,7 @@ public class TicketSystemCLI {
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
         SimulateDetails();
-        createEvent();
+        //createEvent();
 
 
 
