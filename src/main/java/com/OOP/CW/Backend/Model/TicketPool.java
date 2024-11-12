@@ -25,4 +25,13 @@ public class TicketPool {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+    public void addTicket(Ticket ticket) {
+        //vendor add tickets
+        this.tickets.add(ticket);
+    }
+    public void removeTicket(Ticket ticket) {
+        //Customer buying ticket
+        this.tickets.remove(ticket);
+
+    }
 }
