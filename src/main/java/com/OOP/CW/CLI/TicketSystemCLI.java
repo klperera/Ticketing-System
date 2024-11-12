@@ -4,51 +4,44 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TicketSystemCLI {
+
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("""
-              
+                
                 =========================================================================================================
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
-        while (true) {
-            System.out.println("\n1: log in \n2: register \n3: exit");
-            System.out.print("chosen an option: ");
-            if (scanner.hasNextInt()) {
-                int entry = scanner.nextInt();
-                switch (entry) {
-                    case 1 -> login();
-                    case 2 -> register();
-                    case 3 -> {
-                        System.out.println("Exiting From System");
-                        System.exit(0);
-                    }
-                    default -> System.out.println("Please enter a number between 1 and 3");
-                }
-            } else {
-                System.out.println("Please enter a number between 1 and 3");
-                scanner.next();
-            }
+        SimulateDetails();
+        createEvent();
+
+
+
+    }
+
+    public static void SimulateDetails() {
+        Scanner scanner = new Scanner(System.in);
+
+        int numOrganizers = 0;
+        int numVendors = 0;
+        int numCustomers = 0;
+        try{
+            System.out.println("Number of Organizers to Simulate : ");
+            numOrganizers = scanner.nextInt();
+            System.out.println("Number of Vendors to Simulate : ");
+            numVendors = scanner.nextInt();
+            System.out.println("Number of Customers to Simulate : ");
+            numCustomers = scanner.nextInt();
+        }catch (InputMismatchException e){
+            System.out.println("Please enter a valid number");
         }
-
-
-//        System.out.println(" 1: Organizer\n 2: Vendor \n 3: Customer");
-//        System.out.println("\n1: Add Ticket\n2: Check Available Tickets\n3: Exit");
-//        int choice = scanner.nextInt();
-//
-//        switch (choice){
-//            case 1:
-//        }
+        System.out.println(numOrganizers + " Organizers ");
+        System.out.println(numVendors + " Vendors ");
+        System.out.println(numCustomers + " Customers ");
     }
 
-    public static void login(){
+    public static void createEvent(int numOrganizers){
 
     }
 
-    public static void register(){
-        System.out.println();
-        login();
-    }
 }
