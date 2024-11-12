@@ -12,7 +12,7 @@ public abstract class Ticket {
     private int ticketId;
     private double price;
     @ManyToOne
-    @JoinColumn(name = "eventID", referencedColumnName = "id")
+    @JoinColumn(name = "eventID", referencedColumnName = "eventID")
     private Event event;
 
     public Ticket() {}

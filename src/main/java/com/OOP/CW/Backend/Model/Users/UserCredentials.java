@@ -1,10 +1,17 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import org.springframework.stereotype.Component;
 
+//accept credentials as object
+// frontend needs to send user data(login info) using credential class
+
+@Component
 @Embeddable
 public class UserCredentials {
 
+    @Column(unique = true, nullable = false)
     private String email;
     private String username;
     private String password;

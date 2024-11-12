@@ -8,7 +8,7 @@ import java.util.List;
 @Embeddable
 public class TicketPool {
 
-    @OneToMany(mappedBy = "TicketPool", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ticketId", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
 

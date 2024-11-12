@@ -2,6 +2,7 @@ package com.OOP.CW.Backend.Model.Users;
 
 import jakarta.persistence.*;
 
+
 @Entity
 public class Organizer {
 
@@ -13,8 +14,8 @@ public class Organizer {
 
     public Organizer() {}
 
-    public Organizer(String email, String username, String password) {
-        this.userCredentials = new UserCredentials(email, username, password);
+    public Organizer(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 
     public int getOrganizerID() {
