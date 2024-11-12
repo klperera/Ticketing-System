@@ -8,8 +8,8 @@ public class EarlyBirdTicket extends Ticket {
     private float discount;
 
 
-    public EarlyBirdTicket(Event event, double price, float discount) {
-        super(price, event);
+    public EarlyBirdTicket(int ticketId, double price, float discount, Event event) {
+        super(ticketId,price, event);
         this.discount = discount;
     }
 

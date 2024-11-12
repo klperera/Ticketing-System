@@ -1,7 +1,7 @@
 package com.OOP.CW.CLI.Ticket;
 
-import com.OOP.CW.Backend.Model.Event;
 
+import com.OOP.CW.CLI.Event.Event;
 
 public abstract class Ticket {
 
@@ -38,4 +38,7 @@ public abstract class Ticket {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+    abstract String getTicketType();
+    abstract double getTicketPrice();
 }

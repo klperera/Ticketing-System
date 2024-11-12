@@ -7,10 +7,9 @@ public class GeneralTicket extends Ticket {
 
     private float discount;
 
-    public GeneralTicket() {}
 
-    public GeneralTicket(double price, float discount, Event event) {
-        super(price, event);
+    public GeneralTicket(int ticketId, double price, float discount, Event event) {
+        super(ticketId, price, event);
         this.discount = discount;
     }
 
