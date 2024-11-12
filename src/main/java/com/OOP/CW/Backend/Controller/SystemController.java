@@ -1,14 +1,18 @@
 package com.OOP.CW.Backend.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/ticketsystem")
 public class SystemController {
 
     @GetMapping
-    public String greeting() {
-        return "Hello World";
+    public String Welcome() {
+        return "Welcome to the Ticketing System!";
+    }
+
+    @PostMapping("/ticketsystem")
+    public void userSelection(@RequestBody String user) {
+
     }
 }
