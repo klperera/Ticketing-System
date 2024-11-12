@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
 
-@Entity
 public class EarlyBirdTicket extends Ticket {
 
     private float discount;
