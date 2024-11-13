@@ -1,8 +1,13 @@
 package com.OOP.CW.Backend.Model;
 
 import com.OOP.CW.Backend.Model.Users.Organizer;
+import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import jakarta.persistence.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -12,24 +17,28 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int eventID;
     private String eventName;
-    private Date eventDateTime;
+    //"yyyy-MM-dd"
+    private LocalDate eventDate;
+    // HH:mm:ss
+    private LocalTime eventTime;
     private String eventLocation;
-    @OneToOne
-    @JoinColumn(name = "organizerID", referencedColumnName = "organizerID")
+    @ManyToOne
+    @JoinColumn(name = "organizerID", nullable = false)
     private Organizer organizer;
     @Embedded
     private TicketPool ticketPool;
     @Embedded
     private Configuration configuration;
 
+
     public Event(){}
 
-    public Event(String eventName, Date eventDateTime, String eventLocation, Organizer organizer, TicketPool ticketPool, int maxTicketCapacity ) {
+    public Event(String eventName, LocalDate eventDate, LocalTime eventTime, String eventLocation, Organizer organizer, int maxTicketCapacity ) throws ParseException {
         this.eventName = eventName;
-        this.eventDateTime = eventDateTime;
+        this.eventDate = eventDate;
+        this.eventTime = eventTime;
         this.eventLocation = eventLocation;
         this.organizer = organizer;
-        this.ticketPool = ticketPool;
         this.configuration = new Configuration(maxTicketCapacity);
     }
 
@@ -49,12 +58,20 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public Date getEventDateTime() {
-        return eventDateTime;
+    public LocalDate getEventDate() {
+        return eventDate;
     }
 
-    public void setEventDateTime(Date eventDateTime) {
-        this.eventDateTime = eventDateTime;
+    public void setEventDateTime(LocalDate eventDateTime) {
+        this.eventDate = eventDateTime;
+    }
+
+    public LocalTime getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(LocalTime eventTime) {
+        this.eventTime = eventTime;
     }
 
     public String getEventLocation() {
@@ -88,5 +105,4 @@ public class Event {
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
-
 }

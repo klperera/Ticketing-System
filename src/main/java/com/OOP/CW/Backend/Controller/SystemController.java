@@ -10,9 +10,4 @@ public class SystemController {
     public String Welcome() {
         return "Welcome to the Ticketing System!";
     }
-
-    @PostMapping("/ticketsystem")
-    public void userSelection(@RequestBody String user) {
-
-    }
 }

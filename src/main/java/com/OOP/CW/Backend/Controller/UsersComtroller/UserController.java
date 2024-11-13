@@ -5,11 +5,10 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserController {
 
-
     ResponseEntity<String> register(UserCredentials userCredentials);
 
-    ResponseEntity<String> login(String email, String password);
+    ResponseEntity<String> login(UserCredentials userCredentials);
 
-    ResponseEntity<String> changePassword(String email, String newPassword);
+    ResponseEntity<String> changePassword(UserCredentials userCredentials);
 
 }

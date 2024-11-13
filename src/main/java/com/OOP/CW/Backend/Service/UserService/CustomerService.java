@@ -20,9 +20,10 @@ public class CustomerService implements UserController {
         this.customerRepo = customerRepo;
     }
 
+
     @Override
     public ResponseEntity<String> register(UserCredentials userCredentials) {
-        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(userCredentials.getEmail());
+        Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (customer.isPresent()) {
             return ResponseEntity.ok("User already exists, please login.");
         }
@@ -34,12 +35,12 @@ public class CustomerService implements UserController {
     }
 
     @Override
-    public ResponseEntity<String> login(String email, String password) {
-        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(email);
-        if(customer.isPresent() && customer.get().getPassword().equals(password) ) {
+    public ResponseEntity<String> login(UserCredentials userCredentials) {
+        Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
+        if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
             return ResponseEntity.ok("Login successful.");
             //redirect to home page
-        } else if (customer.isPresent() && !(customer.get().getPassword().equals(password))) {
+        } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
@@ -47,10 +48,11 @@ public class CustomerService implements UserController {
     }
 
     @Override
-    public ResponseEntity<String> changePassword(String email, String newPassword) {
-        Optional<UserCredentials> customer = customerRepo.findByUserCredentials(email);
+    public ResponseEntity<String> changePassword(UserCredentials userCredentials) {
+        Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (customer.isPresent()) {
-            customer.get().setPassword(newPassword);
+            customer.get().getUsercredentials().setPassword(userCredentials.getPassword());
+            customerRepo.save(customer.get());
             return ResponseEntity.ok("Password changed successfully.");
         }else{
             return ResponseEntity.ok("User not exists, please try again.");

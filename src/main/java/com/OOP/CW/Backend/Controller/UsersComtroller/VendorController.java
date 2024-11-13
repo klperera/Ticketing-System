@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/vendor")
+@RequestMapping("/ticketsystem/vendor")
 public class VendorController implements UserController {
 
     private VendorService vendorService;
@@ -28,13 +28,13 @@ public class VendorController implements UserController {
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<String> login(@RequestBody String email, String password) {
-        return vendorService.login(email, password);
+    public ResponseEntity<String> login(@RequestBody UserCredentials userCredentials) {
+        return vendorService.login(userCredentials);
     }
 
     @PostMapping("/changepassword")
     @Override
-    public ResponseEntity<String> changePassword(@RequestBody String email, String newPassword) {
-        return vendorService.changePassword(email, newPassword);
+    public ResponseEntity<String> changePassword(@RequestBody UserCredentials userCredentials) {
+        return vendorService.changePassword(userCredentials);
     }
 }

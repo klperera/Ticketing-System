@@ -1,6 +1,7 @@
 package com.OOP.CW.Backend.Service.UserService;
 
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
+import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
@@ -20,10 +21,9 @@ public class OrganizerService implements UserController {
         this.organizerRepo = organizerRepo;
     }
 
-
     @Override
     public ResponseEntity<String> register(UserCredentials userCredentials) {
-        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(userCredentials.getEmail());
+        Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (organizer.isPresent()) {
             return ResponseEntity.ok("User already exists, please login.");
         }
@@ -34,12 +34,13 @@ public class OrganizerService implements UserController {
     }
 
     @Override
-    public ResponseEntity<String> login(String email, String password) {
-        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(email);
-        if(organizer.isPresent() && organizer.get().getPassword().equals(password) ) {
+    public ResponseEntity<String> login(UserCredentials userCredentials) {
+        Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(userCredentials.getEmail());
+        System.out.println(organizer.isPresent());
+        if(organizer.isPresent() && organizer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
             return ResponseEntity.ok("Login successful.");
             //redirect to home page
-        } else if (organizer.isPresent() && !(organizer.get().getPassword().equals(password))) {
+        } else if (organizer.isPresent() && !(organizer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
@@ -47,10 +48,11 @@ public class OrganizerService implements UserController {
     }
 
     @Override
-    public ResponseEntity<String> changePassword(String email, String newPassword) {
-        Optional<UserCredentials> organizer = organizerRepo.findByuserCredentials(email);
+    public ResponseEntity<String> changePassword(UserCredentials userCredentials) {
+        Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (organizer.isPresent()) {
-            organizer.get().setPassword(newPassword);
+            organizer.get().getUserCredentials().setPassword(userCredentials.getPassword());
+            organizerRepo.save(organizer.get());
             return ResponseEntity.ok("Password changed successfully.");
         }else{
             return ResponseEntity.ok("User not exists, please try again.");

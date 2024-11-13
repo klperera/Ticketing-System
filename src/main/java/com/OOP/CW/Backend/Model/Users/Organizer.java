@@ -1,6 +1,9 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import com.OOP.CW.Backend.Model.Event;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
@@ -11,6 +14,8 @@ public class Organizer {
     private int organizerID;
     @Embedded
     private UserCredentials userCredentials;
+    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
+    private List<Event> events;
 
     public Organizer() {}
 
@@ -26,5 +31,7 @@ public class Organizer {
         return userCredentials;
     }
 
-
+    public List<Event> getEvents() {
+        return events;
+    }
 }
