@@ -1,4 +1,4 @@
-package com.OOP.CW.Backend.Repo.UserRepository;
+package com.OOP.CW.Backend.Repo.UsersRepository;
 
 import com.OOP.CW.Backend.Model.Users.Customer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;

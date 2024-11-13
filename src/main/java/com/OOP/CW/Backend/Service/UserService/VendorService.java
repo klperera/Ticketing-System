@@ -1,10 +1,9 @@
 package com.OOP.CW.Backend.Service.UserService;
 
-import com.OOP.CW.Backend.Controller.UserComtroller.UserController;
-import com.OOP.CW.Backend.Model.Users.Organizer;
+import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Model.Users.Vendor;
-import com.OOP.CW.Backend.Repo.UserRepository.VendorRepo;
+import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
