@@ -1,18 +1,19 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
-
+@Entity
+@DiscriminatorValue("GeneralTicket")
 public class GeneralTicket extends Ticket {
 
     private float discount;
 
     public GeneralTicket() {}
 
-    public GeneralTicket(double price, float discount, Event event) {
-        super(price, event);
+    public GeneralTicket(float discount) {
         this.discount = discount;
     }
 
@@ -30,6 +31,6 @@ public class GeneralTicket extends Ticket {
 
     @Override
     public double getTicketPrice() {
-        return getPrice() * discount ;
+        return super.getPrice() * discount ;
     }
 }

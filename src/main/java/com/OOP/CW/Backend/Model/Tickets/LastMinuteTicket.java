@@ -1,18 +1,19 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import org.springframework.stereotype.Component;
 
-
+@Entity
+@DiscriminatorValue("Last-MinuteTicket")
 public class LastMinuteTicket extends Ticket {
 
     private float discount;
 
     public LastMinuteTicket() {}
 
-    public LastMinuteTicket(double price, float discount, Event event) {
-        super(price, event);
+    public LastMinuteTicket(float discount) {
         this.discount = discount;
     }
 
@@ -30,6 +31,6 @@ public class LastMinuteTicket extends Ticket {
 
     @Override
     public double getTicketPrice() {
-        return getPrice() * discount ;
+        return super.getPrice() * discount ;
     }
 }

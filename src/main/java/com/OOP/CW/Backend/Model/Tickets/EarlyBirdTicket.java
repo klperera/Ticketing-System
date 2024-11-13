@@ -1,17 +1,18 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
-
+@Entity
+@DiscriminatorValue("Early-birdTicket")
 public class EarlyBirdTicket extends Ticket {
 
     private float discount;
 
     public EarlyBirdTicket() {}
 
-    public EarlyBirdTicket(Event event, double price, float discount) {
-        super(price, event);
+    public EarlyBirdTicket(float discount) {
         this.discount = discount;
     }
 
@@ -30,6 +31,6 @@ public class EarlyBirdTicket extends Ticket {
 
     @Override
     public double getTicketPrice() {
-        return getPrice() * discount ;
+        return super.getPrice() * discount ;
     }
 }
