@@ -1,4 +1,4 @@
-package com.OOP.CW.Backend.Controller.UserComtroller;
+package com.OOP.CW.Backend.Controller.UsersComtroller;
 
 import com.OOP.CW.Backend.Service.UserService.OrganizerService;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
