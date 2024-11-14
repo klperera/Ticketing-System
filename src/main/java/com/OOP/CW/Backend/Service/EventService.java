@@ -22,21 +22,27 @@ public class EventService {
         this.organizerRepo = organizerRepo;
     }
 
-    public ResponseEntity<String> createEvent(Event NewEvent) {
-        // check Event is already registered or not (using event name and data)
-        Optional<Event> event = eventRepo.findEventByEventNameAndEventDate(NewEvent.getEventName(), NewEvent.getEventDate());
+    public ResponseEntity<EntityResponse> createEvent(Event NewEvent) {
+        // check Event is already registered or not (using event name and organizer email)
+        Optional<Event> event = eventRepo.findEventByEventName(NewEvent.getEventName());
         if (event.isPresent()) {
-            return ResponseEntity.ok("Event is already exists");
+            return ResponseEntity.ok(new EntityResponse(event,"Event is already exists"));
+            //return ResponseEntity.ok("Event is already exists");
+            //return ResponseEntity.ok(event.get());
         }
         else{
             Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(NewEvent.getOrganizer().getUserCredentials().getEmail());
             if (organizer.isPresent()) {
                 NewEvent.setOrganizer(organizer.get());
                 eventRepo.save(NewEvent);
-                return ResponseEntity.ok("Event registered successfully.");
+                return ResponseEntity.ok(new EntityResponse(NewEvent,"Event has been created"));
+                //return ResponseEntity.ok("Event registered successfully.");
+                //return ResponseEntity.ok(NewEvent);
             }
             else {
-                return ResponseEntity.ok("Event could not be registered. Organizer not found.");
+                return ResponseEntity.ok(new EntityResponse(new Event(),"Organizer does not exist"));
+                //return ResponseEntity.badRequest().body("Event could not be registered. Organizer not found.");
+                //return ResponseEntity.notFound().build();
             }
 
         }
