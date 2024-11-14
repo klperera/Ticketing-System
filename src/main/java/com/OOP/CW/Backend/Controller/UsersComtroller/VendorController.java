@@ -37,4 +37,10 @@ public class VendorController implements UserController {
     public ResponseEntity<String> changePassword(@RequestBody UserCredentials userCredentials) {
         return vendorService.changePassword(userCredentials);
     }
+
+    @PostMapping("/deleteaccount")
+    @Override
+    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+        return vendorService.deleteAccount(userCredentials);
+    }
 }

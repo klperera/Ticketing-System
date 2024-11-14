@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 public class Configuration {
 
     private int maxTicketCapacity;                 //total number of tickets for an event
-    private int totalNumberOfTickets = 0;          // total number of tickets available at the moment
-    private double ticketReleaseRate = 0;          // tickets available in overtime
-    private double customerRetrievalRate = 0;     // customer purchase tickets overtime
+    private int totalNumberOfTickets;          // total number of tickets available at the moment
+    private double ticketReleaseRate;          // tickets available in overtime
+    private double customerRetrievalRate;     // customer purchase tickets overtime
 
     public Configuration() {}
 
@@ -46,14 +46,6 @@ public class Configuration {
 
     public void setCustomerRetrievalRate(double customerRetrievalRate) {
         this.customerRetrievalRate = customerRetrievalRate;
-    }
-
-    public void saveConfig(){
-        // need to implement
-    }
-
-    public void loadConfig(){
-        // need to implement
     }
 
 }

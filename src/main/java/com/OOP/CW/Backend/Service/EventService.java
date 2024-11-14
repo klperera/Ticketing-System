@@ -23,6 +23,7 @@ public class EventService {
     }
 
     public ResponseEntity<String> createEvent(Event NewEvent) {
+        // check Event is already registered or not (using event name and data)
         Optional<Event> event = eventRepo.findEventByEventNameAndEventDate(NewEvent.getEventName(), NewEvent.getEventDate());
         if (event.isPresent()) {
             return ResponseEntity.ok("Event is already exists");
@@ -30,6 +31,7 @@ public class EventService {
         else{
             Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(NewEvent.getOrganizer().getUserCredentials().getEmail());
             if (organizer.isPresent()) {
+                NewEvent.setOrganizer(organizer.get());
                 eventRepo.save(NewEvent);
                 return ResponseEntity.ok("Event registered successfully.");
             }

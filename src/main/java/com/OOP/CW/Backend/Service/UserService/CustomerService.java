@@ -2,8 +2,10 @@ package com.OOP.CW.Backend.Service.UserService;
 
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Users.Customer;
+import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Repo.UsersRepository.CustomerRepo;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,19 @@ public class CustomerService implements UserController {
             return ResponseEntity.ok("Password changed successfully.");
         }else{
             return ResponseEntity.ok("User not exists, please try again.");
+        }
+    }
+
+    @Override
+    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+        Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
+        if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
+            customerRepo.delete(customer.get());
+            return ResponseEntity.ok("Account deleted successfully.");
+        } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
+            return ResponseEntity.ok("Incorrect password. Try again.");
+        } else {
+            return ResponseEntity.ok("User not exists, please register first.");
         }
     }
 }

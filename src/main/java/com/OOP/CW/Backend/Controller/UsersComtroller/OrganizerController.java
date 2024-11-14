@@ -3,11 +3,14 @@ package com.OOP.CW.Backend.Controller.UsersComtroller;
 import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
 import com.OOP.CW.Backend.Service.EventService;
+import com.OOP.CW.Backend.Service.UserService.CustomerService;
 import com.OOP.CW.Backend.Service.UserService.OrganizerService;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/ticketsystem/organizer")
@@ -40,9 +43,21 @@ public class OrganizerController implements UserController {
         return organizerService.changePassword(userCredentials);
     }
 
+    @PostMapping("/deleteaccount")
+    @Override
+    public ResponseEntity<String> deleteAccount(@RequestBody UserCredentials userCredentials) {
+        return organizerService.deleteAccount(userCredentials);
+    }
+
     @PostMapping("/newevent")
     public ResponseEntity<String> CreateEvent(@RequestBody Event newEvent) {
         return eventService.createEvent(newEvent);
+    }
+
+    // take the current login UserCredentials details from the body
+    @GetMapping("/checkevents")
+    public ResponseEntity<List<Event>> checkEventDetails(@RequestBody UserCredentials userCredentials) {
+        return organizerService.checkEventDetails(userCredentials);
     }
 
 }

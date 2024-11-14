@@ -11,4 +11,6 @@ public interface UserController {
 
     ResponseEntity<String> changePassword(UserCredentials userCredentials);
 
+    ResponseEntity<String> deleteAccount(UserCredentials userCredentials);
+
 }

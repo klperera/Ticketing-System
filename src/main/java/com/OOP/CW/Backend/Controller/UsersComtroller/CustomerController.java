@@ -36,4 +36,10 @@ public class CustomerController implements UserController {
     public ResponseEntity<String> changePassword(@RequestBody UserCredentials userCredentials) {
         return customerService.changePassword(userCredentials);
     }
+
+    @PostMapping("/deleteaccount")
+    @Override
+    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+        return customerService.deleteAccount(userCredentials);
+    }
 }

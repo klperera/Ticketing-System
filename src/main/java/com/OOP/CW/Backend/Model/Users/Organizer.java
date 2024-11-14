@@ -14,8 +14,6 @@ public class Organizer {
     private int organizerID;
     @Embedded
     private UserCredentials userCredentials;
-    @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
-    private List<Event> events;
 
     public Organizer() {}
 
@@ -31,7 +29,7 @@ public class Organizer {
         return userCredentials;
     }
 
-    public List<Event> getEvents() {
-        return events;
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 }
