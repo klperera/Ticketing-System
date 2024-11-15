@@ -1,19 +1,15 @@
 package com.OOP.CW.Backend.Controller.UsersComtroller;
 
 import com.OOP.CW.Backend.Model.Event;
-import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
-import com.OOP.CW.Backend.Service.EntityResponse;
+import com.OOP.CW.Backend.Service.Response;
 import com.OOP.CW.Backend.Service.EventService;
-import com.OOP.CW.Backend.Service.UserService.CustomerService;
 import com.OOP.CW.Backend.Service.UserService.OrganizerService;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/ticketsystem/organizer")
@@ -53,7 +49,7 @@ public class OrganizerController implements UserController {
     }
 
     @PostMapping("/newevent")
-    public ResponseEntity<EntityResponse> CreateEvent(@RequestBody Event newEvent) {
+    public ResponseEntity<Response> CreateEvent(@RequestBody Event newEvent) {
         return eventService.createEvent(newEvent);
     }
 
@@ -63,4 +59,7 @@ public class OrganizerController implements UserController {
         return organizerService.checkEventDetails(userCredentials);
     }
 
+    public void checkEventSales(@RequestBody UserCredentials userCredentials) {
+        organizerService.checkEventSales(userCredentials);
+    }
 }

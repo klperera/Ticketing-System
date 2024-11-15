@@ -89,5 +89,15 @@ public class OrganizerService implements UserController {
         }
     }
 
+    public void checkEventSales(UserCredentials userCredentials) {
+        Optional<Organizer> organizer = organizerRepo.findByUserCredentials_Email(userCredentials.getEmail());
+        if(organizer.isPresent() && organizer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
 
+            //return ResponseEntity.ok("Account deleted successfully.");
+        } else if (organizer.isPresent() && !(organizer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
+            //return ResponseEntity.ok("Incorrect password. Try again.");
+        } else {
+            //return ResponseEntity.ok("User not exists, please register first.");
+        }
+    }
 }
