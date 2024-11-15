@@ -1,14 +1,12 @@
 package com.OOP.CW.Backend.Model;
 
 import com.OOP.CW.Backend.Model.Users.Organizer;
-import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import jakarta.persistence.*;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
 
 @Entity
 public class Event {
@@ -22,6 +20,7 @@ public class Event {
     // HH:mm:ss
     private LocalTime eventTime;
     private String eventLocation;
+    private double eventPrice;
     @ManyToOne
     @JoinColumn(name = "organizerID", nullable = false)
     private Organizer organizer;
@@ -33,11 +32,12 @@ public class Event {
 
     public Event(){}
 
-    public Event(String eventName, LocalDate eventDate, LocalTime eventTime, String eventLocation, Organizer organizer, int maxTicketCapacity ) throws ParseException {
+    public Event(String eventName, LocalDate eventDate, LocalTime eventTime, String eventLocation, double eventPrice, Organizer organizer, int maxTicketCapacity ) throws ParseException {
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.eventLocation = eventLocation;
+        this.eventPrice = eventPrice;
         this.organizer = organizer;
         this.configuration = new Configuration(maxTicketCapacity);
     }
@@ -80,6 +80,14 @@ public class Event {
 
     public void setEventLocation(String eventLocation) {
         this.eventLocation = eventLocation;
+    }
+
+    public double getEventPrice() {
+        return eventPrice;
+    }
+
+    public void setEventPrice(double eventPrice) {
+        this.eventPrice = eventPrice;
     }
 
     public Organizer getOrganizer() {

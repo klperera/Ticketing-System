@@ -1,10 +1,10 @@
 package com.OOP.CW.Backend.Service;
 
-public class EntityResponse {
+public class Response {
     private Object object;
     private String message;
 
-    public EntityResponse(Object object, String message) {
+    public Response(Object object, String message) {
         this.object = object;
         this.message = message;
     }

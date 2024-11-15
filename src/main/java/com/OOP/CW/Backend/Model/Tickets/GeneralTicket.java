@@ -9,12 +9,26 @@ import org.springframework.stereotype.Component;
 @DiscriminatorValue("GeneralTicket")
 public class GeneralTicket extends Ticket {
 
+    private int numberOfTickets;
     private float discount;
 
     public GeneralTicket() {}
 
     public GeneralTicket(float discount) {
         this.discount = discount;
+    }
+
+    public GeneralTicket(int numberOfTickets, float discount) {
+        this.numberOfTickets = numberOfTickets;
+        this.discount = discount;
+    }
+
+    public int getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
     public float getDiscount() {

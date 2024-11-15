@@ -9,12 +9,26 @@ import org.springframework.stereotype.Component;
 @DiscriminatorValue("Last-MinuteTicket")
 public class LastMinuteTicket extends Ticket {
 
+    private int numberOfTickets;
     private float discount;
 
     public LastMinuteTicket() {}
 
-    public LastMinuteTicket(float discount) {
+    public LastMinuteTicket(float discount){
         this.discount = discount;
+    }
+
+    public LastMinuteTicket(int numberOfTickets,float discount) {
+        this.numberOfTickets = numberOfTickets;
+        this.discount = discount;
+    }
+
+    public int getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
     public float getDiscount() {

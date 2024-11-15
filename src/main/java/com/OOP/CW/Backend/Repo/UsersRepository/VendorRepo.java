@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface VendorRepo extends JpaRepository<Vendor, Integer> {
 
     Optional<Vendor> findByUserCredentials_Email(String email);
+
+    Optional<Vendor> findByUserCredentials_EmailAndUserCredentials_Password(String email, String password);
 }

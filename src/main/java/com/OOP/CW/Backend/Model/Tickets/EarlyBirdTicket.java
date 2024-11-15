@@ -8,12 +8,26 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("Early-birdTicket")
 public class EarlyBirdTicket extends Ticket {
 
+    private int numberOfTickets;
     private float discount;
 
     public EarlyBirdTicket() {}
 
     public EarlyBirdTicket(float discount) {
         this.discount = discount;
+    }
+
+    public EarlyBirdTicket(int numberOfTickets,float discount) {
+        this.numberOfTickets = numberOfTickets;
+        this.discount = discount;
+    }
+
+    public int getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
     public float getDiscount() {
