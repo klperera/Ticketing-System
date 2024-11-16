@@ -3,18 +3,24 @@ package com.OOP.CW.Backend.Model.Tickets;
 import com.OOP.CW.Backend.Model.Event;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("Early-birdTicket")
 public class EarlyBirdTicket extends Ticket {
 
+    @Transient
     private int numberOfTickets;
     private float discount;
+    private double price;
+
 
     public EarlyBirdTicket() {}
 
-    public EarlyBirdTicket(float discount) {
+    public EarlyBirdTicket(Event event, float discount) {
+        super(event);
         this.discount = discount;
+        this.price = getEvent().getEventPrice() * discount;
     }
 
     public EarlyBirdTicket(int numberOfTickets,float discount) {
@@ -38,13 +44,11 @@ public class EarlyBirdTicket extends Ticket {
         this.discount = discount;
     }
 
-    @Override
-    public String getTicketType() {
-        return "EarlyBird Ticket";
+    public double getTicketPrice() {
+        return price;
     }
 
-    @Override
-    public double getTicketPrice() {
-        return super.getPrice() * discount ;
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

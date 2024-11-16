@@ -1,6 +1,5 @@
 package com.OOP.CW.Backend.Model;
 
-import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -8,31 +7,32 @@ import java.util.List;
 @Embeddable
 public class TicketPool {
 
-    @OneToMany(mappedBy = "ticketId", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    //@OneToMany(mappedBy = "TicketPool", cascade = CascadeType.ALL)
+    @ElementCollection
+    private List<Integer> tickets;
 
 
     public TicketPool() {}
 
-    public TicketPool(List<Ticket> tickets) {
+    public TicketPool(List<Integer> tickets) {
         this.tickets = tickets;
     }
 
-    public List<Ticket> getTickets() {
+    public List<Integer> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
+    public void setTickets(List<Integer> tickets) {
         this.tickets = tickets;
     }
 
-    public void addTicket(Ticket ticket) {
+    public void addTicket(int ticketID) {
         //vendor add tickets
-        this.tickets.add(ticket);
+        this.tickets.add(ticketID);
     }
-    public void removeTicket(Ticket ticket) {
+    public int removeTicket(int ticketID) {
         //Customer buying ticket
-        this.tickets.remove(ticket);
+        return this.tickets.remove(ticketID);
 
     }
 }

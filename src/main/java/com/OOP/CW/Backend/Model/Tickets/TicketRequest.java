@@ -4,13 +4,18 @@ package com.OOP.CW.Backend.Model.Tickets;
 public class TicketRequest {
     private int vendorID;
     private int eventID;
+    private int totalTickets;
     private EarlyBirdTicket  earlyBirdTicket;
     private GeneralTicket generalTicket;
     private LastMinuteTicket lastMinuteTicket;
 
-    public TicketRequest(int vendorID, int eventID, EarlyBirdTicket earlyBirdTicket, GeneralTicket generalTicket, LastMinuteTicket lastMinuteTicket) {
+    public TicketRequest(int vendorID, int eventID, int totalTickets) {
         this.vendorID = vendorID;
         this.eventID = eventID;
+        this.totalTickets = totalTickets;
+    }
+
+    public TicketRequest( EarlyBirdTicket earlyBirdTicket, GeneralTicket generalTicket, LastMinuteTicket lastMinuteTicket) {
         this.earlyBirdTicket = earlyBirdTicket;
         this.generalTicket = generalTicket;
         this.lastMinuteTicket = lastMinuteTicket;
@@ -31,6 +36,13 @@ public class TicketRequest {
 
     public void setEventID(int eventID) {
         this.eventID = eventID;
+    }
+    public int getTotalTicketsToPurchase() {
+        return totalTickets;
+    }
+
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
     }
 
     public EarlyBirdTicket getEarlyBirdTicket() {
@@ -57,7 +69,7 @@ public class TicketRequest {
         this.lastMinuteTicket = lastMinuteTicket;
     }
 
-    public int getTotalTickets(){
+    public int getTotalTicketsBySubTickets(){
         return getEarlyBirdTicket().getNumberOfTickets() + getGeneralTicket().getNumberOfTickets() + getLastMinuteTicket().getNumberOfTickets();
     }
 }

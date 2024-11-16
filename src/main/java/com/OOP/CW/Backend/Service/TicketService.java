@@ -26,50 +26,44 @@ public class TicketService {
         this.eventRepo = eventRepo;
     }
 
-    // take vendor logins, event details and number of tickets for each types
-    public ResponseEntity<String> purchaseTickets(TicketRequest ticketsDetails) {
-        //check whether the user logins are valid or not
+    public ResponseEntity<String> addToTicketPool(TicketRequest ticketsDetails) {
+        // if all tickets are purchased - add to ticket pool
         Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
         if (vendor.isPresent()) {
             Optional<Event> event = eventRepo.findById(ticketsDetails.getEventID());
-            //if valid check number of tickets as exceeds or not
-            if (event.get().getConfiguration().getMaxTicketCapacity() <= event.get().getConfiguration().getTotalNumberOfTickets()) {
-                // if all tickets are purchased
-                //return ResponseEntity.ok(new Response(new Event(),"All Tickets are purchased by Vendors"));
-                return ResponseEntity.badRequest().body("All Tickets are purchased by Vendors");
-            }else if ((event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTickets()) <= event.get().getConfiguration().getMaxTicketCapacity()) {
-                // vendor purchase Tickets to sale (add to ticket pool) - add tickets to the ticket pool
-                // redirect to chose how many tickets are need in every types
-                for (int i = 1; i <= ticketsDetails.getEarlyBirdTicket().getNumberOfTickets(); i++) {
-                    //create Early-bird tickets
-                    Ticket earlyBirdTicket = new EarlyBirdTicket(ticketsDetails.getEarlyBirdTicket().getDiscount());
-                    event.get().getTicketPool().addTicket(earlyBirdTicket);
-                    ticketRepo.save(earlyBirdTicket);
+            if (event.isPresent()) {
+                // release all tickets at once
+                if (ticketsDetails.getTotalTicketsBySubTickets() <= vendor.get().getPurchasedTickets()) {
+                    // vendor purchase Tickets to sale (add to tickets to the pool)
+                    for (int i = 1; i <= ticketsDetails.getEarlyBirdTicket().getNumberOfTickets(); i++) {
+                        //create Early-bird tickets
+                        Ticket earlyBirdTicket = new EarlyBirdTicket(event.get(), ticketsDetails.getEarlyBirdTicket().getDiscount());
+                        event.get().getTicketPool().addTicket(earlyBirdTicket.getTicketId());
+                        ticketRepo.save(earlyBirdTicket);
+                    }
+                    for (int i = 1; i <= ticketsDetails.getGeneralTicket().getNumberOfTickets(); i++) {
+                        //create general tickets
+                        Ticket generalTicket = new GeneralTicket(event.get(), ticketsDetails.getGeneralTicket().getDiscount());
+                        event.get().getTicketPool().addTicket(generalTicket.getTicketId());
+                        ticketRepo.save(generalTicket);
+                    }
+                    for (int i = 1; i <= ticketsDetails.getLastMinuteTicket().getNumberOfTickets(); i++) {
+                        //create LastMinute tickets
+                        Ticket lastMinuteTicket = new LastMinuteTicket(event.get(), ticketsDetails.getLastMinuteTicket().getDiscount());
+                        event.get().getTicketPool().addTicket(lastMinuteTicket.getTicketId());
+                        ticketRepo.save(lastMinuteTicket);
+                    }
+                    return ResponseEntity.ok("All tickets have been added to the pool");
                 }
-                for (int i = 1; i <= ticketsDetails.getGeneralTicket().getNumberOfTickets(); i++) {
-                    //create general tickets
-                    Ticket generalTicket = new GeneralTicket(ticketsDetails.getGeneralTicket().getDiscount());
-                    event.get().getTicketPool().addTicket(generalTicket);
-                    ticketRepo.save(generalTicket);
+                else {
+                    return ResponseEntity.ok("You dont have that amount of tickets");
                 }
-                for (int i = 1; i <= ticketsDetails.getLastMinuteTicket().getNumberOfTickets(); i++) {
-                    //create LastMinute tickets
-                    Ticket lastMinuteTicket = new LastMinuteTicket(ticketsDetails.getLastMinuteTicket().getDiscount());
-                    event.get().getTicketPool().addTicket(lastMinuteTicket);
-                    ticketRepo.save(lastMinuteTicket);
-                }
-                //increment the event number of tickets
-                event.get().getConfiguration().setTotalNumberOfTickets(event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTickets());
-
-                //return ResponseEntity.ok(new Response(new Event(), "Tickets purchase successfully"));
-                return ResponseEntity.ok("Tickets purchase successfully");
-            }else{
-                //return ResponseEntity.ok(new Response(new Event(), "Can't purchase that number of tickets."));
-                return ResponseEntity.badRequest().body("Can't purchase that number of tickets.");
             }
-        }else {
-            //return ResponseEntity.ok(new Response(vendor, "No vendor found"));
-            return ResponseEntity.badRequest().body("No Vendor found");
+            else {
+                return ResponseEntity.ok("Event not found");
+            }
+        } else {
+            return ResponseEntity.ok("vendor not found");
         }
     }
 }

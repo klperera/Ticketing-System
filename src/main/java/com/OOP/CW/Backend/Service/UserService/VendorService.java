@@ -1,9 +1,14 @@
 package com.OOP.CW.Backend.Service.UserService;
 
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
+import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.Tickets.*;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Model.Users.Vendor;
+import com.OOP.CW.Backend.Repo.EventRepo;
+import com.OOP.CW.Backend.Repo.TicketRepo;
+import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +20,14 @@ import java.util.Optional;
 public class VendorService implements UserController {
 
     private final VendorRepo vendorRepo;
+    private final EventRepo eventRepo;
+    private final TicketRepo ticketRepo;
 
     @Autowired
-    public VendorService(VendorRepo vendorRepo) {
+    public VendorService(VendorRepo vendorRepo, EventRepo eventRepo, TicketRepo ticketRepo) {
         this.vendorRepo = vendorRepo;
+        this.eventRepo = eventRepo;
+        this.ticketRepo = ticketRepo;
     }
 
 
@@ -69,6 +78,42 @@ public class VendorService implements UserController {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
+        }
+    }
+    // take vendor logins, event details and number of tickets for each types
+    public ResponseEntity<String> purchaseTickets(TicketRequest ticketsDetails) {
+        //check whether the user logins are valid or not
+        Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
+        if (vendor.isPresent()) {
+            Optional<Event> event = eventRepo.findById(ticketsDetails.getEventID());
+            if (event.isPresent()) {
+                //if valid check number of tickets as exceeds or not
+                if (event.get().getConfiguration().getMaxTicketCapacity() <= event.get().getConfiguration().getTotalNumberOfTickets()) {
+                    //return ResponseEntity.ok(new Response(new Event(),"All Tickets are purchased by Vendors"));
+                    return ResponseEntity.badRequest().body("All Tickets are purchased by Vendors");
+                }
+                else{
+                    if ((event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTicketsToPurchase()) <= event.get().getConfiguration().getMaxTicketCapacity()) {
+                        event.get().getConfiguration().setTotalNumberOfTickets(ticketsDetails.getTotalTicketsToPurchase());
+                        vendor.get().setPurchasedTickets(ticketsDetails.getTotalTicketsToPurchase());
+                        vendorRepo.save(vendor.get());
+                        eventRepo.save(event.get());
+                        //return ResponseEntity.ok(new Response(new Event(), "Tickets purchase successfully"));
+                        return ResponseEntity.ok("Tickets purchase successfully");
+                        //redirect to vendor - Add to ticket pool
+                    }
+                    else{
+                        //return ResponseEntity.ok(new Response(new Event(), "Can't purchase that number of tickets."));
+                        return ResponseEntity.badRequest().body("Can't purchase that amount of tickets.");
+                    }
+                }
+            }else {
+                return ResponseEntity.badRequest().body("Event not found.");
+            }
+        }
+        else {
+            //return ResponseEntity.ok(new Response(vendor, "No vendor found"));
+            return ResponseEntity.badRequest().body("No Vendor found");
         }
     }
 

@@ -62,7 +62,13 @@ public class VendorController implements UserController {
 
     @PostMapping("/purchasetickets")
     public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
-        // Ticket request - Objects of vendor, eventID, earlyBirdTicket, generalTicket, lastMinuteTicket
-        return ticketService.purchaseTickets(ticketsDetails);
+        // Ticket request - Objects of vendor, eventID
+        return vendorService.purchaseTickets(ticketsDetails);
+    }
+
+    @PostMapping("/addToTicketPool")
+    public ResponseEntity<String> addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
+        // Ticket request - earlyBirdTicket, generalTicket, lastMinuteTicket
+       return ticketService.addToTicketPool(ticketsDetails);
     }
 }
