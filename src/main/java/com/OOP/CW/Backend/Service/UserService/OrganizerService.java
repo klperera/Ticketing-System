@@ -2,10 +2,12 @@ package com.OOP.CW.Backend.Service.UserService;
 
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.EventDOT;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Repo.EventRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
+import com.OOP.CW.Backend.Service.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -78,11 +80,15 @@ public class OrganizerService implements UserController {
         }
     }
 
-    public ResponseEntity<List<Event>> checkEventDetails(UserCredentials userCredentials) {
+    public ResponseEntity<Response> checkEventDetails(UserCredentials userCredentials) {
         Optional<Organizer> organizer = organizerRepo.findByUserCredentials_EmailAndUserCredentials_Password(userCredentials.getEmail(), userCredentials.getPassword());
         if (organizer.isPresent()) {
             List<Event> events =eventRepo.findAllEventByOrganizer_OrganizerID(organizer.get().getOrganizerID());
-            return ResponseEntity.ok(events);
+            List<EventDOT> eventDOTs = new ArrayList<>();
+            for (Event event : events) {
+                eventDOTs.add(new EventDOT(event));
+            }
+            return ResponseEntity.ok(new Response(eventDOTs,"All events have been found."));
         }else{
             // returns organizer not found
             return ResponseEntity.notFound().build();

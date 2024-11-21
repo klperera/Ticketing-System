@@ -24,7 +24,8 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "organizerID", nullable = false)
     private Organizer organizer;
-    @Embedded
+    @OneToOne
+    @JoinColumn(name = "ticketPoolId", nullable = false)
     private TicketPool ticketPool;
     @Embedded
     private Configuration configuration;

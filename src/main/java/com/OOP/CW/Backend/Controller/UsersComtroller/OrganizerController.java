@@ -55,7 +55,7 @@ public class OrganizerController implements UserController {
 
     // take the current login UserCredentials details from the body
     @GetMapping("/checkevents")
-    public ResponseEntity<List<Event>> checkEventDetails(@RequestBody UserCredentials userCredentials) {
+    public ResponseEntity<Response> checkEventDetails(@RequestBody UserCredentials userCredentials) {
         return organizerService.checkEventDetails(userCredentials);
     }
 

@@ -1,38 +1,48 @@
 package com.OOP.CW.Backend.Model;
 
+import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Embeddable
+@Entity
 public class TicketPool {
 
-    //@OneToMany(mappedBy = "TicketPool", cascade = CascadeType.ALL)
-    @ElementCollection
-    private List<Integer> tickets;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int ticketPoolId;
+    private int totalTickets;
+    @OneToOne(mappedBy = "ticketPool", cascade = CascadeType.ALL)
+    private Event event;
+    @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
 
 
     public TicketPool() {}
 
-    public TicketPool(List<Integer> tickets) {
-        this.tickets = tickets;
+    public TicketPool(Event event) {
+        this.event = event;
     }
 
-    public List<Integer> getTickets() {
-        return tickets;
+
+    public int getTicketPoolId() {
+        return ticketPoolId;
     }
 
-    public void setTickets(List<Integer> tickets) {
-        this.tickets = tickets;
+    public void setTicketPoolId(int ticketPoolId) {
+        this.ticketPoolId = ticketPoolId;
     }
 
-    public void addTicket(int ticketID) {
+    public void addTicket(Ticket ticket) {
         //vendor add tickets
-        this.tickets.add(ticketID);
+        this.tickets.add(ticket);
+        this.totalTickets++;
     }
-    public int removeTicket(int ticketID) {
+    public Boolean removeTicket(Ticket ticket) {
         //Customer buying ticket
-        return this.tickets.remove(ticketID);
+        this.totalTickets--;
+        return this.tickets.remove(ticket);
 
     }
 }

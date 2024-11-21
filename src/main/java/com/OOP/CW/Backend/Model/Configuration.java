@@ -29,7 +29,7 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int totalNumberOfTickets) {
-        this.totalNumberOfTickets = totalNumberOfTickets;
+        this.totalNumberOfTickets += totalNumberOfTickets;
     }
 
     public double getTicketReleaseRate() {

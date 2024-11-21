@@ -1,6 +1,7 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.TicketPool;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
@@ -17,8 +18,8 @@ public class GeneralTicket extends Ticket {
 
     public GeneralTicket() {}
 
-    public GeneralTicket(Event event, float discount) {
-        super(event);
+    public GeneralTicket(Event event, TicketPool ticketPool, float discount) {
+        super(event, ticketPool);
         this.discount = discount;
         this.price = getEvent().getEventPrice() * discount;
     }

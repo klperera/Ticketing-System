@@ -37,22 +37,26 @@ public class TicketService {
                     // vendor purchase Tickets to sale (add to tickets to the pool)
                     for (int i = 1; i <= ticketsDetails.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         //create Early-bird tickets
-                        Ticket earlyBirdTicket = new EarlyBirdTicket(event.get(), ticketsDetails.getEarlyBirdTicket().getDiscount());
-                        event.get().getTicketPool().addTicket(earlyBirdTicket.getTicketId());
+                        Ticket earlyBirdTicket = new EarlyBirdTicket(event.get(), event.get().getTicketPool(), ticketsDetails.getEarlyBirdTicket().getDiscount());
+                        //event.get().getTicketPool().addTicket(earlyBirdTicket.getTicketId());
+                        event.get().getTicketPool().addTicket(earlyBirdTicket);
                         ticketRepo.save(earlyBirdTicket);
                     }
                     for (int i = 1; i <= ticketsDetails.getGeneralTicket().getNumberOfTickets(); i++) {
                         //create general tickets
-                        Ticket generalTicket = new GeneralTicket(event.get(), ticketsDetails.getGeneralTicket().getDiscount());
-                        event.get().getTicketPool().addTicket(generalTicket.getTicketId());
+                        Ticket generalTicket = new GeneralTicket(event.get(), event.get().getTicketPool(), ticketsDetails.getGeneralTicket().getDiscount());
+                        event.get().getTicketPool().addTicket(generalTicket);
+                        //event.get().getTicketPool().addTicket(generalTicket.getTicketId());
                         ticketRepo.save(generalTicket);
                     }
                     for (int i = 1; i <= ticketsDetails.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         //create LastMinute tickets
-                        Ticket lastMinuteTicket = new LastMinuteTicket(event.get(), ticketsDetails.getLastMinuteTicket().getDiscount());
-                        event.get().getTicketPool().addTicket(lastMinuteTicket.getTicketId());
+                        Ticket lastMinuteTicket = new LastMinuteTicket(event.get(), event.get().getTicketPool(), ticketsDetails.getLastMinuteTicket().getDiscount());
+                        event.get().getTicketPool().addTicket(lastMinuteTicket);
+                        //event.get().getTicketPool().addTicket(lastMinuteTicket.getTicketId());
                         ticketRepo.save(lastMinuteTicket);
                     }
+                    eventRepo.save(event.get());
                     return ResponseEntity.ok("All tickets have been added to the pool");
                 }
                 else {

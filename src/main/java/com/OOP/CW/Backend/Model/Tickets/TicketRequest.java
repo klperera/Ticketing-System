@@ -9,17 +9,18 @@ public class TicketRequest {
     private GeneralTicket generalTicket;
     private LastMinuteTicket lastMinuteTicket;
 
+    public TicketRequest() {}
+
     public TicketRequest(int vendorID, int eventID, int totalTickets) {
         this.vendorID = vendorID;
         this.eventID = eventID;
         this.totalTickets = totalTickets;
     }
 
-    public TicketRequest( EarlyBirdTicket earlyBirdTicket, GeneralTicket generalTicket, LastMinuteTicket lastMinuteTicket) {
+    public TicketRequest(EarlyBirdTicket earlyBirdTicket, GeneralTicket generalTicket, LastMinuteTicket lastMinuteTicket) {
         this.earlyBirdTicket = earlyBirdTicket;
         this.generalTicket = generalTicket;
         this.lastMinuteTicket = lastMinuteTicket;
-
     }
 
     public int getVendorID() {

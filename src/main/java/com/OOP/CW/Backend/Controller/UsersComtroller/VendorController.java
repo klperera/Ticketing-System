@@ -9,10 +9,7 @@ import com.OOP.CW.Backend.Service.TicketService;
 import com.OOP.CW.Backend.Service.UserService.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -62,13 +59,15 @@ public class VendorController implements UserController {
 
     @PostMapping("/purchasetickets")
     public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
-        // Ticket request - Objects of vendor, eventID
+        // Ticket request - Objects of vendor, eventID, total tickets
         return vendorService.purchaseTickets(ticketsDetails);
     }
 
     @PostMapping("/addToTicketPool")
     public ResponseEntity<String> addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
+        System.out.println(ticketsDetails.getVendorID());
         // Ticket request - earlyBirdTicket, generalTicket, lastMinuteTicket
        return ticketService.addToTicketPool(ticketsDetails);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.TicketPool;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
@@ -17,8 +18,8 @@ public class LastMinuteTicket extends Ticket {
 
     public LastMinuteTicket() {}
 
-    public LastMinuteTicket(Event event, float discount){
-        super(event);
+    public LastMinuteTicket(Event event, TicketPool ticketPool, float discount){
+        super(event, ticketPool);
         this.discount = discount;
         this.price = getEvent().getEventPrice() * discount;
     }

@@ -82,6 +82,7 @@ public class VendorService implements UserController {
     }
     // take vendor logins, event details and number of tickets for each types
     public ResponseEntity<String> purchaseTickets(TicketRequest ticketsDetails) {
+        //System.out.println(ticketsDetails.getVendorID());
         //check whether the user logins are valid or not
         Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
         if (vendor.isPresent()) {
