@@ -2,6 +2,7 @@ package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.TicketPool;
+import com.OOP.CW.Backend.Model.Users.Vendor;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
@@ -18,8 +19,8 @@ public class EarlyBirdTicket extends Ticket {
 
     public EarlyBirdTicket() {}
 
-    public EarlyBirdTicket(Event event, TicketPool ticketPool, float discount) {
-        super(event, ticketPool);
+    public EarlyBirdTicket(Event event, Vendor vendor, TicketPool ticketPool, float discount) {
+        super(event, ticketPool, vendor);
         this.discount = discount;
         this.price = (getEvent().getEventPrice() * discount)/100;
     }
