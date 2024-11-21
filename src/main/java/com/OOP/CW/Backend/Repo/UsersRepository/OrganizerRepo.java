@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface OrganizerRepo extends JpaRepository<Organizer, Integer> {
 
-    Optional<UserCredentials> findByuserCredentials(String email);
-
+    Optional<Organizer> findByUserCredentials_Email(String email);
+    Optional<Organizer> findByUserCredentials_EmailAndUserCredentials_Password(String email, String password);
 }

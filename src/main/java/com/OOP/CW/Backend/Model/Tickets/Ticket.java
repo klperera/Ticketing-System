@@ -2,43 +2,67 @@ package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
 
+import com.OOP.CW.Backend.Model.TicketPool;
+import com.OOP.CW.Backend.Model.Users.Customer;
+import com.OOP.CW.Backend.Model.Users.Vendor;
 import jakarta.persistence.*;
 
 @Entity
-public abstract class Ticket {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "ticketType", discriminatorType = DiscriminatorType.STRING)
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ticketId;
-    private double price;
     @ManyToOne
-    @JoinColumn(name = "eventID", referencedColumnName = "eventID")
+    @JoinColumn(name = "eventID", nullable = false)
     private Event event;
+    @OneToOne
+    @JoinColumn(name = "customerID") // set only when customer purchase the ticket
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "ticketPoolId", nullable = false)
+    private TicketPool ticketPool;
+
 
     public Ticket() {}
 
-    public Ticket(double price, Event event) {
-        this.price = price;
+    public Ticket(Event event, TicketPool ticketPool) {
         this.event = event;
+        this.ticketPool = ticketPool;
     }
 
     public int getTicketId() {
         return ticketId;
     }
 
-    public double getPrice() {
-        return price;
+    public void setTicketId(int ticketId) {
+        this.ticketId = ticketId;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Event getEvent() {
         return event;
     }
 
-    public int getEventIdInTicket(){
-        return getEvent().getEventID();
+    public TicketPool getTicketPool() {
+        return ticketPool;
     }
 
-    abstract String getTicketType();
-    abstract double getTicketPrice();
+    public void setTicketPool(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
+    }
 }
 

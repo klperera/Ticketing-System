@@ -1,19 +1,41 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.TicketPool;
+import com.OOP.CW.Backend.Model.Users.Vendor;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import org.springframework.stereotype.Component;
 
-
+@Entity
+@DiscriminatorValue("Last-MinuteTicket")
 public class LastMinuteTicket extends Ticket {
 
+    @Transient
+    private int numberOfTickets;
     private float discount;
+    private double price;
 
     public LastMinuteTicket() {}
 
-    public LastMinuteTicket(double price, float discount, Event event) {
-        super(price, event);
+    public LastMinuteTicket(Event event, TicketPool ticketPool, float discount){
+        super(event, ticketPool);
         this.discount = discount;
+        this.price = getEvent().getEventPrice() * discount;
+    }
+
+    public LastMinuteTicket(int numberOfTickets,float discount) {
+        this.numberOfTickets = numberOfTickets;
+        this.discount = discount;
+    }
+
+    public int getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
     public float getDiscount() {
@@ -23,13 +45,11 @@ public class LastMinuteTicket extends Ticket {
         this.discount = discount;
     }
 
-    @Override
-    public String getTicketType() {
-        return "Last Minute Ticket";
+    public double getTicketPrice() {
+        return price;
     }
 
-    @Override
-    public double getTicketPrice() {
-        return getPrice() * discount ;
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
-    Optional<UserCredentials> findByUserCredentials(String email);
+    Optional<Customer> findByUserCredentials_Email(String email);
 }

@@ -1,6 +1,9 @@
 package com.OOP.CW.Backend.Model.Users;
 
+import com.OOP.CW.Backend.Model.Event;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
@@ -26,5 +29,7 @@ public class Organizer {
         return userCredentials;
     }
 
-
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
+    }
 }
