@@ -19,9 +19,6 @@ public class Ticket {
     @JoinColumn(name = "eventID", nullable = false)
     private Event event;
     @OneToOne
-    @JoinColumn(name = "vendorId", nullable = false)
-    private Vendor vendor;
-    @OneToOne
     @JoinColumn(name = "customerID") // set only when customer purchase the ticket
     private Customer customer;
     @ManyToOne
@@ -31,10 +28,9 @@ public class Ticket {
 
     public Ticket() {}
 
-    public Ticket(Event event, TicketPool ticketPool, Vendor vendor) {
+    public Ticket(Event event, TicketPool ticketPool) {
         this.event = event;
         this.ticketPool = ticketPool;
-        this.vendor = vendor;
     }
 
     public int getTicketId() {
@@ -47,14 +43,6 @@ public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-    public Vendor getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
     }
 
     public Customer getCustomer() {
