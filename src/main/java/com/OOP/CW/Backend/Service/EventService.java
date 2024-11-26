@@ -65,18 +65,6 @@ public class EventService{
         }
     }
 
-    public ResponseEntity<Response> allEvents(UserCredentials userCredentials) {
-        Optional<Vendor> vendor = vendorRepo.findByUserCredentials_EmailAndUserCredentials_Password(userCredentials.getEmail(), userCredentials.getPassword());
-        if (vendor.isPresent()) {
-            List<Event> events = eventRepo.findAll();
-            List<EventDOT> eventDOTS = new ArrayList<>();
-            for (Event event : events) {
-                eventDOTS.add(new EventDOT(event));
-            }
-            return ResponseEntity.ok(new Response(eventDOTS,"All events have been found"));
-        }else{
-            return ResponseEntity.ok(new Response(new Vendor(),"incorrect vendor details"));
-        }
-    }
+
 
 }

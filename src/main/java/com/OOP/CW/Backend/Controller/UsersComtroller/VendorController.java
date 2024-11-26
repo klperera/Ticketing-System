@@ -54,7 +54,7 @@ public class VendorController implements UserController {
 
     @PostMapping("/allevents")
     public ResponseEntity<Response> allevents(@RequestBody UserCredentials userCredentials) {
-        return eventService.allEvents(userCredentials);
+        return vendorService.allEvents(userCredentials);
     }
 
     @PostMapping("/purchasetickets")

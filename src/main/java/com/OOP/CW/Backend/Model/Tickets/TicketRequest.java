@@ -2,6 +2,7 @@ package com.OOP.CW.Backend.Model.Tickets;
 
 
 public class TicketRequest {
+    private int customerId;
     private int vendorID;
     private int eventID;
     private int totalTickets;
@@ -21,6 +22,24 @@ public class TicketRequest {
         this.earlyBirdTicket = earlyBirdTicket;
         this.generalTicket = generalTicket;
         this.lastMinuteTicket = lastMinuteTicket;
+    }
+
+    // customer buy tickets
+    public TicketRequest(int customerId, int vendorID, int eventID, EarlyBirdTicket earlyBirdTicket, GeneralTicket generalTicket, LastMinuteTicket lastMinuteTicket) {
+        this.customerId = customerId;
+        this.vendorID = vendorID;
+        this.eventID = eventID;
+        this.earlyBirdTicket = earlyBirdTicket;
+        this.generalTicket = generalTicket;
+        this.lastMinuteTicket = lastMinuteTicket;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public int getVendorID() {

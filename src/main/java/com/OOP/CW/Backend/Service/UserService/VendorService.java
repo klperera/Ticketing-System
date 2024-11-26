@@ -2,6 +2,7 @@ package com.OOP.CW.Backend.Service.UserService;
 
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Event;
+import com.OOP.CW.Backend.Model.EventDOT;
 import com.OOP.CW.Backend.Model.Tickets.*;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
@@ -10,10 +11,13 @@ import com.OOP.CW.Backend.Repo.EventRepo;
 import com.OOP.CW.Backend.Repo.TicketRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
+import com.OOP.CW.Backend.Service.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -78,6 +82,20 @@ public class VendorService implements UserController {
             return ResponseEntity.ok("Incorrect password. Try again.");
         } else {
             return ResponseEntity.ok("User not exists, please register first.");
+        }
+    }
+
+    public ResponseEntity<Response> allEvents(UserCredentials userCredentials) {
+        Optional<Vendor> vendor = vendorRepo.findByUserCredentials_EmailAndUserCredentials_Password(userCredentials.getEmail(), userCredentials.getPassword());
+        if (vendor.isPresent()) {
+            List<Event> events = eventRepo.findAll();
+            List<EventDOT> eventDOTS = new ArrayList<>();
+            for (Event event : events) {
+                eventDOTS.add(new EventDOT(event));
+            }
+            return ResponseEntity.ok(new Response(eventDOTS,"All events have been found"));
+        }else{
+            return ResponseEntity.ok(new Response(new Vendor(),"incorrect vendor details"));
         }
     }
     // take vendor logins, event details and number of tickets for each types

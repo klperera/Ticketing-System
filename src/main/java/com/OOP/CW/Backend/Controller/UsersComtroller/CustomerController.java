@@ -1,5 +1,7 @@
 package com.OOP.CW.Backend.Controller.UsersComtroller;
 
+import com.OOP.CW.Backend.Model.Tickets.TicketRequest;
+import com.OOP.CW.Backend.Service.Response;
 import com.OOP.CW.Backend.Service.UserService.CustomerService;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,18 @@ public class CustomerController implements UserController {
 
     @PostMapping("/deleteaccount")
     @Override
-    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+    public ResponseEntity<String> deleteAccount(@RequestBody UserCredentials userCredentials) {
         return customerService.deleteAccount(userCredentials);
     }
+
+    @PostMapping("/allevents")
+    public ResponseEntity<Response> allevents(@RequestBody UserCredentials userCredentials) {
+        return customerService.allEvents(userCredentials);
+    }
+
+    @PostMapping("/buytickets")
+    public Response buyTickets(@RequestBody TicketRequest ticketRequest) {
+        return customerService.buyTickets(ticketRequest);
+    }
+
 }
