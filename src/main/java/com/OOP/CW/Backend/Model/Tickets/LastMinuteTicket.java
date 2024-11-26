@@ -19,8 +19,8 @@ public class LastMinuteTicket extends Ticket {
 
     public LastMinuteTicket() {}
 
-    public LastMinuteTicket(Event event, TicketPool ticketPool, float discount){
-        super(event, ticketPool);
+    public LastMinuteTicket(Event event, float discount){
+        super(event);
         this.discount = discount;
         this.price = getEvent().getEventPrice() * discount;
     }

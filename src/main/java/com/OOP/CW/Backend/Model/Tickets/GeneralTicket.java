@@ -19,8 +19,8 @@ public class GeneralTicket extends Ticket {
 
     public GeneralTicket() {}
 
-    public GeneralTicket(Event event, TicketPool ticketPool, float discount) {
-        super(event, ticketPool);
+    public GeneralTicket(Event event, float discount) {
+        super(event);
         this.discount = discount;
         this.price = getEvent().getEventPrice() * discount;
     }

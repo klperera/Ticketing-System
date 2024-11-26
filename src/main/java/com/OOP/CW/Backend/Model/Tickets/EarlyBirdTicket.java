@@ -18,8 +18,8 @@ public class EarlyBirdTicket extends Ticket {
 
     public EarlyBirdTicket() {}
 
-    public EarlyBirdTicket(Event event, TicketPool ticketPool, float discount) {
-        super(event, ticketPool);
+    public EarlyBirdTicket(Event event, float discount) {
+        super(event);
         this.discount = discount;
         this.price = (super.getEvent().getEventPrice() * discount)/100;
     }

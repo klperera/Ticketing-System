@@ -28,9 +28,9 @@ public class Ticket {
 
     public Ticket() {}
 
-    public Ticket(Event event, TicketPool ticketPool) {
+    public Ticket(Event event) {
         this.event = event;
-        this.ticketPool = ticketPool;
+        this.ticketPool = event.getTicketPool();
     }
 
     public int getTicketId() {
