@@ -100,7 +100,6 @@ public class VendorService implements UserController {
     }
     // take vendor logins, event details and number of tickets for each types
     public ResponseEntity<String> purchaseTickets(TicketRequest ticketsDetails) {
-        //System.out.println(ticketsDetails.getVendorID());
         //check whether the user logins are valid or not
         Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
         if (vendor.isPresent()) {
@@ -113,8 +112,12 @@ public class VendorService implements UserController {
                 }
                 else{
                     if ((event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTicketsToPurchase()) <= event.get().getConfiguration().getMaxTicketCapacity()) {
-                        event.get().getConfiguration().setTotalNumberOfTickets(ticketsDetails.getTotalTicketsToPurchase());
-                        vendor.get().setPurchasedTickets(ticketsDetails.getTotalTicketsToPurchase());
+                        for (int i = 0; i < ticketsDetails.getTotalTicketsToPurchase(); i++) {
+                            Ticket ticket = new Ticket(event.get(),vendor.get(), "Ticket");
+                            ticketRepo.save(ticket);
+                        }
+                        event.get().getConfiguration().setTotalNumberOfTickets(event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTicketsToPurchase());
+                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() + ticketsDetails.getTotalTicketsToPurchase());
                         vendorRepo.save(vendor.get());
                         eventRepo.save(event.get());
                         //return ResponseEntity.ok(new Response(new Event(), "Tickets purchase successfully"));

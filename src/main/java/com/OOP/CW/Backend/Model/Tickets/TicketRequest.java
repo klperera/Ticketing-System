@@ -12,6 +12,7 @@ public class TicketRequest {
 
     public TicketRequest() {}
 
+    // vendor purchase tickets
     public TicketRequest(int vendorID, int eventID, int totalTickets) {
         this.vendorID = vendorID;
         this.eventID = eventID;
