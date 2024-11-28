@@ -8,8 +8,6 @@ import com.OOP.CW.Backend.Model.Users.Vendor;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "ticketType", discriminatorType = DiscriminatorType.STRING)
 public class Ticket {
 
     @Id
@@ -22,16 +20,25 @@ public class Ticket {
     @JoinColumn(name = "customerID") // set only when customer purchase the ticket
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "ticketPoolId", nullable = false)
+    @JoinColumn(name = "ticketPoolId")
     private TicketPool ticketPool;
+    @ManyToOne
+    @JoinColumn(name = "vendorId", nullable = false)
+    private Vendor vendor;
+    private String ticketType;
+    private double ticketPrice;
+    private double ticketDiscount;
 
 
     public Ticket() {}
 
-    public Ticket(Event event, TicketPool ticketPool) {
+    public Ticket(Event event, Vendor vendor, String ticketType) {
         this.event = event;
-        this.ticketPool = ticketPool;
+        this.vendor = vendor;
+        this.ticketType = ticketType;
+        this.ticketPrice = getEvent().getEventPrice();
     }
+
 
     public int getTicketId() {
         return ticketId;
@@ -63,6 +70,39 @@ public class Ticket {
 
     public void setTicketPool(TicketPool ticketPool) {
         this.ticketPool = ticketPool;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
+    }
+
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(double ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public double getTicketDiscount() {
+        return ticketDiscount;
+    }
+
+    public void setTicketDiscount(double ticketDiscount) {
+        this.ticketDiscount = ticketDiscount;
+        setTicketPrice(getEvent().getEventPrice() - ((getEvent().getEventPrice() * ticketDiscount))/100);
     }
 }
 

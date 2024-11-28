@@ -54,18 +54,17 @@ public class VendorController implements UserController {
 
     @PostMapping("/allevents")
     public ResponseEntity<Response> allevents(@RequestBody UserCredentials userCredentials) {
-        return eventService.allEvents(userCredentials);
+        return vendorService.allEvents(userCredentials);
     }
 
     @PostMapping("/purchasetickets")
     public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
-        // Ticket request - Objects of vendor, eventID, total tickets
+        // Ticket request - Objects of vendor, event, total tickets
         return vendorService.purchaseTickets(ticketsDetails);
     }
 
     @PostMapping("/addToTicketPool")
     public ResponseEntity<String> addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
-        System.out.println(ticketsDetails.getVendorID());
         // Ticket request - earlyBirdTicket, generalTicket, lastMinuteTicket
        return ticketService.addToTicketPool(ticketsDetails);
     }
