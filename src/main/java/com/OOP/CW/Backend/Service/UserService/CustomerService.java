@@ -3,12 +3,16 @@ package com.OOP.CW.Backend.Service.UserService;
 import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.EventDOT;
+import com.OOP.CW.Backend.Model.TicketPool;
+import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import com.OOP.CW.Backend.Model.Tickets.TicketRequest;
 import com.OOP.CW.Backend.Model.Users.Customer;
 import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Model.Users.Vendor;
 import com.OOP.CW.Backend.Repo.EventRepo;
+import com.OOP.CW.Backend.Repo.TicketPoolRepo;
+import com.OOP.CW.Backend.Repo.TicketRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.CustomerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import com.OOP.CW.Backend.Service.Response;
@@ -27,12 +31,16 @@ public class CustomerService implements UserController {
     private final CustomerRepo customerRepo;
     private final EventRepo eventRepo;
     private final VendorRepo vendorRepo;
+    private final TicketRepo ticketRepo;
+    private final TicketPoolRepo ticketPoolRepo;
 
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, EventRepo eventRepo, VendorRepo vendorRepo) {
+    public CustomerService(CustomerRepo customerRepo, EventRepo eventRepo, VendorRepo vendorRepo, TicketRepo ticketRepo, TicketPoolRepo ticketPoolRepo) {
         this.customerRepo = customerRepo;
         this.eventRepo = eventRepo;
         this.vendorRepo = vendorRepo;
+        this.ticketRepo = ticketRepo;
+        this.ticketPoolRepo = ticketPoolRepo;
     }
 
 
@@ -109,18 +117,36 @@ public class CustomerService implements UserController {
                 Optional<Event> event = eventRepo.findById(ticketRequest.getEventID());
                 if (event.isPresent()) {
                     for (int i = 1; i <= ticketRequest.getEarlyBirdTicket().getNumberOfTickets(); i++) {
-
-                        return new Response(new Object(), "");
+                        // check request number of tickets are in the ticket pool
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"EarlyBirdTicket");
+                        ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().removeTicket(ticket);
+                        ticketPoolRepo.save(ticket.getTicketPool());
+                        ticket.setTicketPool(null);
+                        ticketRepo.save(ticket);
+                        //new Response(ticket, "Ticket purchased successfully");
                     }
                     for (int i = 1; i <= ticketRequest.getGeneralTicket().getNumberOfTickets(); i++) {
-
-                        return new Response(new Object(), "");
+                        // check request number of tickets are in the ticket pool
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"GeneralTicket");
+                        ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().removeTicket(ticket);
+                        ticketPoolRepo.save(ticket.getTicketPool());
+                        ticket.setTicketPool(null);
+                        ticketRepo.save(ticket);
+                        //new Response(ticket, "Ticket purchased successfully");
                     }
                     for (int i = 1; i <= ticketRequest.getLastMinuteTicket().getNumberOfTickets(); i++) {
-
-                        return new Response(new Object(), "");
+                        // check request number of tickets are in the ticket pool
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"LastMinuteTicket");
+                        ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().removeTicket(ticket);
+                        ticketPoolRepo.save(ticket.getTicketPool());
+                        ticket.setTicketPool(null);
+                        ticketRepo.save(ticket);
+                        //new Response(ticket, "Ticket purchased successfully");
                     }
-                    return null;
+                    return new Response(new Ticket(), "Tickets are purchased successfully");
                 }
                 else{
                     return new Response(new Event(), "Event not found");
@@ -131,7 +157,7 @@ public class CustomerService implements UserController {
             }
         }
         else{
-            return new Response(new Vendor(),"Customer not found");
+            return new Response(new Customer(),"Customer not found");
         }
     }
 }

@@ -40,7 +40,7 @@ public class TicketService {
                     // (add tickets to the pool)
                     for (int i = 1; i <= ticketsDetails.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as Early-bird ticket
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndTicketType(ticketsDetails.getVendorID(), "Ticket");
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
                         ticket.setTicketType("EarlyBirdTicket");
                         ticket.setTicketDiscount(ticketsDetails.getEarlyBirdTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());
@@ -51,7 +51,7 @@ public class TicketService {
                     }
                     for (int i = 1; i <= ticketsDetails.getGeneralTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as  general tickets
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndTicketType(ticketsDetails.getVendorID(), "Ticket");
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
                         ticket.setTicketType("GeneralTicket");
                         ticket.setTicketDiscount(ticketsDetails.getGeneralTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());
@@ -61,7 +61,7 @@ public class TicketService {
                     }
                     for (int i = 1; i <= ticketsDetails.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as  LastMinute tickets
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndTicketType(ticketsDetails.getVendorID(), "Ticket");
+                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
                         ticket.setTicketType("LastMinuteTicket");
                         ticket.setTicketDiscount(ticketsDetails.getLastMinuteTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());

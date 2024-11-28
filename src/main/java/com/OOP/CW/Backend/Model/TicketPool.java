@@ -39,10 +39,10 @@ public class TicketPool {
         this.tickets.add(ticket);
         this.totalTickets++;
     }
-    public Boolean removeTicket(Ticket ticket) {
+    public void removeTicket(Ticket ticket) {
         //Customer buying ticket
         this.totalTickets--;
-        return this.tickets.remove(ticket);
+        this.tickets.remove(ticket);
 
     }
 }

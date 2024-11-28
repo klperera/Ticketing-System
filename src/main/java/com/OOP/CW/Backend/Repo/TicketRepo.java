@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TicketRepo extends JpaRepository<Ticket, Integer> {
-    Ticket findFirstTicketByVendor_VendorIdAndTicketType(int vendorId, String ticketType);
+    Ticket findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(int vendorId, int eventID, String ticketType);
+
+    Ticket findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(int vendorId, int eventID, String ticketType);
 }
