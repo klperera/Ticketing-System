@@ -44,6 +44,7 @@ public class TicketService {
                         ticket.setTicketType("EarlyBirdTicket");
                         ticket.setTicketDiscount(ticketsDetails.getEarlyBirdTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);
@@ -55,6 +56,7 @@ public class TicketService {
                         ticket.setTicketType("GeneralTicket");
                         ticket.setTicketDiscount(ticketsDetails.getGeneralTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);
@@ -65,6 +67,7 @@ public class TicketService {
                         ticket.setTicketType("LastMinuteTicket");
                         ticket.setTicketDiscount(ticketsDetails.getLastMinuteTicket().getDiscount());
                         ticket.setTicketPool(event.get().getTicketPool());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);

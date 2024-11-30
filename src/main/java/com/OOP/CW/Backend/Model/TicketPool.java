@@ -19,12 +19,8 @@ public class TicketPool {
     private List<Ticket> tickets = new ArrayList<>();
 
 
-    public TicketPool() {}
-
-    public TicketPool(Event event) {
-        this.event = event;
+    public TicketPool() {
     }
-
 
     public int getTicketPoolId() {
         return ticketPoolId;
@@ -32,6 +28,14 @@ public class TicketPool {
 
     public void setTicketPoolId(int ticketPoolId) {
         this.ticketPoolId = ticketPoolId;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public void addTicket(Ticket ticket) {
@@ -43,6 +47,5 @@ public class TicketPool {
         //Customer buying ticket
         this.totalTickets--;
         this.tickets.remove(ticket);
-
     }
 }

@@ -120,6 +120,7 @@ public class CustomerService implements UserController {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"EarlyBirdTicket");
                         ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().removeTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticket.setTicketPool(null);
@@ -130,6 +131,7 @@ public class CustomerService implements UserController {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"GeneralTicket");
                         ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().removeTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticket.setTicketPool(null);
@@ -140,6 +142,7 @@ public class CustomerService implements UserController {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"LastMinuteTicket");
                         ticket.setCustomer(customer.get());
+                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().removeTicket(ticket);
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticket.setTicketPool(null);
