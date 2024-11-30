@@ -24,29 +24,29 @@ public class CustomerController implements UserController {
 
     @PostMapping("/register")
     @Override
-    public ResponseEntity<String> register(@RequestBody UserCredentials userCredentials) {
+    public Response register(@RequestBody UserCredentials userCredentials) {
         return customerService.register(userCredentials);
     }
     @PostMapping("/login")
     @Override
-    public ResponseEntity<String> login(@RequestBody UserCredentials userCredentials) {
+    public Response login(@RequestBody UserCredentials userCredentials) {
          return customerService.login(userCredentials);
     }
 
     @PostMapping("/changepassword")
     @Override
-    public ResponseEntity<String> changePassword(@RequestBody UserCredentials userCredentials) {
+    public Response changePassword(@RequestBody UserCredentials userCredentials) {
         return customerService.changePassword(userCredentials);
     }
 
     @PostMapping("/deleteaccount")
     @Override
-    public ResponseEntity<String> deleteAccount(@RequestBody UserCredentials userCredentials) {
+    public Response deleteAccount(@RequestBody UserCredentials userCredentials) {
         return customerService.deleteAccount(userCredentials);
     }
 
     @PostMapping("/allevents")
-    public ResponseEntity<Response> allevents(@RequestBody UserCredentials userCredentials) {
+    public Response allevents(@RequestBody UserCredentials userCredentials) {
         return customerService.allEvents(userCredentials);
     }
 

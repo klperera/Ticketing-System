@@ -30,25 +30,25 @@ public class VendorController implements UserController {
 
     @PostMapping("/register")
     @Override
-    public ResponseEntity<String> register(@RequestBody UserCredentials userCredentials) {
+    public Response register(@RequestBody UserCredentials userCredentials) {
         return vendorService.register(userCredentials);
     }
 
     @PostMapping("/login")
     @Override
-    public ResponseEntity<String> login(@RequestBody UserCredentials userCredentials) {
+    public Response login(@RequestBody UserCredentials userCredentials) {
         return vendorService.login(userCredentials);
     }
 
     @PostMapping("/changepassword")
     @Override
-    public ResponseEntity<String> changePassword(@RequestBody UserCredentials userCredentials) {
+    public Response changePassword(@RequestBody UserCredentials userCredentials) {
         return vendorService.changePassword(userCredentials);
     }
 
     @PostMapping("/deleteaccount")
     @Override
-    public ResponseEntity<String> deleteAccount(@RequestBody UserCredentials userCredentials) {
+    public Response deleteAccount(@RequestBody UserCredentials userCredentials) {
         return vendorService.deleteAccount(userCredentials);
     }
 
