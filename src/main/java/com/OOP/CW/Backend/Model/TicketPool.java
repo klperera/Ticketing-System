@@ -15,7 +15,7 @@ public class TicketPool {
     private int totalTickets;
     @OneToOne(mappedBy = "ticketPool", cascade = CascadeType.ALL)
     private Event event;
-    @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> tickets = new ArrayList<>();
 
 

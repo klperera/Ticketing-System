@@ -19,27 +19,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EventService{
+public class EventService implements Runnable{
 
     private final EventRepo eventRepo;
     private final OrganizerRepo organizerRepo;
-    private final VendorRepo vendorRepo;
     private final TicketPoolRepo ticketPoolRepo;
+
+    private Event event;
+    private Response response;
 
     @Autowired
     public EventService(EventRepo eventRepo, OrganizerRepo organizerRepo, VendorRepo vendorRepo, TicketPoolRepo ticketPoolRepo) {
         this.eventRepo = eventRepo;
         this.organizerRepo = organizerRepo;
-        this.vendorRepo = vendorRepo;
         this.ticketPoolRepo = ticketPoolRepo;
     }
 
-    public ResponseEntity<Response> createEvent(Event NewEvent) {
+    @Override
+    public void run() {
+        this.response = createEvent(getEvent());
+    }
+
+    public Response createEvent(Event NewEvent) {
         // check Event is already registered or not (using event name and organizer email)
         Optional<Event> event = eventRepo.findEventByEventName(NewEvent.getEventName());
         if (event.isPresent()) {
             EventDOT eventDOT = new EventDOT(event.get());
-            return ResponseEntity.ok(new Response(eventDOT,"Event is already exists"));
+            return new Response(eventDOT,"Event is already exists");
             //return ResponseEntity.ok("Event is already exists");
             //return ResponseEntity.ok(event.get());
         }
@@ -52,19 +58,30 @@ public class EventService{
                 EventDOT eventDOT = new EventDOT(NewEvent);
                 NewEvent.setOrganizer(organizer.get());
                 eventRepo.save(NewEvent);
-                return ResponseEntity.ok(new Response(eventDOT,"Event has been created"));
+                return new Response(eventDOT,"Event has been created");
                 //return ResponseEntity.ok("Event registered successfully.");
                 //return ResponseEntity.ok(NewEvent);
             }
             else {
-                return ResponseEntity.ok(new Response(new Organizer(),"Organizer does not exist"));
+                return new Response(new Organizer(),"Organizer does not exist");
                 //return ResponseEntity.badRequest().body("Event could not be registered. Organizer not found.");
                 //return ResponseEntity.notFound().build();
             }
-
         }
     }
 
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+    public Event getEvent() {
+        return event;
+    }
 
+    public Response getResponse() {
+        return response;
+    }
 
+    public void setResponse(Response response) {
+        this.response = response;
+    }
 }

@@ -26,13 +26,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CustomerService implements UserController {
+public class CustomerService implements UserController, Runnable {
 
     private final CustomerRepo customerRepo;
     private final EventRepo eventRepo;
     private final VendorRepo vendorRepo;
     private final TicketRepo ticketRepo;
     private final TicketPoolRepo ticketPoolRepo;
+
+    private String method;
+    private UserCredentials userCredentials;
+    private Response response;
+    private TicketRequest ticketRequest;
+
+
 
     @Autowired
     public CustomerService(CustomerRepo customerRepo, EventRepo eventRepo, VendorRepo vendorRepo, TicketRepo ticketRepo, TicketPoolRepo ticketPoolRepo) {
@@ -43,59 +50,84 @@ public class CustomerService implements UserController {
         this.ticketPoolRepo = ticketPoolRepo;
     }
 
+    @Override
+    public void run() {
+        switch (method) {
+            case "register" -> {
+                this.response = register(getUserCredentials());
+            }
+            case "login" -> {
+                this.response = login(getUserCredentials());
+            }
+            case "changePassword" -> {
+                this.response = changePassword(getUserCredentials());
+            }
+            case "deleteAccount" -> {
+                this.response = deleteAccount(getUserCredentials());
+            }
+            case "allEvents" -> {
+                this.response = allEvents(getUserCredentials());
+            }
+            case "buyTickets" -> {
+                this.response = buyTickets(getTicketRequest());
+            }
+            default -> {}
+        }
+    }
 
     @Override
-    public ResponseEntity<String> register(UserCredentials userCredentials) {
+    public Response register(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (customer.isPresent()) {
-            return ResponseEntity.ok("User already exists, please login.");
+            return new Response(new Customer(),"User already exists, please login.");
         }
         else{
-            customerRepo.save(new Customer(userCredentials));
-            return ResponseEntity.ok("User registered successfully.");
+            Customer newCustomer = new Customer(userCredentials);
+            customerRepo.save(newCustomer);
+            return new Response(newCustomer,"User registered successfully.");
         }
 
     }
 
     @Override
-    public ResponseEntity<String> login(UserCredentials userCredentials) {
+    public Response login(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
-            return ResponseEntity.ok("Login successful.");
+            return new Response(customer,"Login successful.");
             //redirect to home page
         } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
-            return ResponseEntity.ok("Incorrect password. Try again.");
+            return new Response(customer.get().getUsercredentials().getEmail(),"Incorrect password. Try again.");
         } else {
-            return ResponseEntity.ok("User not exists, please register first.");
+            return new Response(new Customer(),"User not exists, please register first.");
         }
     }
 
     @Override
-    public ResponseEntity<String> changePassword(UserCredentials userCredentials) {
+    public Response changePassword(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (customer.isPresent()) {
             customer.get().getUsercredentials().setPassword(userCredentials.getPassword());
             customerRepo.save(customer.get());
-            return ResponseEntity.ok("Password changed successfully.");
+            return new Response(customer.get(),"Password changed successfully.");
         }else{
-            return ResponseEntity.ok("User not exists, please try again.");
+            return new Response(new Customer(),"User not exists, please register first.");
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+    public Response deleteAccount(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
             customerRepo.delete(customer.get());
-            return ResponseEntity.ok("Account deleted successfully.");
+            return new Response(new Customer(),"Account deleted successfully.");
         } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
-            return ResponseEntity.ok("Incorrect password. Try again.");
+            return new Response(new Customer(),"Incorrect password. Try again.");
         } else {
-            return ResponseEntity.ok("User not exists, please register first.");
+             return new Response(new Customer(),"User not exists, please register first.");
         }
     }
 
-    public ResponseEntity<Response> allEvents(UserCredentials userCredentials) {
+    public Response allEvents(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_EmailAndUserCredentials_Password(userCredentials.getEmail(), userCredentials.getPassword());
         if (customer.isPresent()) {
             List<Event> events = eventRepo.findAll();
@@ -103,9 +135,9 @@ public class CustomerService implements UserController {
             for (Event event : events) {
                 eventDOTS.add(new EventDOT(event));
             }
-            return ResponseEntity.ok(new Response(eventDOTS,"All events have been found"));
+            return new Response(eventDOTS,"All events have been found.");
         }else{
-            return ResponseEntity.ok(new Response(new Vendor(),"incorrect Customer details"));
+            return new Response(new Customer(), "User not exists, please try again");
         }
     }
 
@@ -116,40 +148,51 @@ public class CustomerService implements UserController {
             if (vendor.isPresent()) {
                 Optional<Event> event = eventRepo.findById(ticketRequest.getEventID());
                 if (event.isPresent()) {
+                    List<Ticket> ticketList = new ArrayList<>();
                     for (int i = 1; i <= ticketRequest.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"EarlyBirdTicket");
-                        ticket.setCustomer(customer.get());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().removeTicket(ticket);
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticket.setTicketPool(null);
-                        ticketRepo.save(ticket);
-                        //new Response(ticket, "Ticket purchased successfully");
+                        if (ticket != null) {
+                            ticket.setCustomer(customer.get());
+                            ticketList.add(ticket);
+                            //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().removeTicket(ticket);
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticket.setTicketPool(null);
+                            ticketRepo.save(ticket);
+                            //new Response(ticket, "Ticket purchased successfully");
+                        }
                     }
                     for (int i = 1; i <= ticketRequest.getGeneralTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"GeneralTicket");
-                        ticket.setCustomer(customer.get());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().removeTicket(ticket);
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticket.setTicketPool(null);
-                        ticketRepo.save(ticket);
-                        //new Response(ticket, "Ticket purchased successfully");
+                        if (ticket != null) {
+                            ticket.setCustomer(customer.get());
+                            ticketList.add(ticket);
+                            //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().removeTicket(ticket);
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticket.setTicketPool(null);
+                            ticketRepo.save(ticket);
+                            //new Response(ticket, "Ticket purchased successfully");
+                        }
+
                     }
                     for (int i = 1; i <= ticketRequest.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"LastMinuteTicket");
-                        ticket.setCustomer(customer.get());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().removeTicket(ticket);
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticket.setTicketPool(null);
-                        ticketRepo.save(ticket);
-                        //new Response(ticket, "Ticket purchased successfully");
+                        if (ticket != null) {
+                            ticket.setCustomer(customer.get());
+                            ticketList.add(ticket);
+                            // ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().removeTicket(ticket);
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticket.setTicketPool(null);
+                            ticketRepo.save(ticket);
+                            //new Response(ticket, "Ticket purchased successfully");
+                        }
                     }
-                    return new Response(new Ticket(), "Tickets are purchased successfully");
+                    return new Response(ticketList, "Tickets are purchased successfully");
                 }
                 else{
                     return new Response(new Event(), "Event not found");
@@ -162,5 +205,37 @@ public class CustomerService implements UserController {
         else{
             return new Response(new Customer(),"Customer not found");
         }
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
+    }
+
+    public Response getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+
+    public TicketRequest getTicketRequest() {
+        return ticketRequest;
+    }
+
+    public void setTicketRequest(TicketRequest ticketRequest) {
+        this.ticketRequest = ticketRequest;
     }
 }

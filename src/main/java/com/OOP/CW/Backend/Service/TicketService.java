@@ -10,16 +10,20 @@ import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
 @Service
-public class TicketService {
+public class TicketService implements Runnable {
 
     private final TicketRepo ticketRepo;
     private final VendorRepo vendorRepo;
     private final EventRepo eventRepo;
     private final TicketPoolRepo ticketPoolRepo;
+
+    private ResponseEntity<String> responseEntity;
+    private TicketRequest ticketRequest;
 
     @Autowired
     public TicketService(TicketRepo ticketRepo , VendorRepo vendorRepo, EventRepo eventRepo, TicketPoolRepo ticketPoolRepo) {
@@ -27,6 +31,11 @@ public class TicketService {
         this.vendorRepo = vendorRepo;
         this.eventRepo = eventRepo;
         this.ticketPoolRepo = ticketPoolRepo;
+    }
+
+    @Override
+    public void run() {
+        this.responseEntity = addToTicketPool(getTicketRequest());
     }
 
     public ResponseEntity<String> addToTicketPool(TicketRequest ticketsDetails) {
@@ -84,5 +93,21 @@ public class TicketService {
         } else {
             return ResponseEntity.ok("vendor not found");
         }
+    }
+
+    public ResponseEntity<String> getResponseEntity() {
+        return responseEntity;
+    }
+
+    public void setResponseEntity(ResponseEntity<String> responseEntity) {
+        this.responseEntity = responseEntity;
+    }
+
+    public TicketRequest getTicketRequest() {
+        return ticketRequest;
+    }
+
+    public void setTicketRequest(TicketRequest ticketRequest) {
+        this.ticketRequest = ticketRequest;
     }
 }

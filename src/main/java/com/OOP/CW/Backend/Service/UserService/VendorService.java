@@ -4,12 +4,10 @@ import com.OOP.CW.Backend.Controller.UsersComtroller.UserController;
 import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.EventDOT;
 import com.OOP.CW.Backend.Model.Tickets.*;
-import com.OOP.CW.Backend.Model.Users.Organizer;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Model.Users.Vendor;
 import com.OOP.CW.Backend.Repo.EventRepo;
 import com.OOP.CW.Backend.Repo.TicketRepo;
-import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import com.OOP.CW.Backend.Service.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class VendorService implements UserController {
+public class VendorService implements UserController, Runnable {
 
     private final VendorRepo vendorRepo;
     private final EventRepo eventRepo;
     private final TicketRepo ticketRepo;
+
+    private String method;
+    private UserCredentials userCredentials;
+    private Response response;
+    private ResponseEntity<String> responseEntity;
+    private TicketRequest ticketRequest;
 
     @Autowired
     public VendorService(VendorRepo vendorRepo, EventRepo eventRepo, TicketRepo ticketRepo) {
@@ -34,58 +38,83 @@ public class VendorService implements UserController {
         this.ticketRepo = ticketRepo;
     }
 
+    @Override
+    public void run() {
+        switch (method) {
+            case "register" -> {
+                this.response = register(getUserCredentials());
+            }
+            case "login" -> {
+                this.response = login(getUserCredentials());
+            }
+            case "changePassword" -> {
+                this.response = changePassword(getUserCredentials());
+            }
+            case "deleteAccount" -> {
+                this.response = deleteAccount(getUserCredentials());
+            }
+            case "allEvents" -> {
+                this.response = allEvents(getUserCredentials());
+            }
+            case "purchasetickets" -> {
+                this.responseEntity = purchaseTickets(getTicketRequest());
+            }
+            default -> {}
+        }
+    }
 
     @Override
-    public ResponseEntity<String> register(UserCredentials userCredentials) {
+    public Response register(UserCredentials userCredentials) {
         Optional<Vendor> vendor = vendorRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (vendor.isPresent()) {
-            return ResponseEntity.ok("User already exists, please login.");
+            return new Response(new Vendor(),"User already exists, please login.");
         }
         else{
-            vendorRepo.save(new Vendor(userCredentials));
-            return ResponseEntity.ok("User registered successfully.");
+            Vendor newVendor = new Vendor(userCredentials);
+            vendorRepo.save(newVendor);
+            return new Response(newVendor,"User registered successfully.");
         }
     }
 
     @Override
-    public ResponseEntity<String> login(UserCredentials userCredentials) {
+    public Response login(UserCredentials userCredentials) {
         Optional<Vendor> vendor = vendorRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if(vendor.isPresent() && vendor.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
-            return ResponseEntity.ok("Login successful.");
+            return new Response(vendor.get(),"Login successful.");
             //redirect to home page
         } else if (vendor.isPresent() && !(vendor.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
-            return ResponseEntity.ok("Incorrect password. Try again.");
+            return new Response(vendor.get().getUserCredentials().getEmail(),"Incorrect password. Try again.");
         } else {
-            return ResponseEntity.ok("User not exists, please register first.");
+            return new Response(new Vendor(),"User not exists, please register first.");
         }
     }
 
     @Override
-    public ResponseEntity<String> changePassword(UserCredentials userCredentials) {
+    public Response changePassword(UserCredentials userCredentials) {
         Optional<Vendor> vendor = vendorRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (vendor.isPresent()) {
             vendor.get().getUserCredentials().setPassword(userCredentials.getPassword());
             vendorRepo.save(vendor.get());
-            return ResponseEntity.ok("Password changed successfully.");
+            return new Response(vendor.get(),"Password changed successfully.");
         }else{
-            return ResponseEntity.ok("User not exists, please try again.");
+            return new Response(new Vendor(),"User not exists, please register first.");
         }
     }
 
     @Override
-    public ResponseEntity<String> deleteAccount(UserCredentials userCredentials) {
+    public Response deleteAccount(UserCredentials userCredentials) {
         Optional<Vendor> vendor = vendorRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if(vendor.isPresent() && vendor.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
             vendorRepo.delete(vendor.get());
-            return ResponseEntity.ok("Account deleted successfully.");
+            return new Response(new Vendor(),"Account deleted successfully.");
         } else if (vendor.isPresent() && !(vendor.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
-            return ResponseEntity.ok("Incorrect password. Try again.");
+            return new Response(new Vendor(),"Incorrect password. Try again.");
         } else {
-            return ResponseEntity.ok("User not exists, please register first.");
+            return new Response(new Vendor(),"User not exists, please register first.");
         }
     }
 
-    public ResponseEntity<Response> allEvents(UserCredentials userCredentials) {
+    public Response allEvents(UserCredentials userCredentials) {
         Optional<Vendor> vendor = vendorRepo.findByUserCredentials_EmailAndUserCredentials_Password(userCredentials.getEmail(), userCredentials.getPassword());
         if (vendor.isPresent()) {
             List<Event> events = eventRepo.findAll();
@@ -93,9 +122,9 @@ public class VendorService implements UserController {
             for (Event event : events) {
                 eventDOTS.add(new EventDOT(event));
             }
-            return ResponseEntity.ok(new Response(eventDOTS,"All events have been found"));
+            return new Response(eventDOTS,"All events have been found");
         }else{
-            return ResponseEntity.ok(new Response(new Vendor(),"incorrect vendor details"));
+            return new Response(new Vendor(),"incorrect vendor details");
         }
     }
     // take vendor logins, event details and number of tickets for each types
@@ -139,4 +168,43 @@ public class VendorService implements UserController {
         }
     }
 
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
+    }
+
+    public Response getResponse() {
+        return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
+    }
+
+    public TicketRequest getTicketRequest() {
+        return ticketRequest;
+    }
+
+    public void setTicketRequest(TicketRequest ticketRequest) {
+        this.ticketRequest = ticketRequest;
+    }
+
+    public ResponseEntity<String> getResponseEntity() {
+        return responseEntity;
+    }
+
+    public void setResponseEntity(ResponseEntity<String> responseEntity) {
+        this.responseEntity = responseEntity;
+    }
 }
