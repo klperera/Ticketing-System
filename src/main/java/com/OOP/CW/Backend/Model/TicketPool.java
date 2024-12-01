@@ -2,8 +2,10 @@ package com.OOP.CW.Backend.Model;
 
 import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
+import org.hibernate.mapping.Collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ public class TicketPool {
     @OneToOne(mappedBy = "ticketPool", cascade = CascadeType.ALL)
     private Event event;
     @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Ticket> tickets = new ArrayList<>();
+    private List<Ticket> tickets = Collections.synchronizedList(new ArrayList<>());
 
 
     public TicketPool() {
@@ -38,12 +40,12 @@ public class TicketPool {
         this.tickets = tickets;
     }
 
-    public void addTicket(Ticket ticket) {
+    public synchronized void addTicket(Ticket ticket) {
         //vendor add tickets
         this.tickets.add(ticket);
         this.totalTickets++;
     }
-    public void removeTicket(Ticket ticket) {
+    public synchronized void removeTicket(Ticket ticket) {
         //Customer buying ticket
         this.totalTickets--;
         this.tickets.remove(ticket);
