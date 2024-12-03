@@ -1,7 +1,5 @@
 package com.OOP.CW.CLI.Event;
 
-
-
 import com.OOP.CW.CLI.Ticket.Ticket;
 
 import java.util.List;

@@ -1,18 +1,12 @@
 package com.OOP.CW.CLI.Ticket;
 
 
-import com.OOP.CW.CLI.Event.Event;
-
-public abstract class Ticket {
+public class Ticket {
 
     private int ticketId;
     private double price;
-    private Event event;
 
-    public Ticket(int ticketId, double price, Event event) {
-        this.ticketId = ticketId;
-        this.price = price;
-        this.event = event;
+    public Ticket() {
     }
 
     public int getTicketId() {
@@ -31,14 +25,4 @@ public abstract class Ticket {
         this.price = price;
     }
 
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    abstract String getTicketType();
-    abstract double getTicketPrice();
 }

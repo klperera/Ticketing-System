@@ -1,21 +1,28 @@
 package com.OOP.CW.CLI.Users;
 
-public class Customer {
-    private int customerID;
-    private UserCredentials userCredentials;
+public class Customer implements Runnable {
 
-    public Customer() {}
+    private int numberOfTickets = 0;
+    private double ticketReleaseRate = 0;
 
-    public Customer(String email, String username, String password) {
-        this.userCredentials = new UserCredentials(email, username, password);
+    public int getNumberOfTickets() {
+        return numberOfTickets;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
     }
 
-    public UserCredentials getUsercredentials() {
-        return userCredentials;
+    public double getTicketReleaseRate() {
+        return ticketReleaseRate;
     }
 
+    public void setTicketReleaseRate(double ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
+    }
+
+    @Override
+    public void run() {
+
+    }
 }
