@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TicketSystemCLI {
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("""
               
@@ -21,7 +21,8 @@ public class TicketSystemCLI {
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
         while (true) {
-            List<Ticket> ticketPool = Collections.synchronizedList(new ArrayList<>());
+            //List<Ticket> ticketPool = Collections.synchronizedList(new ArrayList<>());
+
             int maxCapacity = 0;
             int totalNumberOfTickets = 0;
             System.out.println("Enter 'start' or 'exit' :");
@@ -35,18 +36,22 @@ public class TicketSystemCLI {
                 System.out.println("Enter number of Customers to simulate :");
                 int customerNum = scanner.nextInt();
 
-                for (int i = 0; i < vendorNum; i++) {
-                    System.out.println("Enter number of tickets to simulate :");
+                for (int i = 1; i <= vendorNum; i++) {
+                    System.out.println("Vendor " + i + " - Enter number of tickets to release :");
                     int numTickets = scanner.nextInt();
-                    System.out.println("Enter tickets release rate :");
-                    double releaseRate = scanner.nextInt();
-                    Runnable runnable = new Vendor(numTickets,releaseRate);
+                    System.out.println("Vendor " + i + " - Enter number of tickets to release :");
+                    int releaseRate = scanner.nextInt();
+                    Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool);
                     Thread thread = new Thread(runnable);
                     thread.start();
                 }
 
-                for (int i = 0; i < customerNum; i++) {
-                    Runnable runnable = new Customer();
+                for (int i = 1; i <= customerNum; i++) {
+                    System.out.println("Customer "+ i +" - Enter number of tickets you buy :");
+                    int numTickets = scanner.nextInt();
+                    System.out.println("Enter"+" Customer" + i + " retrieval Rate :");
+                    int retrievalRate = scanner.nextInt();
+                    Runnable runnable = new Customer(numTickets,retrievalRate, ticketPool);
                     Thread thread = new Thread(runnable);
                     thread.start();
                 }
