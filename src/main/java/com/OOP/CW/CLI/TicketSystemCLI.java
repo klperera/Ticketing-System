@@ -1,5 +1,6 @@
 package com.OOP.CW.CLI;
 
+import com.OOP.CW.CLI.Event.TicketPool;
 import com.OOP.CW.CLI.Ticket.Ticket;
 import com.OOP.CW.CLI.Users.Customer;
 import com.OOP.CW.CLI.Users.Vendor;
@@ -10,19 +11,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TicketSystemCLI {
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
+
         System.out.println("""
-              
                 =========================================================================================================
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
         while (true) {
-            //List<Ticket> ticketPool = Collections.synchronizedList(new ArrayList<>());
-
+            TicketPool ticketPool = new TicketPool();
             int maxCapacity = 0;
             int totalNumberOfTickets = 0;
             System.out.println("Enter 'start' or 'exit' :");
@@ -37,9 +36,9 @@ public class TicketSystemCLI {
                 int customerNum = scanner.nextInt();
 
                 for (int i = 1; i <= vendorNum; i++) {
-                    System.out.println("Vendor " + i + " - Enter number of tickets to release :");
+                    System.out.println("Vendor " + i +  " Enter number of tickets to simulate :");
                     int numTickets = scanner.nextInt();
-                    System.out.println("Vendor " + i + " - Enter number of tickets to release :");
+                    System.out.println("Vendor "+ i + " Enter tickets releaseRate :");
                     int releaseRate = scanner.nextInt();
                     Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool);
                     Thread thread = new Thread(runnable);
@@ -47,15 +46,16 @@ public class TicketSystemCLI {
                 }
 
                 for (int i = 1; i <= customerNum; i++) {
-                    System.out.println("Customer "+ i +" - Enter number of tickets you buy :");
-                    int numTickets = scanner.nextInt();
-                    System.out.println("Enter"+" Customer" + i + " retrieval Rate :");
+                    System.out.println("Customer " + i +  " Enter number of tickets you buy :");
+                    int buyTickets = scanner.nextInt();
+                    System.out.println("Customer "+ i + " Enter Customer RetrievalRate :");
                     int retrievalRate = scanner.nextInt();
-                    Runnable runnable = new Customer(numTickets,retrievalRate, ticketPool);
+                    Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
                     Thread thread = new Thread(runnable);
                     thread.start();
                 }
-            } else if (entry.equalsIgnoreCase("exit")) {
+            }
+            else if (entry.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting...");
                 System.exit(0);
             }
