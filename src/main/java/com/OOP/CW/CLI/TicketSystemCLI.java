@@ -36,9 +36,9 @@ public class TicketSystemCLI {
                 int customerNum = scanner.nextInt();
 
                 for (int i = 1; i <= vendorNum; i++) {
-                    System.out.println("Vendor " + i +  " Enter number of tickets to simulate :");
+                    System.out.println("Vendor " + i +  " - Enter number of tickets to simulate :");
                     int numTickets = scanner.nextInt();
-                    System.out.println("Vendor "+ i + " Enter tickets releaseRate :");
+                    System.out.println("Vendor "+ i + " - Enter tickets releaseRate :");
                     int releaseRate = scanner.nextInt();
                     Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool);
                     Thread thread = new Thread(runnable);
@@ -46,9 +46,9 @@ public class TicketSystemCLI {
                 }
 
                 for (int i = 1; i <= customerNum; i++) {
-                    System.out.println("Customer " + i +  " Enter number of tickets you buy :");
+                    System.out.println("Customer " + i +  " - Enter number of tickets you buy :");
                     int buyTickets = scanner.nextInt();
-                    System.out.println("Customer "+ i + " Enter Customer RetrievalRate :");
+                    System.out.println("Customer "+ i + " - Enter Customer RetrievalRate :");
                     int retrievalRate = scanner.nextInt();
                     Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
                     Thread thread = new Thread(runnable);
