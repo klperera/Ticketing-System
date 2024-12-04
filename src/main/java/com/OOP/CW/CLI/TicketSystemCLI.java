@@ -1,26 +1,24 @@
 package com.OOP.CW.CLI;
 
 import com.OOP.CW.CLI.Event.TicketPool;
-import com.OOP.CW.CLI.Ticket.Ticket;
 import com.OOP.CW.CLI.Users.Customer;
 import com.OOP.CW.CLI.Users.Vendor;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class TicketSystemCLI {
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-
-
         System.out.println("""
                 =========================================================================================================
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
         while (true) {
+            ArrayList<Thread> vendorThreads = new ArrayList<>();
+            ArrayList<Thread> CustomerThreads = new ArrayList<>();
             TicketPool ticketPool = new TicketPool();
             int maxCapacity = 0;
             int totalNumberOfTickets = 0;
@@ -42,7 +40,9 @@ public class TicketSystemCLI {
                     int releaseRate = scanner.nextInt();
                     Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool);
                     Thread thread = new Thread(runnable);
+                    vendorThreads.add(thread);
                     thread.start();
+
                 }
 
                 for (int i = 1; i <= customerNum; i++) {
@@ -52,8 +52,18 @@ public class TicketSystemCLI {
                     int retrievalRate = scanner.nextInt();
                     Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
                     Thread thread = new Thread(runnable);
+                    CustomerThreads.add(thread);
                     thread.start();
+
                 }
+                try {
+                    for (Thread thread : vendorThreads) {
+                        thread.join();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
             }
             else if (entry.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting...");
