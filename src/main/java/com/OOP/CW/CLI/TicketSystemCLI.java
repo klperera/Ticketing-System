@@ -1,47 +1,86 @@
 package com.OOP.CW.CLI;
 
-import java.util.InputMismatchException;
+import com.OOP.CW.CLI.Event.TicketPool;
+import com.OOP.CW.CLI.Users.Customer;
+import com.OOP.CW.CLI.Users.Vendor;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TicketSystemCLI {
 
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         System.out.println("""
-                
                 =========================================================================================================
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
-        SimulateDetails();
-        //createEvent();
+        while (true) {
+            ArrayList<Thread> vendorThreads = new ArrayList<>();
+            ArrayList<Thread> CustomerThreads = new ArrayList<>();
+            TicketPool ticketPool = new TicketPool();
+            int maxCapacity = 0;
+            int totalNumberOfTickets = 0;
+            System.out.println("Enter 'start' or 'exit' :");
+            String entry = scanner.nextLine();
+            if (entry.equalsIgnoreCase("start")) {
+                System.out.println("Enter System configurations..");
+                System.out.println("Enter Max Capacity :");
+                maxCapacity = scanner.nextInt();
+                System.out.println("Enter number of Vendors to simulate :");
+                int vendorNum = scanner.nextInt();
+                System.out.println("Enter number of Customers to simulate :");
+                int customerNum = scanner.nextInt();
 
-
-
-    }
-
-    public static void SimulateDetails() {
-        Scanner scanner = new Scanner(System.in);
-
-        int numOrganizers = 0;
-        int numVendors = 0;
-        int numCustomers = 0;
-        try{
-            System.out.println("Number of Organizers to Simulate : ");
-            numOrganizers = scanner.nextInt();
-            System.out.println("Number of Vendors to Simulate : ");
-            numVendors = scanner.nextInt();
-            System.out.println("Number of Customers to Simulate : ");
-            numCustomers = scanner.nextInt();
-        }catch (InputMismatchException e){
-            System.out.println("Please enter a valid number");
+                for (int i = 1; i <= vendorNum; i++) {
+                    System.out.println("Vendor " + i +  " - Enter number of tickets to simulate :");
+                    int numTickets = scanner.nextInt();
+                    System.out.println("Vendor "+ i + " - Enter tickets releaseRate :");
+                    int releaseRate = scanner.nextInt();
+                    Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool, maxCapacity);
+                    Thread thread = new Thread(runnable);
+                    vendorThreads.add(thread);
+                    thread.setName("Vendor " + i);
+                    //thread.start();
+                }
+                for (int i = 1; i <= customerNum; i++) {
+                    System.out.println("Customer " + i +  " - Enter number of tickets you buy :");
+                    int buyTickets = scanner.nextInt();
+                    System.out.println("Customer "+ i + " - Enter Customer RetrievalRate :");
+                    int retrievalRate = scanner.nextInt();
+                    Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
+                    Thread thread = new Thread(runnable);
+                    CustomerThreads.add(thread);
+                    thread.setName("Customer " + i);
+                    //thread.start();
+                }
+//                for (Thread thread : vendorThreads) {
+//                    thread.start();
+//                }
+//                for (Thread thread : CustomerThreads) {
+//                    thread.start();
+//                }
+                try {
+                    for (Thread thread : vendorThreads) {
+                        thread.start();
+                        thread.join();
+                    }
+                    for (Thread thread : CustomerThreads) {
+                        thread.start();
+                        thread.join();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else if (entry.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting...");
+                System.exit(0);
+            }
+            else {
+                System.out.println("Invalid entry. Please try again.");
+            }
         }
-        System.out.println(numOrganizers + " Organizers ");
-        System.out.println(numVendors + " Vendors ");
-        System.out.println(numCustomers + " Customers ");
     }
-
-    public static void createEvent(int numOrganizers){
-
-    }
-
 }

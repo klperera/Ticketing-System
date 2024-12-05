@@ -46,12 +46,4 @@ public class Configuration {
         this.customerRetrievalRate = customerRetrievalRate;
     }
 
-    public void saveConfig(){
-        // need to implement
-    }
-
-    public void loadConfig(){
-        // need to implement
-    }
-
 }

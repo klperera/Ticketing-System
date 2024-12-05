@@ -1,22 +1,69 @@
 package com.OOP.CW.CLI.Users;
 
-public class Vendor {
+import com.OOP.CW.CLI.Event.TicketPool;
+import com.OOP.CW.CLI.Ticket.Ticket;
 
-    private int vendorId;
-    private UserCredentials userCredentials;
+import java.util.List;
 
-    public Vendor() {}
+public class Vendor implements Runnable {
 
-    public Vendor(String email, String username, String password) {
-        this.userCredentials = new UserCredentials(email, username, password);
+    private int numberOfTickets;
+    private int ticketReleaseRate;
+    private TicketPool ticketPool;
+    private int maxCapacity;
+
+    public Vendor(int numberOfTickets, int ticketReleaseRate, TicketPool ticketPool, int maxCapacity) {
+        this.numberOfTickets = numberOfTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
+        this.ticketPool = ticketPool;
+        this.maxCapacity = maxCapacity;
     }
 
-    public int getVendorId() {
-        return vendorId;
+    public int getTicketReleaseRate() {
+        return ticketReleaseRate;
     }
 
-    public UserCredentials getUserCredentials() {
-        return userCredentials;
+    public void setTicketReleaseRate(int ticketReleaseRate) {
+        this.ticketReleaseRate = ticketReleaseRate;
     }
+
+    public int getNumberOfTickets() {
+        return numberOfTickets;
+    }
+
+    public void setNumberOfTickets(int numberOfTickets) {
+        this.numberOfTickets = numberOfTickets;
+    }
+
+    public TicketPool getTicketPool() {
+        return ticketPool;
+    }
+
+    public void setTicketPool(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < getNumberOfTickets() & TicketPool.getTotalTickets() < getMaxCapacity() ; i++) {
+            Ticket ticket = new Ticket();
+            ticketPool.addTicket(ticket);
+            System.out.println(Thread.currentThread().getName() + " added a ticket to the TicketPool");
+            try {
+                Thread.sleep(getTicketReleaseRate());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
 }
