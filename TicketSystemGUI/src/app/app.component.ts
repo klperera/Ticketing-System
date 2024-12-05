@@ -7,7 +7,6 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {HomeComponent} from './home/home.component';
 import {MainComponent} from './main/main.component';
 import{UserControlComponent} from './user-control/user-control.component';
-import { NgZone } from '@angular/core';
 import { VendorPageComponent } from './vendor-page/vendor-page.component';
 import { CustomerPageComponent } from './customer-page/customer-page.component';
 

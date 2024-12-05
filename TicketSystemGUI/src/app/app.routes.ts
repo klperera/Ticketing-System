@@ -6,7 +6,6 @@ import {ConfigureComponent} from './configure/configure.component'
 import { UserControlComponent } from './user-control/user-control.component';
 import { VendorPageComponent } from './vendor-page/vendor-page.component';
 import { CustomerPageComponent } from './customer-page/customer-page.component';
-import { NgModule } from '@angular/core';
 
 
 export const routes: Routes = [
