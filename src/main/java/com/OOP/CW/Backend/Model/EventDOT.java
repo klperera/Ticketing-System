@@ -16,7 +16,6 @@ public class EventDOT {
     private String eventLocation;
     private double eventPrice;
     private String organizerEmail;
-    private TicketPool ticketPool;
     private Configuration configuration;
 
 
@@ -28,7 +27,6 @@ public class EventDOT {
         this.eventLocation = event.getEventLocation();
         this.eventPrice = event.getEventPrice();
         this.organizerEmail = event.getOrganizer().getUserCredentials().getEmail();
-        this.ticketPool = event.getTicketPool();
         this.configuration = event.getConfiguration();
     }
 
@@ -88,13 +86,6 @@ public class EventDOT {
         this.organizerEmail = organizerEmail;
     }
 
-    public TicketPool getTicketPool() {
-        return ticketPool;
-    }
-
-    public void setTicketPool(TicketPool ticketPool) {
-        this.ticketPool = ticketPool;
-    }
 
     public Configuration getConfiguration() {
         return configuration;

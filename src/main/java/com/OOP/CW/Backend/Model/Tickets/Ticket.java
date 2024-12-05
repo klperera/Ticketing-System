@@ -68,10 +68,10 @@ public class Ticket {
         return ticketPool;
     }
 
+
     public void setTicketPool(TicketPool ticketPool) {
         this.ticketPool = ticketPool;
     }
-
     public Vendor getVendor() {
         return vendor;
     }

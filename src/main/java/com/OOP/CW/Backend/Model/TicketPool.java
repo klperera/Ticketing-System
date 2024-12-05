@@ -2,8 +2,10 @@ package com.OOP.CW.Backend.Model;
 
 import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
+import org.hibernate.mapping.Collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -15,16 +17,12 @@ public class TicketPool {
     private int totalTickets;
     @OneToOne(mappedBy = "ticketPool", cascade = CascadeType.ALL)
     private Event event;
-    @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticket> tickets = new ArrayList<>();
+    @OneToMany(mappedBy = "ticketPool", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Ticket> tickets = Collections.synchronizedList(new ArrayList<>());
 
 
-    public TicketPool() {}
-
-    public TicketPool(Event event) {
-        this.event = event;
+    public TicketPool() {
     }
-
 
     public int getTicketPoolId() {
         return ticketPoolId;
@@ -34,15 +32,22 @@ public class TicketPool {
         this.ticketPoolId = ticketPoolId;
     }
 
-    public void addTicket(Ticket ticket) {
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public synchronized void addTicket(Ticket ticket) {
         //vendor add tickets
         this.tickets.add(ticket);
         this.totalTickets++;
     }
-    public Boolean removeTicket(Ticket ticket) {
+    public synchronized void removeTicket(Ticket ticket) {
         //Customer buying ticket
         this.totalTickets--;
-        return this.tickets.remove(ticket);
-
+        this.tickets.remove(ticket);
     }
 }

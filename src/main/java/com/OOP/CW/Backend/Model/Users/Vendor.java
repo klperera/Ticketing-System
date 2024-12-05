@@ -31,7 +31,7 @@ public class Vendor {
     }
 
     public void setPurchasedTickets(int purchasedTickets) {
-        this.purchasedTickets += purchasedTickets;
+        this.purchasedTickets = purchasedTickets;
     }
 
     public int getPurchasedTickets() {
