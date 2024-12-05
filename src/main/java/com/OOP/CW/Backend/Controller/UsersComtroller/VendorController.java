@@ -1,13 +1,11 @@
 package com.OOP.CW.Backend.Controller.UsersComtroller;
 
-import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.Tickets.TicketRequest;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import com.OOP.CW.Backend.Repo.EventRepo;
 import com.OOP.CW.Backend.Repo.TicketPoolRepo;
 import com.OOP.CW.Backend.Repo.TicketRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
-import com.OOP.CW.Backend.Service.EventService;
 import com.OOP.CW.Backend.Service.Response;
 import com.OOP.CW.Backend.Service.TicketService;
 import com.OOP.CW.Backend.Service.UserService.VendorService;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 @RestController
 @RequestMapping("/ticketsystem/vendor")

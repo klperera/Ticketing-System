@@ -1,8 +1,6 @@
 package com.OOP.CW.Backend.Model.Tickets;
 
 
-
-
 public class EarlyBirdTicket {
 
     private int numberOfTickets;
