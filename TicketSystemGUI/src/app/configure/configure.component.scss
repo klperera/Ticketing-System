@@ -1,0 +1,45 @@
+.config-inputs {
+    margin-top: 20px;
+  
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+  
+      label {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      
+        
+      }
+  
+      input {
+        width: 100%;
+        padding: 12px;
+        max-width: 400px; /* Limits the maximum width */
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+  
+    .submit-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+  
