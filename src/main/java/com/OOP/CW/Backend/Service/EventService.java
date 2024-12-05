@@ -4,18 +4,13 @@ import com.OOP.CW.Backend.Model.Event;
 import com.OOP.CW.Backend.Model.EventDOT;
 import com.OOP.CW.Backend.Model.TicketPool;
 import com.OOP.CW.Backend.Model.Users.Organizer;
-import com.OOP.CW.Backend.Model.Users.UserCredentials;
-import com.OOP.CW.Backend.Model.Users.Vendor;
 import com.OOP.CW.Backend.Repo.EventRepo;
 import com.OOP.CW.Backend.Repo.TicketPoolRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.OrganizerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

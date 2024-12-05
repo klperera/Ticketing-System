@@ -1,6 +1,5 @@
 package com.OOP.CW.Backend.Model.Users;
 
-import com.OOP.CW.Backend.Model.Event;
 import jakarta.persistence.*;
 
 import java.util.List;

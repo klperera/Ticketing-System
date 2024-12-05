@@ -2,7 +2,6 @@ package com.OOP.CW.Backend.Model;
 
 import com.OOP.CW.Backend.Model.Tickets.Ticket;
 import jakarta.persistence.*;
-import org.hibernate.mapping.Collection;
 
 import java.util.ArrayList;
 import java.util.Collections;

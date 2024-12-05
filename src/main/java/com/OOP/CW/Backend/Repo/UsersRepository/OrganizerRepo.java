@@ -1,7 +1,6 @@
 package com.OOP.CW.Backend.Repo.UsersRepository;
 
 import com.OOP.CW.Backend.Model.Users.Organizer;
-import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
