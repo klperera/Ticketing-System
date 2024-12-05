@@ -7,14 +7,16 @@ import java.util.List;
 
 public class Vendor implements Runnable {
 
-    private int numberOfTickets = 0;
-    private int ticketReleaseRate = 0;
+    private int numberOfTickets;
+    private int ticketReleaseRate;
     private TicketPool ticketPool;
+    private int maxCapacity;
 
-    public Vendor(int numberOfTickets, int ticketReleaseRate, TicketPool ticketPool) {
+    public Vendor(int numberOfTickets, int ticketReleaseRate, TicketPool ticketPool, int maxCapacity) {
         this.numberOfTickets = numberOfTickets;
         this.ticketReleaseRate = ticketReleaseRate;
         this.ticketPool = ticketPool;
+        this.maxCapacity = maxCapacity;
     }
 
     public int getTicketReleaseRate() {
@@ -41,12 +43,20 @@ public class Vendor implements Runnable {
         this.ticketPool = ticketPool;
     }
 
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
     @Override
     public void run() {
-        for (int i = 0; i < getNumberOfTickets(); i++) {
+        for (int i = 0; i < getNumberOfTickets() & TicketPool.getTotalTickets() < getMaxCapacity() ; i++) {
             Ticket ticket = new Ticket();
             ticketPool.addTicket(ticket);
-            System.out.println("Ticket Added to TicketPool");
+            System.out.println(Thread.currentThread().getName() + " added a ticket to the TicketPool");
             try {
                 Thread.sleep(getTicketReleaseRate());
             } catch (InterruptedException e) {

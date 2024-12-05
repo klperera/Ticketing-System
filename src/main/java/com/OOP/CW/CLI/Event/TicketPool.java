@@ -10,6 +10,7 @@ import java.util.List;
 public class TicketPool {
 
     private static List<Ticket> tickets = Collections.synchronizedList(new ArrayList<Ticket>());
+    private static int totalTickets;
 
 
     public TicketPool() {}
@@ -22,11 +23,21 @@ public class TicketPool {
         TicketPool.tickets = tickets;
     }
 
-    public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
+    public static int getTotalTickets() {
+        return totalTickets;
     }
 
-    public void removeTicket() {
+    public static void setTotalTickets(int totalTickets) {
+        TicketPool.totalTickets = totalTickets;
+    }
+
+    public synchronized void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+        totalTickets++;
+    }
+
+    public synchronized void removeTicket() {
         tickets.removeFirst();
+        totalTickets--;
     }
 }

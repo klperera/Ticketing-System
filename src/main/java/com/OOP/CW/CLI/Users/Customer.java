@@ -1,12 +1,12 @@
 package com.OOP.CW.CLI.Users;
 
 import com.OOP.CW.CLI.Event.TicketPool;
-import com.OOP.CW.CLI.Ticket.Ticket;
+
 
 public class Customer implements Runnable {
 
-    private int numberOfTickets = 0;
-    private int retrievalRate = 0;
+    private int numberOfTickets;
+    private int retrievalRate;
     private TicketPool ticketPool;
 
     public Customer(int numberOfTickets, int retrievalRate, TicketPool ticketPool) {
@@ -41,9 +41,9 @@ public class Customer implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 1; i <= getNumberOfTickets(); i++) {
+        for (int i = 1; i <= getNumberOfTickets() && TicketPool.getTotalTickets() != 0; i++) {
             ticketPool.removeTicket();
-            System.out.println("Ticket removed from the TicketPool.");
+            System.out.println(Thread.currentThread().getName() + " removed a ticket from the TicketPool.");
             try {
                 Thread.sleep(getRetrievalRate());
             } catch (InterruptedException e) {

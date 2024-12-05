@@ -38,13 +38,12 @@ public class TicketSystemCLI {
                     int numTickets = scanner.nextInt();
                     System.out.println("Vendor "+ i + " - Enter tickets releaseRate :");
                     int releaseRate = scanner.nextInt();
-                    Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool);
+                    Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool, maxCapacity);
                     Thread thread = new Thread(runnable);
                     vendorThreads.add(thread);
-                    thread.start();
-
+                    thread.setName("Vendor " + i);
+                    //thread.start();
                 }
-
                 for (int i = 1; i <= customerNum; i++) {
                     System.out.println("Customer " + i +  " - Enter number of tickets you buy :");
                     int buyTickets = scanner.nextInt();
@@ -53,17 +52,27 @@ public class TicketSystemCLI {
                     Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
                     Thread thread = new Thread(runnable);
                     CustomerThreads.add(thread);
-                    thread.start();
-
+                    thread.setName("Customer " + i);
+                    //thread.start();
                 }
+//                for (Thread thread : vendorThreads) {
+//                    thread.start();
+//                }
+//                for (Thread thread : CustomerThreads) {
+//                    thread.start();
+//                }
                 try {
                     for (Thread thread : vendorThreads) {
+                        thread.start();
+                        thread.join();
+                    }
+                    for (Thread thread : CustomerThreads) {
+                        thread.start();
                         thread.join();
                     }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
             }
             else if (entry.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting...");
