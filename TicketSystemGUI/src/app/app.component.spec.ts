@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'TicketSystemGUI' title`, () => {
+  it(`should have the 'Real_Time_Event_Ticketing_System' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('TicketSystemGUI');
+    expect(app.title).toEqual('Real_Time_Event_Ticketing_System');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, TicketSystemGUI');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Real_Time_Event_Ticketing_System');
   });
 });
