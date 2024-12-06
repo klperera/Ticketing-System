@@ -1,1 +1,12 @@
-<p>register works!</p>
+<div>
+    <div>
+        <h1>Create Account</h1>
+        <span>Already have an Account? <a routerLink="/Login"></a>Login in</span>
+    </div>
+    <form [formGroup] = "signupForm" (ngSubmit) = "onSubmit()">
+        <input type="text" name="Email" placeholder="Enter your Email" formControlName = "Email">
+        <input type="text" name="userName" placeholder="Enter your userName" formControlName = "userName">
+        <input type="password" name="password" placeholder="Enter a password" formControlName = "password">
+        <button type="submit">Sign Up</button>
+    </form>
+</div>
