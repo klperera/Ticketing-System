@@ -3,6 +3,8 @@ import { RegisterComponent } from './register/register.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 export const routes: Routes = [
-    {path: 'WelcomePage', component: WelcomePageComponent},
-    {path: 'Register', component: RegisterComponent}
+    {path: '', redirectTo: 'welcomepage', pathMatch: 'full'},
+    // {path: 'vendornav', component: vendorComponent}
+    {path: 'welcomepage', component: WelcomePageComponent},
+    {path: 'register', component: RegisterComponent}
 ];
