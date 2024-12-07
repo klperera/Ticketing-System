@@ -3,12 +3,12 @@ import { WelcomeNavBarComponent } from '../NavBar/welcome-nav-bar/welcome-nav-ba
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-welcome-page',
+  selector: 'app-login',
   standalone: true,
   imports: [WelcomeNavBarComponent, RouterLink],
-  templateUrl: './welcome-page.component.html',
-  styleUrl: './welcome-page.component.css'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
-export class WelcomePageComponent {
+export class LoginComponent {
 
 }
