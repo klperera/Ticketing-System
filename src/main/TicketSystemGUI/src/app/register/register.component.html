@@ -1,24 +1,21 @@
-<div class="flex items-center justify-center min-h-screen font-sans text-white">
-  <div class="container bg-gray-800 bg-opacity-50 rounded-lg shadow-lg w-96">
-    <div class="logo font-serif text-center text-xl pt-5">
+<div class="flex items-center justify-center min-h-screen text-white">
+  <div class="bg-gray-700 bg-opacity-50 rounded-lg shadow-lg w-96">
+    <div class="text-center text-3xl py-10">
       SignUp Form
     </div>
-    <div class="login-item text-white px-6 py-6">
+    <div class="text-white p-5">
       <form action="" method="post" class="form-login">
-        <div class="form-field flex items-center mb-6">
-          <label for="login-username" class="user hidden">
-            Username
-          </label>
-          <input id="login-username" type="text" class="form-input w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Username" required>
+        <div class="flex items-center mb-6">
+          <input id="email" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
         </div>
-        <div class="form-field flex items-center mb-6">
-          <label for="login-password" class="lock hidden">
-            Password
-          </label>
-          <input id="login-password" type="password" class="form-input w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Password" required>
+        <div class="flex items-center mb-6">
+          <input id="username" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Username" required>
         </div>
-        <div class="form-field">
-          <input type="submit" value="Log in" class="w-full p-4 bg-teal-500 text-white font-bold uppercase rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer">
+        <div class="flex items-center mb-6">
+          <input id="password" type="password" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Password" required>
+        </div>
+        <div>
+          <input type="submit" value="SIGN UP" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5">
         </div>
       </form>
     </div>
