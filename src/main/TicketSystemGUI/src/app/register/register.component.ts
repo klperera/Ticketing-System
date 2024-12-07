@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { NavBarComponent } from '../NavBar/nav-bar/nav-bar.component';
 import { RouterLink } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 

@@ -1,12 +1,26 @@
-<div>
-    <div>
-        <h1>Create Account</h1>
-        <span>Already have an Account? <a routerLink="/Login"></a>Login in</span>
+<div class="flex items-center justify-center min-h-screen font-sans text-white">
+  <div class="container bg-gray-800 bg-opacity-50 rounded-lg shadow-lg w-96">
+    <div class="logo font-serif text-center text-xl pt-5">
+      SignUp Form
     </div>
-    <form [formGroup] = "signupForm" (ngSubmit) = "onSubmit()">
-        <input type="text" name="Email" placeholder="Enter your Email" formControlName = "Email">
-        <input type="text" name="userName" placeholder="Enter your userName" formControlName = "userName">
-        <input type="password" name="password" placeholder="Enter a password" formControlName = "password">
-        <button type="submit">Sign Up</button>
-    </form>
+    <div class="login-item text-white px-6 py-6">
+      <form action="" method="post" class="form-login">
+        <div class="form-field flex items-center mb-6">
+          <label for="login-username" class="user hidden">
+            Username
+          </label>
+          <input id="login-username" type="text" class="form-input w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Username" required>
+        </div>
+        <div class="form-field flex items-center mb-6">
+          <label for="login-password" class="lock hidden">
+            Password
+          </label>
+          <input id="login-password" type="password" class="form-input w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Password" required>
+        </div>
+        <div class="form-field">
+          <input type="submit" value="Log in" class="w-full p-4 bg-teal-500 text-white font-bold uppercase rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer">
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
