@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { WelcomeNavBarComponent } from '../NavBar/welcome-nav-bar/welcome-nav-bar.component';
 import { FormsModule } from '@angular/forms';
 import { User } from '../app-classes/User/user';
@@ -8,7 +8,7 @@ import { UserServiceService } from '../Service/user-service.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, WelcomeNavBarComponent, FormsModule],
+  imports: [WelcomeNavBarComponent, FormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -16,10 +16,10 @@ export class RegisterComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private userService: UserServiceService, private route: ActivatedRoute){}
+  constructor(private userService: UserServiceService, private activeRoute: ActivatedRoute, private router: Router){}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.activeRoute.paramMap.subscribe(params => {
       this.user.usertype = params.get('usertype') || 'user';
     });
   }
@@ -65,5 +65,9 @@ export class RegisterComponent implements OnInit {
     else{
       console.log("all data required." + `${this.user.usertype}`);
     }
+  }
+
+  select(){
+    this.router.navigate([`${this.user.usertype}/signIn`]);
   }
 }

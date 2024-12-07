@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ticketsystem/vendor")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VendorController implements UserController {
 
     private final VendorRepo vendorRepo;

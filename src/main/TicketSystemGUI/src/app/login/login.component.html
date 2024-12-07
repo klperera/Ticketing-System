@@ -6,15 +6,15 @@
               Sign In Form
             </div>
             <div class="text-white p-5">
-              <form action="" method="post" class="form-login">
+              <form action="" method="post">
                 <div class="flex items-center mb-6">
-                  <input id="email" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
+                  <input id="email" name="email" type="text" [(ngModel)]="user.email" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
                 </div>
                 <div class="flex items-center mb-6">
-                  <input id="password" type="password" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Password" required>
+                  <input id="password" name="text" type="text" [(ngModel)]="user.password" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Password" required>
                 </div>
                 <div>
-                  <input type="submit" value="SIGN IN" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5">
+                  <input type="submit" value="SIGN IN" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="login()">
                   <hr>
                 </div>
                 <div class="flex mt-5 justify-around">
