@@ -9,9 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './welcome-nav-bar.component.css'
 })
 export class WelcomeNavBarComponent {
-  isDropDownOpen = false;
-
-  toggleDropDown(){
-    this.isDropDownOpen = !this.isDropDownOpen;  
-  }
+  
 }
