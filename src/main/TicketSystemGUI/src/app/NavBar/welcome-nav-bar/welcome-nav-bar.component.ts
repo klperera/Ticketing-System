@@ -1,10 +1,10 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-welcome-nav-bar',
   standalone: true,
-  imports: [NgClass],
+  imports: [RouterLink],
   templateUrl: './welcome-nav-bar.component.html',
   styleUrl: './welcome-nav-bar.component.css'
 })
