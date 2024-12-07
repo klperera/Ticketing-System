@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
-import { NavBarComponent } from '../NavBar/nav-bar/nav-bar.component';
-import { RouterLink } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { WelcomeNavBarComponent } from '../NavBar/welcome-nav-bar/welcome-nav-bar.component';
 import { FormsModule } from '@angular/forms';
 import { User } from '../app-classes/User/user';
-import { UserService } from '../Service/user.service';
+import { UserServiceService } from '../Service/user-service.service';
 
 @Component({
   selector: 'app-register',
@@ -14,22 +12,58 @@ import { UserService } from '../Service/user.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserServiceService, private route: ActivatedRoute){}
 
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.user.usertype = params.get('usertype') || 'user';
+    });
   }
 
-  submit(){
-    this.userService.passUserData(this.user).subscribe(
-      (response) => {
-        console.log("Data passed.");
-      },
-      (error) => {
-        console.log("Error.");
+  register() {
+    if (this.user.email !== "" && this.user.username !== "" && this.user.password !== "") {
+      switch(this.user.usertype) {
+        case "organizer": {
+          this.userService.organizer_register(this.user).subscribe(
+            (response) => {
+              console.log("Organizer - Data passed.");
+            },
+            (error) => {
+              console.log("Organizer - Error.");
+            }
+          );
+          break;
+        }
+        case "vendor": {
+          this.userService.vendor_register(this.user).subscribe(
+            (response) => {
+              console.log("vendor - Data passed.");
+            },
+            (error) => {
+              console.log("vendor - Error.");
+            }
+          );
+          break;
+        }
+        case "customer": {
+          this.userService.customer_register(this.user).subscribe(
+            (response) => {
+              console.log("customer - Data passed.");
+            },
+            (error) => {
+              console.log("customer - Error.");
+            }
+          );
+          break;
+        }
       }
-    );
+    }
+    else{
+      console.log("all data required." + `${this.user.usertype}`);
+    }
   }
 }

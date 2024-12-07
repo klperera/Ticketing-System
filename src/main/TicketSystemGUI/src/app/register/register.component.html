@@ -8,16 +8,16 @@
       <div class="text-white p-5">
         <form action="" method="post" class="form-login">
           <div class="flex items-center mb-6">
-            <input id="email" name="email" [(ngModel)]="user.email"  type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
+            <input id="email" name="email" [(ngModel)]="user.email" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
           </div>
           <div class="flex items-center mb-6">
-            <input id="username" name="username" [(ngModel)]="user.userName" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Username" required>
+            <input id="username" name="username" [(ngModel)]="user.username" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Username" required>
           </div>
           <div class="flex items-center mb-6">
-            <input id="password" name="password" [(ngModel)]="user.password" type="password" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Password" required>
+            <input id="password" name="password" [(ngModel)]="user.password" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter Password" required>
           </div>
           <div>
-            <input type="submit" value="SIGN UP" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="submit()">
+            <input type="submit" value="SIGN UP" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="register()">
             <hr>
           </div>
           <div class="flex mt-5 justify-around">
