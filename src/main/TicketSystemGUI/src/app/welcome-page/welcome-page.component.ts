@@ -14,7 +14,7 @@ export class WelcomePageComponent {
 
   constructor(private router: Router){}
 
-  select(usertype: string){
+  signUp(usertype: string){
     this.router.navigate([`${usertype}/signUp`]);
   }
 }

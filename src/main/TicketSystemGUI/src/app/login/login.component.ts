@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WelcomeNavBarComponent } from '../NavBar/welcome-nav-bar/welcome-nav-bar.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { User } from '../app-classes/User/user';
 import { UserServiceService } from '../Service/user-service.service';
@@ -8,7 +8,7 @@ import { UserServiceService } from '../Service/user-service.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [WelcomeNavBarComponent, RouterLink, FormsModule],
+  imports: [WelcomeNavBarComponent, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private userService: UserServiceService, private activeRoute: ActivatedRoute) {}
+  constructor(private userService: UserServiceService, private activeRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.activeRoute.paramMap.subscribe(params => {
@@ -26,45 +26,28 @@ export class LoginComponent implements OnInit {
 
   login(){
     if (this.user.email !== "" && this.user.password !== "") {
-      switch(this.user.usertype) {
-        case "organizer": {
-          this.userService.organizer_login(this.user).subscribe(
-            (response) => {
-              console.log("Organizer - Data passed.");
-            },
-            (error) => {
-              console.log("Organizer - Error.");
-            }
-          );
-          break;
+      this.userService.user_method(this.user,'login').subscribe(
+        (details) => {
+          console.log(`${this.user.usertype}`+" - Data passed.");
+          console.log(details);
+          if (details.message === "Login successful.") {
+            alert(details.message);
+            this.router.navigateByUrl(`${this.user.usertype}/home`,{state: this.user});
+          } else {
+            alert(details.message);
+          }
+        },
+        (error) => {
+          console.log(`${this.user.usertype}`+" - Error.");
         }
-        case "vendor": {
-          this.userService.vendor_login(this.user).subscribe(
-            (response) => {
-              console.log("vendor - Data passed.");
-            },
-            (error) => {
-              console.log("vendor - Error.");
-            }
-          );
-          break;
-        }
-        case "customer": {
-          this.userService.customer_login(this.user).subscribe(
-            (response) => {
-              console.log("customer - Data passed.");
-            },
-            (error) => {
-              console.log("customer - Error.");
-            }
-          );
-          break;
-        }
-      }
+      );
     }
     else{
       console.log("all data required." + `${this.user.usertype}`);
     }
+  }
+  signUp(){
+    this.router.navigate([`${this.user.usertype}/signUp`]);
   }
 
 }

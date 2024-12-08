@@ -1,2 +1,7 @@
-<app-nav-bar />
-<p>home-page works!</p>
+@if (this.user.usertype == "organizer") {
+    <app-organizer-nav-bar />
+}@else if (this.user.usertype == "vendor") {
+    <app-vendor-nav-bar />
+}@else {
+    <app-customer-nav-bar />
+}

@@ -26,48 +26,27 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (this.user.email !== "" && this.user.username !== "" && this.user.password !== "") {
-      switch(this.user.usertype) {
-        case "organizer": {
-          this.userService.organizer_register(this.user).subscribe(
-            (response) => {
-              console.log("Organizer - Data passed.");
-            },
-            (error) => {
-              console.log("Organizer - Error.");
-            }
-          );
-          break;
+      this.userService.user_method(this.user,'register').subscribe(
+        (response) => {
+          console.log(`${this.user.usertype}`+" - Data passed.");
+          if (response.message === "User registered successfully.") {
+            alert(response.message);
+            this.router.navigate([`${this.user.usertype}/signIn`]);
+          }else{
+            alert(response.message);
+          }
+        },
+        (error) => {
+          console.log(`${this.user.usertype}`+" - Error.");
         }
-        case "vendor": {
-          this.userService.vendor_register(this.user).subscribe(
-            (response) => {
-              console.log("vendor - Data passed.");
-            },
-            (error) => {
-              console.log("vendor - Error.");
-            }
-          );
-          break;
-        }
-        case "customer": {
-          this.userService.customer_register(this.user).subscribe(
-            (response) => {
-              console.log("customer - Data passed.");
-            },
-            (error) => {
-              console.log("customer - Error.");
-            }
-          );
-          break;
-        }
-      }
+      );
     }
     else{
-      console.log("all data required." + `${this.user.usertype}`);
+      console.log("all data required. " + `${this.user.usertype}`);
     }
   }
 
-  select(){
+  signIn(){
     this.router.navigate([`${this.user.usertype}/signIn`]);
   }
 }

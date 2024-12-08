@@ -9,5 +9,5 @@ export const routes: Routes = [
     {path: 'welcomePage', component: WelcomePageComponent},
     {path: ':usertype/signUp', component: RegisterComponent },
     {path: ':usertype/signIn', component: LoginComponent},
-    {path: 'home', component: HomePageComponent}
+    {path: ':usertype/home', component: HomePageComponent}
 ];
