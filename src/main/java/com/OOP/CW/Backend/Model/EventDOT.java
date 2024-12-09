@@ -9,8 +9,6 @@ public class EventDOT {
 
     private int eventID;
     private String eventName;
-    private LocalDate eventDate;
-    private LocalTime eventTime;
     private String eventLocation;
     private double eventPrice;
     private String organizerEmail;
@@ -20,8 +18,6 @@ public class EventDOT {
     public EventDOT(Event event) {
         this.eventID = event.getEventID();
         this.eventName = event.getEventName();
-        this.eventDate = event.getEventDate();
-        this.eventTime = event.getEventTime();
         this.eventLocation = event.getEventLocation();
         this.eventPrice = event.getEventPrice();
         this.organizerEmail = event.getOrganizer().getUserCredentials().getEmail();
@@ -42,22 +38,6 @@ public class EventDOT {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public LocalDate getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDate(LocalDate eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public LocalTime getEventTime() {
-        return eventTime;
-    }
-
-    public void setEventTime(LocalTime eventTime) {
-        this.eventTime = eventTime;
     }
 
     public String getEventLocation() {
