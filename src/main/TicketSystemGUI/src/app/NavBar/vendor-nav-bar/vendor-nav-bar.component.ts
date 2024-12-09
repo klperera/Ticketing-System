@@ -1,12 +1,12 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../app-classes/User/user';
 
 @Component({
   selector: 'app-vendor-nav-bar',
   standalone: true,
-  imports: [NgClass, RouterLink],
+  imports: [NgClass],
   templateUrl: './vendor-nav-bar.component.html',
   styleUrl: './vendor-nav-bar.component.css'
 })
