@@ -20,5 +20,4 @@ export class UserServiceService {
   event_method(event: Event, method: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/${event.organizer.usertype}/${method}`,event);
   }
-  
 }
