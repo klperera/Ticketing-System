@@ -29,10 +29,9 @@ export class LoginComponent implements OnInit {
       this.userService.user_method(this.user,'login').subscribe(
         (details) => {
           console.log(`${this.user.usertype}`+" - Data passed.");
-          console.log(details);
           if (details.message === "Login successful.") {
             alert(details.message);
-            this.router.navigateByUrl(`${this.user.usertype}/home`,{state: this.user});
+            this.router.navigateByUrl(`${this.user.usertype}/home`,{state: details.object});
           } else {
             alert(details.message);
           }

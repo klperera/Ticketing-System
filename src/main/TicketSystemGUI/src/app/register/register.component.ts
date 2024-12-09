@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
           console.log(`${this.user.usertype}`+" - Data passed.");
           if (response.message === "User registered successfully.") {
             alert(response.message);
-            this.router.navigate([`${this.user.usertype}/signIn`]);
+            this.router.navigateByUrl(`${this.user.usertype}/signIn`,{state: response.object});
           }else{
             alert(response.message);
           }

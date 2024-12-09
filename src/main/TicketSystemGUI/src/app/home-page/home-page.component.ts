@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../app-classes/User/user';
-import { OrganizerNavBarComponent } from "../NavBar/organizer-nav-bar/organizer-nav-bar.component";
 import { VendorNavBarComponent } from "../NavBar/vendor-nav-bar/vendor-nav-bar.component";
 import { CustomerNavBarComponent } from "../NavBar/customer-nav-bar/customer-nav-bar.component";
+import { OrganizerNavBarComponent } from '../NavBar/organizer-nav-bar/organizer-nav-bar.component';
+import { User } from '../app-classes/User/user';
 
 @Component({
   selector: 'app-home-page',
@@ -14,15 +14,15 @@ import { CustomerNavBarComponent } from "../NavBar/customer-nav-bar/customer-nav
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private activeRoute:ActivatedRoute, private router: Router) {}
+  constructor(private activeRoute:ActivatedRoute) {}
 
-  user: User = new User();
+  logedInUser: any = new User();
 
   ngOnInit(): void {
-      this.activeRoute.paramMap.subscribe(params => {
-        this.user.usertype = params.get('usertype') || 'user';
-      }
-    );
-    this.user = history.state;
+    this.logedInUser = history.state;
+    this.activeRoute.paramMap.subscribe(params => {
+      this.logedInUser.usertype = params.get('usertype') || 'user';
+    });
+    console.log(this.logedInUser);
   }
 }
