@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { User } from '../app-classes/User/user';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserServiceService } from '../Service/user-service.service';
+import { FormsModule } from '@angular/forms';
 import { OrganizerNavBarComponent } from '../NavBar/organizer-nav-bar/organizer-nav-bar.component';
 import { VendorNavBarComponent } from '../NavBar/vendor-nav-bar/vendor-nav-bar.component';
 import { CustomerNavBarComponent } from '../NavBar/customer-nav-bar/customer-nav-bar.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserServiceService } from '../Service/user-service.service';
 
 @Component({
-  selector: 'app-change-password',
+  selector: 'app-delete-account',
   standalone: true,
   imports: [FormsModule, OrganizerNavBarComponent, VendorNavBarComponent, CustomerNavBarComponent],
-  templateUrl: './change-password.component.html',
-  styleUrl: './change-password.component.css'
+  templateUrl: './delete-account.component.html',
+  styleUrl: './delete-account.component.css'
 })
-export class ChangePasswordComponent implements OnInit {
+export class DeleteAccountComponent implements OnInit {
 
- user: User = new User();
- logedInUser: any = new User();
+  user: User = new User();
+  logedInUser: User = new User();
 
   constructor(private activeRoute: ActivatedRoute, private userService: UserServiceService, private router: Router) {}
 
@@ -29,16 +29,15 @@ export class ChangePasswordComponent implements OnInit {
     this.logedInUser = history.state;
     console.log(this.logedInUser);
   }
-
-  savePassword() {
+  deleteAccount() {
     console.log(this.user);
     if (this.user.email !== "" && this.user.password !== "") {
-      this.userService.user_method(this.user, 'changepassword').subscribe(
+      this.userService.user_method(this.user, 'deleteaccount').subscribe(
         (details) => {
           console.log(`${this.logedInUser.usertype}`+" - Data passed.");
-          if (details.message === "Password changed successfully.") {
+          if (details.message === "Account deleted successfully.") {
             alert(details.message);
-            this.router.navigateByUrl(`${this.logedInUser.usertype}/home`,{state: details.object});
+            this.router.navigateByUrl(`/welcomePage`);
           }else{
             alert(details.message);
           }
