@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WelcomeNavBarComponent } from '../NavBar/welcome-nav-bar/welcome-nav-bar.component';
 import { Router } from '@angular/router';
 import { User } from '../app-classes/User/user';
@@ -12,9 +12,13 @@ import { User } from '../app-classes/User/user';
 })
 export class WelcomePageComponent {
 
+  user: User = new User();
+  logedInUser: User = new User();
+
   constructor(private router: Router){}
 
   signUp(usertype: string){
-    this.router.navigate([`${usertype}/signUp`]);
+    this.user.usertype = usertype;
+    this.router.navigate([`${this.user.usertype}/signUp`]);
   }
 }

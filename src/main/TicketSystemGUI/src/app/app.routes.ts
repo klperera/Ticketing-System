@@ -14,8 +14,7 @@ export const routes: Routes = [
     {path: ':usertype/home', component: HomePageComponent},
     {path: ':usertype/changePassword', component: ChangePasswordComponent},
     {path: ':usertype/deleteAccount', component: DeleteAccountComponent},
-    //
-    {path: ':usertype/SignOut', component: HomePageComponent},
+    {path: ':usertype/SignOut', component: WelcomePageComponent},
     {path: ':usertype/createEvent', component: HomePageComponent},
     {path: ':usertype/checkEventDetails', component: HomePageComponent},
     {path: ':usertype/allEvents', component: HomePageComponent},
