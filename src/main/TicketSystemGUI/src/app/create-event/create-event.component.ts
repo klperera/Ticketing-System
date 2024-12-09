@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { OrganizerNavBarComponent } from '../NavBar/organizer-nav-bar/organizer-nav-bar.component';
 import { User } from '../app-classes/User/user';
 import { Event } from '../app-classes/Event/event';
-import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../Service/user-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-event',
@@ -18,7 +18,7 @@ export class CreateEventComponent implements OnInit {
   logedInUser: User = new User();
   event: Event = new Event();
 
-  constructor(private activeRoute: ActivatedRoute, private route: Router, private userService: UserServiceService) {}
+  constructor(private activeRoute: ActivatedRoute, private router: Router, private userService: UserServiceService) {}
 
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe(params => {
@@ -27,14 +27,14 @@ export class CreateEventComponent implements OnInit {
     this.logedInUser = history.state; 
   }
   createEvent() {
-    this.event.organizer = this.logedInUser;
-    console.log(this.event);  
+    if (this.event.eventName !== "" || this.event.eventLocation !== "" || this.event.eventPrice !== "") {
+      this.event.organizer = this.logedInUser;  
     this.userService.event_method(this.event, 'newevent').subscribe(
       (details) => {
+        console.log(details);
         console.log(`${this.logedInUser.usertype}`+" - Data passed.");
         if (details.message === "Event has been created.") {
           alert(details.message);
-          this.route.navigateByUrl(`${this.logedInUser.usertype}/home`,{state: details.object});
         }else{
           alert(details.message);
         }
@@ -43,5 +43,8 @@ export class CreateEventComponent implements OnInit {
         console.log(`${this.logedInUser.usertype}`+" - Error.");
       }
     );
+    }else{
+      console.log("all data required. " + `${this.logedInUser.usertype}`);
+    }
   }
 }
