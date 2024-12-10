@@ -32,7 +32,7 @@ export class ChangePasswordComponent implements OnInit {
 
   savePassword() {
     console.log(this.user);
-    if (this.user.email !== "" && this.user.password !== "") {
+    if (this.user.email !== "" && this.user.password !== "" && this.user.email === this.logedInUser.email) {
       this.userService.user_method(this.user, 'changepassword').subscribe(
         (details) => {
           console.log(`${this.logedInUser.usertype}`+" - Data passed.");

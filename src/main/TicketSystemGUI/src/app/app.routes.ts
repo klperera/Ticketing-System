@@ -18,8 +18,8 @@ export const routes: Routes = [
     {path: ':usertype/deleteAccount', component: DeleteAccountComponent},
     {path: ':usertype/SignOut', component: WelcomePageComponent},
     {path: ':usertype/createEvent', component: CreateEventComponent},
-    //
     {path: ':usertype/checkEventDetails', component: CheckEventDetailsComponent},
+    //
     {path: ':usertype/allEvents', component: HomePageComponent},
     {path: ':usertype/purchaseTickets', component: HomePageComponent},
     {path: ':usertype/addToTicketPool', component: HomePageComponent},
