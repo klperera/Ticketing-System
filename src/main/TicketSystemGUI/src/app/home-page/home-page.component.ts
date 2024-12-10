@@ -23,6 +23,6 @@ export class HomePageComponent implements OnInit {
     this.activeRoute.paramMap.subscribe(params => {
       this.logedInUser.usertype = params.get('usertype') || 'user';
     });
-    console.log(this.logedInUser);
+    this.logedInUser = history.state;
   }
 }

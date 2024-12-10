@@ -11,13 +11,18 @@ export class UserServiceService {
 
   private baseUrl = 'http://localhost:8080/ticketsystem';
 
+  user: User = new User();
+
   constructor(private http: HttpClient) {}
 
 
   user_method(user: User, method: string): Observable<any> {
+    this.user = user;
+    console.log(user);
     return this.http.post(`${this.baseUrl}/${user.usertype}/${method}`,user);
   }
   event_method(event: Event, method: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/${event.organizer.usertype}/${method}`,event);
   }
+  
 }
