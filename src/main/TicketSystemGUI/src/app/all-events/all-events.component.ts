@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorNavBarComponent } from '../NavBar/vendor-nav-bar/vendor-nav-bar.component';
 import { User } from '../app-classes/User/user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../Service/user-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-all-events',
   standalone: true,
-  imports: [VendorNavBarComponent],
+  imports: [CommonModule,VendorNavBarComponent],
   templateUrl: './all-events.component.html',
   styleUrl: './all-events.component.css'
 })
@@ -17,7 +18,7 @@ export class AllEventsComponent implements OnInit {
   user: User = new User();
   details: any = {};
 
-  constructor(private activeRoute: ActivatedRoute, private userService: UserServiceService) {}
+  constructor(private activeRoute: ActivatedRoute, private userService: UserServiceService, private router: Router) {}
 
   ngOnInit(): void {
     this.activeRoute.paramMap.subscribe(params => {
@@ -44,5 +45,7 @@ export class AllEventsComponent implements OnInit {
       }
     );
   }
-
+  buyTicket() {
+    this.router.navigateByUrl(`${this.logedInUser.usertype}/purchaseTickets`, {state: this.logedInUser});
+  }
 }
