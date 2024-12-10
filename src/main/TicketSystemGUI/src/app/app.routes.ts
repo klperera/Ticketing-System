@@ -7,6 +7,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CheckEventDetailsComponent } from './check-event-details/check-event-details.component';
+import { AllEventsComponent } from './all-events/all-events.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'welcomePage', pathMatch: 'full'},
@@ -20,7 +21,7 @@ export const routes: Routes = [
     {path: ':usertype/createEvent', component: CreateEventComponent},
     {path: ':usertype/checkEventDetails', component: CheckEventDetailsComponent},
     //
-    {path: ':usertype/allEvents', component: HomePageComponent},
+    {path: ':usertype/allEvents', component: AllEventsComponent},
     {path: ':usertype/purchaseTickets', component: HomePageComponent},
     {path: ':usertype/addToTicketPool', component: HomePageComponent},
     {path: ':usertype/buyTickets', component: HomePageComponent}
