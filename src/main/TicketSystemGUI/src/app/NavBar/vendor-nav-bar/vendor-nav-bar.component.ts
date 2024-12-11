@@ -28,6 +28,7 @@ export class VendorNavBarComponent implements OnInit {
   }
 
   select_method(method: string){
+    console.log(this.logedInUser);
     this.router.navigateByUrl(`${this.logedInUser.usertype}/${method}`, {state: this.logedInUser});
   }
 }

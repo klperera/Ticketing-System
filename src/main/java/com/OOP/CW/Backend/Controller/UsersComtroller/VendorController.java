@@ -117,7 +117,7 @@ public class VendorController implements UserController {
     }
 
     @PostMapping("/purchasetickets")
-    public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
+    public Response purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
         // Ticket request - Objects of vendor, event, total tickets
         VendorService vendorService = new VendorService(vendorRepo, eventRepo, ticketRepo);
         Thread thread = new Thread(vendorService);
@@ -129,7 +129,7 @@ public class VendorController implements UserController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return vendorService.getResponseEntity();
+        return vendorService.getResponse();
         //return vendorService.purchaseTickets(ticketsDetails);
     }
 

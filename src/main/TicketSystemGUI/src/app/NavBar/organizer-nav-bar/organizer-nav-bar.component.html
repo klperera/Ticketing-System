@@ -4,9 +4,9 @@
     </svg> 
     
     <nav class="px-2 pt-2 pb-4 md:flex md:p-0 max-h[120px]">
-        <a (click)="select_method('home')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4">Home</a>
-        <a (click)="select_method('createEvent')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4">Create Event</a>
-        <a (click)="select_method('checkEventDetails')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4">Check Event Details</a>
+        <a (click)="select_method('home')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4 cursor-pointer">Home</a>
+        <a (click)="select_method('createEvent')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4 cursor-pointer">Create Event</a>
+        <a (click)="select_method('checkEventDetails')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4 cursor-pointer">Check Event Details</a>
         <div class="relative mt-2 md:mt-0">
             <button class="text-white bg-gray-600 hover:bg-gray-500 focus:outline-none px-4 py-2 rounded-md inline-flex items-center" (click)="toggleDropDown()">
                 Account
@@ -18,9 +18,9 @@
             [ngClass]="isDropDownOpen? 'transition ease-out duration-300 transform opacity-100 scale-100':
             'transition ease-in duration-75 transform opacity-0 scale-95'"
             class="md:absolute right-0 mt-2 w-48 bg-gray-600 rounded-md shadow-lg z-10">
-                <a (click)="select_method('changePassword')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500">Change Password</a>
-                <a (click)="select_method('deleteAccount')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500">Delete Account </a> 
-                <a (click)="select_method('SignOut')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500">Sign Out</a>
+                <a (click)="select_method('changePassword')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Change Password</a>
+                <a (click)="select_method('deleteAccount')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Delete Account </a> 
+                <a (click)="select_method('signOut')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Sign Out</a>
             </div>
         </div>
     </nav>

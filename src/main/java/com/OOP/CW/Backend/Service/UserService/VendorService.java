@@ -28,7 +28,6 @@ public class VendorService implements UserController, Runnable {
     private String method;
     private UserCredentials userCredentials;
     private Response response;
-    private ResponseEntity<String> responseEntity;
     private TicketRequest ticketRequest;
 
     @Autowired
@@ -57,7 +56,7 @@ public class VendorService implements UserController, Runnable {
                 this.response = allEvents(getUserCredentials());
             }
             case "purchasetickets" -> {
-                this.responseEntity = purchaseTickets(getTicketRequest());
+                this.response = purchaseTickets(getTicketRequest());
             }
             default -> {}
         }
@@ -128,7 +127,7 @@ public class VendorService implements UserController, Runnable {
         }
     }
     // take vendor logins, event details and number of tickets for each types
-    public ResponseEntity<String> purchaseTickets(TicketRequest ticketsDetails) {
+    public Response purchaseTickets(TicketRequest ticketsDetails) {
         //check whether the user logins are valid or not
         Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
         if (vendor.isPresent()) {
@@ -137,7 +136,8 @@ public class VendorService implements UserController, Runnable {
                 //if valid check number of tickets as exceeds or not
                 if (event.get().getConfiguration().getMaxTicketCapacity() <= event.get().getConfiguration().getTotalNumberOfTickets()) {
                     //return ResponseEntity.ok(new Response(new Event(),"All Tickets are purchased by Vendors"));
-                    return ResponseEntity.badRequest().body("All Tickets are purchased by Vendors");
+                    //return ResponseEntity.badRequest().body("All Tickets are purchased by Vendors");
+                    return new Response(new Object(),"All Tickets are purchased by Vendors");
                 }
                 else{
                     if ((event.get().getConfiguration().getTotalNumberOfTickets() + ticketsDetails.getTotalTicketsToPurchase()) <= event.get().getConfiguration().getMaxTicketCapacity()) {
@@ -150,21 +150,28 @@ public class VendorService implements UserController, Runnable {
                         vendorRepo.save(vendor.get());
                         eventRepo.save(event.get());
                         //return ResponseEntity.ok(new Response(new Event(), "Tickets purchase successfully"));
-                        return ResponseEntity.ok("Tickets purchase successfully");
+                        //return ResponseEntity.ok("Tickets purchase successfully");
+                        return new Response((vendor.get()),"Tickets purchase successfully");
                         //redirect to vendor - Add to ticket pool
                     }
                     else{
                         //return ResponseEntity.ok(new Response(new Event(), "Can't purchase that number of tickets."));
-                        return ResponseEntity.badRequest().body("Can't purchase that amount of tickets.");
+                        //return ResponseEntity.badRequest().body("Can't purchase that amount of tickets.");
+                        return new Response(new Object(),"Can't purchase that amount of tickets.");
                     }
                 }
             }else {
-                return ResponseEntity.badRequest().body("Event not found.");
+                //return ResponseEntity.badRequest().body("Event not found.");
+                return new Response(new Object(),"Event not found.");
+
+
             }
         }
         else {
             //return ResponseEntity.ok(new Response(vendor, "No vendor found"));
-            return ResponseEntity.badRequest().body("No Vendor found");
+            //return ResponseEntity.badRequest().body("No Vendor found");
+            return new Response(new Object(),"No Vendor found");
+
         }
     }
 
@@ -198,13 +205,5 @@ public class VendorService implements UserController, Runnable {
 
     public void setTicketRequest(TicketRequest ticketRequest) {
         this.ticketRequest = ticketRequest;
-    }
-
-    public ResponseEntity<String> getResponseEntity() {
-        return responseEntity;
-    }
-
-    public void setResponseEntity(ResponseEntity<String> responseEntity) {
-        this.responseEntity = responseEntity;
     }
 }

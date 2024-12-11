@@ -10,11 +10,10 @@
             <p class="mb-2 text-lg"><strong>Location:</strong> {{ event.eventLocation }}</p>
             <p class="mb-2 text-lg"><strong>Price:</strong> ${{ event.eventPrice }}</p>
             <p class="mb-2 text-lg"><strong>Organizer:</strong> {{ event.organizerEmail}}</p>
-            <input type="submit" value="Buy Ticket" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="buyTicket()">
+            <input type="submit" value="Buy Ticket" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="buyTicket(event)">
           </div>
         </div>
       </div>
-      
 }@else if (this.details.message === "No events have been found") {
     <h1 class="text-3xl text-white text-center mt-10">{{details.message}}</h1>
 }

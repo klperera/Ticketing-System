@@ -14,9 +14,13 @@ import { CommonModule } from '@angular/common';
 })
 export class AllEventsComponent implements OnInit {
 
-  logedInUser: any = new User();
+  logedInUser: any = {};
   user: User = new User();
   details: any = {};
+  ticketPurchase = {
+    event: {},
+    logedInUser: {}
+  }
 
   constructor(private activeRoute: ActivatedRoute, private userService: UserServiceService, private router: Router) {}
 
@@ -33,7 +37,7 @@ export class AllEventsComponent implements OnInit {
         this.details = response;
         console.log(`${this.logedInUser.usertype}`+" - Data passed.");
         if (this.details.message === "All events have been found") {
-          alert(this.details.message);
+          // alert(this.details.message);
           console.log(this.details.object);
           //this.router.navigateByUrl(`${this.logedInUser.usertype}/home`, {state: this.logedInUser});
         }else{
@@ -45,7 +49,9 @@ export class AllEventsComponent implements OnInit {
       }
     );
   }
-  buyTicket() {
-    this.router.navigateByUrl(`${this.logedInUser.usertype}/purchaseTickets`, {state: this.logedInUser});
+  buyTicket(event: any) {
+    this.ticketPurchase.event = event;
+    this.ticketPurchase.logedInUser = this.logedInUser;
+    this.router.navigateByUrl(`${this.logedInUser.usertype}/purchaseTickets`, {state: this.ticketPurchase});
   }
 }

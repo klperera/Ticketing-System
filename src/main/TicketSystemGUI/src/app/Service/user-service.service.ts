@@ -24,5 +24,9 @@ export class UserServiceService {
   event_method(event: Event, method: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/${event.organizer.usertype}/${method}`,event);
   }
+  purchaseTickets_method(sendDetails: any, method: string): Observable<any> {
+    console.log(sendDetails);
+    return this.http.post(`${this.baseUrl}/${sendDetails.usertype}/${method}`,sendDetails);
+  }
   
 }
