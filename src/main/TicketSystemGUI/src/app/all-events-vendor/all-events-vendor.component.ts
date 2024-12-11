@@ -9,8 +9,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-all-events',
   standalone: true,
   imports: [CommonModule,VendorNavBarComponent],
-  templateUrl: './all-events.component.html',
-  styleUrl: './all-events.component.css'
+  templateUrl: './all-events-vendor.component.html',
+  styleUrl: './all-events-vendor.component.css'
 })
 export class AllEventsComponent implements OnInit {
 
