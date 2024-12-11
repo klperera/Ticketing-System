@@ -10,8 +10,8 @@ import { CustomerNavBarComponent } from '../NavBar/customer-nav-bar/customer-nav
   selector: 'app-all-events',
   standalone: true,
   imports: [CommonModule,VendorNavBarComponent, CustomerNavBarComponent],
-  templateUrl: './all-events.component.html',
-  styleUrl: './all-events.component.css'
+  templateUrl: './all-events-vendor.component.html',
+  styleUrl: './all-events-vendor.component.css'
 })
 export class AllEventsComponent implements OnInit {
 

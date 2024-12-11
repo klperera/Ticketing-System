@@ -7,7 +7,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CheckEventDetailsComponent } from './check-event-details/check-event-details.component';
-import { AllEventsComponent } from './all-events/all-events.component';
+import { AllEventsComponent } from './all-events-organizer/all-events-vendor.component';
 import { PurchaseTicketsComponent } from './purchase-tickets/purchase-tickets.component';
 import { AddToTicketPoolComponent } from './add-to-ticket-pool/add-to-ticket-pool.component';
 

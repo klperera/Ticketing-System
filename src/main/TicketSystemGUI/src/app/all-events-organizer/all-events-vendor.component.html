@@ -1,9 +1,4 @@
-@if (this.logedInUser.usertype === "vendor") {
-  <app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
-}@else if (this.logedInUser.usertype === "customer") {
-  <app-customer-nav-bar [logedInUser] = "this.logedInUser"  />
-}
-
+<app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
 <h1 class="text-4xl text-white text-center mt-20">All Events</h1>
 @if (this.details.message === "All events have been found") {
     <div class="flex gap-56 justify-center items-center min-h-screens py-8">
@@ -16,9 +11,7 @@
             <p class="mb-2 text-lg"><strong>Price:</strong> ${{ event.eventPrice }}</p>
             <p class="mb-2 text-lg"><strong>Organizer:</strong> {{ event.organizerEmail}}</p>
             <input type="submit" value="Buy Ticket" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="buyTicket(event)"> 
-            @if (this.logedInUser.usertype === "vendor") {
-              <input type="submit" value="Add To TicketPool" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="addToTicketPool(event)">
-            }
+            <input type="submit" value="Add To TicketPool" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="addToTicketPool(event)">
           </div>
         </div>
       </div>
