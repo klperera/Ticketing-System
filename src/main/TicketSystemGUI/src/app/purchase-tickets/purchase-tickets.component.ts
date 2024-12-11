@@ -26,14 +26,14 @@ export class PurchaseTicketsComponent implements OnInit {
       this.logedInUser.usertype = params.get('usertype') || 'user';
     });
     this.ticketPurchase = history.state;
+    this.logedInUser = this.ticketPurchase.logedInUser;
     console.log(this.ticketPurchase);
   }
   purchaseTickets() {
-    this.logedInUser = this.ticketPurchase.logedInUser;
     this.sendDetails.vendorID = this.ticketPurchase.logedInUser.vendorId;
     this.sendDetails.eventID = this.ticketPurchase.event.eventID;
     this.sendDetails.totalTickets = this.numOfTickets;
-    this.sendDetails.usertype = this.logedInUser.usertype;
+    this.sendDetails.logedInUser = this.logedInUser;
     console.log(this.sendDetails);
 
     this.userService.purchaseTickets_method( this.sendDetails, 'purchasetickets').subscribe(
@@ -41,10 +41,14 @@ export class PurchaseTicketsComponent implements OnInit {
         console.log(`${this.logedInUser.usertype}`+" - Data passed.");
         console.log(response);
         if (response.message === "Tickets purchase successfully") {
+          console.log(response.message);
           alert(response.message);
-          this.router.navigateByUrl(`${this.logedInUser.usertype}/home`, {state: response.object});
+          this.sendDetails.responseObject = response.object;
+          console.log(this.sendDetails);
+          this.router.navigateByUrl(`${this.logedInUser.usertype}/addToTicketPool`, {state: this.sendDetails});
         }else{
           alert(response.message);
+          this.router.navigateByUrl(`${this.logedInUser.usertype}/home`, {state: this.sendDetails.logedInUser});
         }
       },
       (error) =>{

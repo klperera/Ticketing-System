@@ -21,7 +21,7 @@ public class TicketService implements Runnable {
     private final EventRepo eventRepo;
     private final TicketPoolRepo ticketPoolRepo;
 
-    private ResponseEntity<String> responseEntity;
+    private Response response;
     private TicketRequest ticketRequest;
 
     @Autowired
@@ -34,10 +34,10 @@ public class TicketService implements Runnable {
 
     @Override
     public void run() {
-        this.responseEntity = addToTicketPool(getTicketRequest());
+        this.response = addToTicketPool(getTicketRequest());
     }
 
-    public ResponseEntity<String> addToTicketPool(TicketRequest ticketsDetails) {
+    public Response addToTicketPool(TicketRequest ticketsDetails) {
         // if all tickets are purchased - add to ticket pool
         Optional<Vendor> vendor = vendorRepo.findById(ticketsDetails.getVendorID());
         if (vendor.isPresent()) {
@@ -54,6 +54,8 @@ public class TicketService implements Runnable {
                         ticket.setTicketPool(event.get().getTicketPool());
                         ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
+                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                        vendorRepo.save(vendor.get());
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);
 
@@ -66,6 +68,8 @@ public class TicketService implements Runnable {
                         ticket.setTicketPool(event.get().getTicketPool());
                         ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
+                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                        vendorRepo.save(vendor.get());
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);
                     }
@@ -77,29 +81,37 @@ public class TicketService implements Runnable {
                         ticket.setTicketPool(event.get().getTicketPool());
                         ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                         ticket.getTicketPool().addTicket(ticket);
+                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                        vendorRepo.save(vendor.get());
                         ticketPoolRepo.save(ticket.getTicketPool());
                         ticketRepo.save(ticket);
                     }
-                    return ResponseEntity.ok("All tickets have been added to the pool");
+                    //return ResponseEntity.ok("All tickets have been added to the pool");
+                    return new Response(vendor.get(),"All tickets have been added to the pool" );
                 }
                 else {
-                    return ResponseEntity.ok("You dont have that amount of tickets");
+                    //return ResponseEntity.ok("You dont have that amount of tickets");
+                    return new Response(vendor.get(),"You dont have that amount of tickets" );
+
                 }
             }
             else {
-                return ResponseEntity.ok("Event not found");
+                //return ResponseEntity.ok("Event not found");
+                return new Response(new Event(),"Event not found" );
+
             }
         } else {
-            return ResponseEntity.ok("vendor not found");
+            //return ResponseEntity.ok("vendor not found");
+            return new Response(new Vendor(),"Vendor not found" );
         }
     }
 
-    public ResponseEntity<String> getResponseEntity() {
-        return responseEntity;
+    public Response getResponse() {
+        return response;
     }
 
-    public void setResponseEntity(ResponseEntity<String> responseEntity) {
-        this.responseEntity = responseEntity;
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     public TicketRequest getTicketRequest() {

@@ -134,7 +134,7 @@ public class VendorController implements UserController {
     }
 
     @PostMapping("/addToTicketPool")
-    public ResponseEntity<String> addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
+    public Response addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
         // Ticket request - earlyBirdTicket, generalTicket, lastMinuteTicket
         TicketService ticketService = new TicketService(ticketRepo, vendorRepo, eventRepo, ticketPoolRepo);
         Thread thread = new Thread(ticketService);
@@ -145,7 +145,7 @@ public class VendorController implements UserController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return ticketService.getResponseEntity();
+        return ticketService.getResponse();
        //return ticketService.addToTicketPool(ticketsDetails);
     }
 

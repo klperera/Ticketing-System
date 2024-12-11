@@ -1,1 +1,41 @@
-<p>add-to-ticket-pool works!</p>
+ <app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
+<div class="flex flex-col items-center justify-center mt-12">
+    <div class="min-h-screens py-8">
+        <div class="flex rounded-lg p-10 shadow-lg bg-gray-300 hover:bg-gray-100 focus:outline-none text-black hover:shadow-xl transition duration-300 transform hover:scale-105 mt-10 w-full">
+            <div class="flex-1 w-72">
+                <h3 class="text-3xl font-bold text-center mb-3 uppercase underline">{{reciveDetails.event.eventName}}</h3>
+                <p class="mb-2 text-lg"><strong>Location:</strong> {{reciveDetails.event.eventLocation}} </p>
+                <p class="mb-2 text-lg"><strong>Price:</strong> ${{reciveDetails.event.eventPrice}}</p>
+                <p class="mb-2 text-lg"><strong>Organizer:</strong>{{reciveDetails.event.organizerEmail}}</p>              
+            </div>
+        </div>
+    </div>
+    <div class="bg-gray-700 bg-opacity-50 rounded-lg shadow-lg w-96">
+        <div class="text-center text-white text-3xl py-10">
+          Add To TicketPool Form
+        </div>
+        <div class="text-white p-5">
+          <form action="" method="post">
+            <div class="items-center mb-6">
+                <label for="numberOfTickets"> Early-Bird Ticket </label>
+                <input id="numberOfTickets" name="numberOfTickets" type="text" [(ngModel)]="ticketDetails.earlyBirdTicket.numberOfTickets" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200 my-5" placeholder="Enter number of earlyBirdTickets" required>
+                <input id="discount" name="discount" type="text" [(ngModel)]="ticketDetails.earlyBirdTicket.discount" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter earlyBirdTicket discount" required>
+            </div>
+            <div class="items-center mb-6">
+                <label for="numberOfTickets"> General Ticket </label>
+                <input id="numberOfTickets" name="numberOfTickets" type="text" [(ngModel)]="ticketDetails.generalTicket.numberOfTickets" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200 my-5" placeholder="Enter number of GeneralTicket" required>
+                <input id="discount" name="discount" type="text" [(ngModel)]="ticketDetails.generalTicket.discount" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter GeneralTicket discount" required>
+            </div>
+            <div class="items-center mb-6">
+                <label for="numberOfTickets"> Last Minute Ticket </label>
+                <input id="numberOfTickets" name="numberOfTickets" type="text" [(ngModel)]="ticketDetails.lastMinuteTicket.numberOfTickets" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200 my-5" placeholder="Enter number of earlyBirdTickets" required>
+                <input id="discount" name="discount" type="text" [(ngModel)]="ticketDetails.lastMinuteTicket.discount" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter earlyBirdTicket discount" required>
+            </div>
+            <div>
+              <input type="submit" value="add To TicketPool " class=" uppercase w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="addToTicketPool()" >
+              <hr>
+            </div>
+          </form>
+        </div>
+      </div>
+</div> 

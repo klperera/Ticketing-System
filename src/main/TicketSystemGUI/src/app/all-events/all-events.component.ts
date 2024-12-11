@@ -52,6 +52,13 @@ export class AllEventsComponent implements OnInit {
   buyTicket(event: any) {
     this.ticketPurchase.event = event;
     this.ticketPurchase.logedInUser = this.logedInUser;
+    console.log(this.ticketPurchase);
     this.router.navigateByUrl(`${this.logedInUser.usertype}/purchaseTickets`, {state: this.ticketPurchase});
+  }
+  addToTicketPool(event: any){
+    this.ticketPurchase.event = event;
+    this.ticketPurchase.logedInUser = this.logedInUser;
+    console.log(this.ticketPurchase);
+    this.router.navigateByUrl(`${this.logedInUser.usertype}/addToTicketPool`, {state: this.ticketPurchase});
   }
 }

@@ -12,6 +12,7 @@ export class UserServiceService {
   private baseUrl = 'http://localhost:8080/ticketsystem';
 
   user: User = new User();
+  requiredData: any = {};
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +27,17 @@ export class UserServiceService {
   }
   purchaseTickets_method(sendDetails: any, method: string): Observable<any> {
     console.log(sendDetails);
-    return this.http.post(`${this.baseUrl}/${sendDetails.usertype}/${method}`,sendDetails);
+    return this.http.post(`${this.baseUrl}/${sendDetails.logedInUser.usertype}/${method}`,sendDetails);
+  }
+  addToTicketPool(sendDetails: any, method: string): Observable<any> {
+    console.log(sendDetails);
+    this.requiredData.eventID = sendDetails.event.eventID;
+    this.requiredData.vendorID = sendDetails.logedInUser.vendorId;
+    this.requiredData.earlyBirdTicket = sendDetails.ticketDetails.earlyBirdTicket;
+    this.requiredData.generalTicket = sendDetails.ticketDetails.generalTicket;
+    this.requiredData.lastMinuteTicket = sendDetails.ticketDetails.lastMinuteTicket;
+    console.log(this.requiredData);
+    return this.http.post(`${this.baseUrl}/${sendDetails.logedInUser.usertype}/${method}`,this.requiredData);
   }
   
 }
