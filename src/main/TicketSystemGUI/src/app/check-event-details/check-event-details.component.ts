@@ -40,6 +40,7 @@ export class CheckEventDetailsComponent implements OnInit {
         }
       },
       (error) =>{
+        alert(error.error.message);
         console.log(`${this.logedInUser.usertype}`+" - Error.");
       }
     );
