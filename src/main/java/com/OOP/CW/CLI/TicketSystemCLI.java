@@ -5,6 +5,7 @@ import com.OOP.CW.CLI.Event.TicketPool;
 import com.OOP.CW.CLI.Users.Customer;
 import com.OOP.CW.CLI.Users.Vendor;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,14 +20,31 @@ public class TicketSystemCLI {
                 \t\t\t\t\t\t\t\t\t\tWelcome to the Ticket System!
                 =========================================================================================================""");
         while (true) {
-            Configuration config = new Configuration();
             ArrayList<Thread> vendorThreads = new ArrayList<>();
             ArrayList<Thread> CustomerThreads = new ArrayList<>();
             int totalNumberOfTickets = 0;
-            System.out.println("Enter System configurations..");
-            System.out.print("Enter Max Capacity :");
-            config.setMaxTicketCapacity(scanner.nextInt());
+            System.out.print("New configuration or load configuration... (type new or load): ");
+            String userInput = scanner.nextLine();
+            Configuration config = new Configuration();
             TicketPool ticketPool = new TicketPool(config.getMaxTicketCapacity());
+
+            if (userInput.equals("new")) {
+                System.out.println("Enter System configurations..");
+                System.out.print("Enter Max Capacity :");
+                config.setMaxTicketCapacity(scanner.nextInt());
+                config.saveToJson("ticket_system_config.json");
+                ticketPool = new TicketPool(config.getMaxTicketCapacity());
+
+            }else if (userInput.equals("load")) {
+                Configuration Config = null;
+                Config = config.loadFromJson("ticket_system_config.json");
+                if (Config != null) {
+                    ticketPool = new TicketPool(Config.getMaxTicketCapacity());
+                }
+
+            }else {
+                System.out.println("invalid command");
+            }
             System.out.println("Enter number of Vendors to simulate :");
             int vendorNum = scanner.nextInt();
             System.out.println("Enter number of Customers to simulate :");

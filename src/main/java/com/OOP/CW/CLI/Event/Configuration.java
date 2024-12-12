@@ -1,5 +1,10 @@
 package com.OOP.CW.CLI.Event;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.*;
+import java.util.Scanner;
 
 public class Configuration {
 
@@ -44,6 +49,31 @@ public class Configuration {
 
     public void setCustomerRetrievalRate(double customerRetrievalRate) {
         this.customerRetrievalRate = customerRetrievalRate;
+    }
+    public void saveToJson(String filePath) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (
+                BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            gson.toJson(this, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Configuration loadFromJson(String filePath) {
+        Scanner scanner = new Scanner(System.in);
+        Gson gson = new Gson();
+        try (
+                BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            return gson.fromJson(reader, Configuration.class);
+        } catch (IOException e) {
+            System.out.println("File not found");
+            Configuration config = new Configuration();
+            System.out.println("Enter System configurations...");
+            System.out.print("Enter Max Capacity :");
+            config.setMaxTicketCapacity(scanner.nextInt());
+            return config;
+        }
     }
 
 }
