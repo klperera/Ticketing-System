@@ -10,7 +10,7 @@ import java.util.List;
 public interface TicketRepo extends JpaRepository<Ticket, Integer> {
     Ticket findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(int vendorId, int eventID, String ticketType);
 
-    Ticket findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(int vendorId, int eventID, String ticketType);
+    Ticket findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(int eventID, String ticketType);
 
     List<Ticket> findAllByTicketPool_ticketPoolId(int ticketPoolID);
 }

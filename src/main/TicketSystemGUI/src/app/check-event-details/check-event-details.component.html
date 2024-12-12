@@ -1,26 +1,19 @@
 <div class="min-h-screen text-white">
    <app-organizer-nav-bar [logedInUser] = "this.logedInUser"  /> 
-   <h1 class="text-3xl text-center mt-10">Event Details</h1>
-   <div class="flex justify-center mt-10">
-      <div class="w-1/2">
-         <div class="flex justify-between">
-            <h1 class="text-md">Event Name:</h1>
-            <h1 class="text-md">{{details.object}}</h1>
-         </div>
-         <div class="flex justify-between mt-5">
-            <h1 class="text-md">Event Location:</h1>
-            <h1 class="text-md">{{details.eventLocation}}</h1>
-         </div>
-         <div class="flex justify-between mt-5">
-            <h1 class="text-md">Event Capacity:</h1>
-            <h1 class="text-md">{{details.eventCapacity}}</h1>
-         </div>
-         <div class="flex justify-between mt-5">
-            <h1 class="text-md">Event Price:</h1>
-            <h1 class="text-md">{{details.eventPrice}}</h1>
-         </div>
-         <div class="flex justify-between mt-5">
-            <h1 class="text-md">Event Organizer Email:</h1>
-            <h1 class="text-md">{{details.eventOrganizerEmail}}</h1>
-         </div>
+   @if (this.details.message === "All events have been found.") {
+      <div class="flex gap-56 justify-center items-center min-h-screens py-8">
+          <div 
+            class="flex items-center rounded-lg p-10 shadow-lg bg-gray-300 hover:bg-gray-100 focus:outline-none text-black w-[30%] hover:shadow-xl transition duration-300 transform hover:scale-105 mt-10" 
+            *ngFor="let event of this.details.object">
+            <div class="flex-1">
+              <h3 class="text-3xl font-bold text-center mb-3 uppercase underline">{{ event.eventName }}</h3>
+              <p class="mb-2 text-lg"><strong>Location:</strong> {{ event.eventLocation }}</p>
+              <p class="mb-2 text-lg"><strong>Price:</strong> ${{ event.eventPrice }}</p>
+              <p class="mb-2 text-lg"><strong>Organizer:</strong> {{ event.organizerEmail}}</p>
+            </div>
+          </div>
+        </div>
+  }@else if (this.details.message === "No events have been found") {
+      <h1 class="text-3xl text-white text-center mt-10">{{details.message}}</h1>
+  }
 </div>

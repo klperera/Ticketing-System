@@ -3,11 +3,12 @@ import { User } from '../app-classes/User/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizerNavBarComponent } from '../NavBar/organizer-nav-bar/organizer-nav-bar.component';
 import { UserServiceService } from '../Service/user-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-check-event-details',
   standalone: true,
-  imports: [OrganizerNavBarComponent],
+  imports: [OrganizerNavBarComponent, CommonModule],
   templateUrl: './check-event-details.component.html',
   styleUrl: './check-event-details.component.css'
 })
@@ -26,13 +27,14 @@ export class CheckEventDetailsComponent implements OnInit {
     this.logedInUser = history.state;
     this.user = this.logedInUser.userCredentials;
     this.user.usertype = this.logedInUser.usertype;
-    // console.log(this.user);
+    //console.log(this.user);
     this.userService.user_method(this.user, 'checkevents').subscribe(
       (response) => {
         this.details = response;
+        console.log(this.details);
         console.log(`${this.logedInUser.usertype}`+" - Data passed.");
         if (this.details.message === "All events have been found.") {
-          alert(this.details.message);
+          //alert(this.details.message);
           console.log(this.details.object);
           //this.router.navigateByUrl(`${this.logedInUser.usertype}/home`, {state: this.logedInUser});
         }else{

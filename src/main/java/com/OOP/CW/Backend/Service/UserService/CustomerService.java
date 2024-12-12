@@ -140,14 +140,12 @@ public class CustomerService implements UserController, Runnable {
     public Response buyTickets(TicketRequest ticketRequest) {
         Optional<Customer> customer = customerRepo.findById(ticketRequest.getCustomerId());
         if (customer.isPresent()) {
-            Optional<Vendor> vendor = vendorRepo.findById(ticketRequest.getVendorID());
-            if (vendor.isPresent()) {
                 Optional<Event> event = eventRepo.findById(ticketRequest.getEventID());
                 if (event.isPresent()) {
                     List<Ticket> ticketList = new ArrayList<>();
                     for (int i = 1; i <= ticketRequest.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"EarlyBirdTicket");
+                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"EarlyBirdTicket");
                         if (ticket != null) {
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
@@ -161,7 +159,7 @@ public class CustomerService implements UserController, Runnable {
                     }
                     for (int i = 1; i <= ticketRequest.getGeneralTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"GeneralTicket");
+                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"GeneralTicket");
                         if (ticket != null) {
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
@@ -176,7 +174,7 @@ public class CustomerService implements UserController, Runnable {
                     }
                     for (int i = 1; i <= ticketRequest.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketTypeAndCustomerIsNull(vendor.get().getVendorId(), event.get().getEventID(),"LastMinuteTicket");
+                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"LastMinuteTicket");
                         if (ticket != null) {
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
@@ -195,12 +193,8 @@ public class CustomerService implements UserController, Runnable {
                 }
             }
             else{
-                return new Response(new Vendor(),"Vendor not found");
+                return new Response(new Customer(),"Customer not found");
             }
-        }
-        else{
-            return new Response(new Customer(),"Customer not found");
-        }
     }
 
     public String getMethod() {

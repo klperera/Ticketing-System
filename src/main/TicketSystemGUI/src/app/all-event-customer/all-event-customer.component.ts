@@ -3,7 +3,6 @@ import { CustomerNavBarComponent } from '../NavBar/customer-nav-bar/customer-nav
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../Service/user-service.service';
-import { User } from '../app-classes/User/user';
 
 @Component({
   selector: 'app-all-event-customer',
@@ -33,7 +32,6 @@ export class AllEventCustomerComponent implements OnInit {
     console.log(this.logedInUser);
     this.user = this.logedInUser.usercredentials;
     this.user.usertype = this.logedInUser.usertype;
-    console.log(this.user.usertype); 
     this.userService.user_method(this.user, 'allevents').subscribe(
       (response) => {
         this.details = response;
@@ -55,9 +53,8 @@ export class AllEventCustomerComponent implements OnInit {
   buyTicket(event: any) {
     this.ticketPurchase.event = event;
     this.ticketPurchase.logedInUser = this.logedInUser;
-    this.ticketPurchase.vendorID = event.vendorID;
     console.log(this.ticketPurchase);
-    this.router.navigateByUrl(`${this.logedInUser.usertype}/addToTicketPool`, {state: this.ticketPurchase});
+    this.router.navigateByUrl(`${this.logedInUser.usertype}/purchaseTicket`, {state: this.ticketPurchase});
   }
 
 }

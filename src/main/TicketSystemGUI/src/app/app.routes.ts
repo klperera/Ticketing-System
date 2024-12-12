@@ -9,8 +9,9 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { CheckEventDetailsComponent } from './check-event-details/check-event-details.component';
 import { PurchaseTicketsComponent } from './purchase-tickets/purchase-tickets.component';
 import { AddToTicketPoolComponent } from './add-to-ticket-pool/add-to-ticket-pool.component';
-import { AllEventsVendorComponent } from './all-events-organizer/all-events-vendor.component';
 import { AllEventCustomerComponent } from './all-event-customer/all-event-customer.component';
+import { AllEventsVendorComponent } from './all-events-vendor/all-events-vendor.component';
+import { CustomerPurchaseTicketsComponent } from './customer-purchase-tickets/customer-purchase-tickets.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'welcomePage', pathMatch: 'full'},
@@ -27,6 +28,5 @@ export const routes: Routes = [
     {path: ':usertype/purchaseTickets', component: PurchaseTicketsComponent},
     {path: ':usertype/addToTicketPool', component: AddToTicketPoolComponent},
     {path: ':usertype/allEvent', component: AllEventCustomerComponent},
-    //
-    //{path: ':usertype/buyTicket', component: AllEventCustomerComponent}
+    {path: ':usertype/purchaseTicket', component: CustomerPurchaseTicketsComponent},
 ];

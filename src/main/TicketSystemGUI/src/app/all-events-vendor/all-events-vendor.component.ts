@@ -36,6 +36,7 @@ export class AllEventsVendorComponent implements OnInit {
     this.userService.user_method(this.user, 'allevents').subscribe(
       (response) => {
         this.details = response;
+        console.log(this.details);
         console.log(`${this.logedInUser.usertype}`+" - Data passed.");
         if (this.details.message === "All events have been found") {
           // alert(this.details.message);
