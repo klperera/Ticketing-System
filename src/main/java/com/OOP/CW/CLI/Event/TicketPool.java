@@ -11,9 +11,12 @@ public class TicketPool {
 
     private static List<Ticket> tickets = Collections.synchronizedList(new ArrayList<Ticket>());
     private static int totalTickets;
+    private final int maxcapacity;
 
 
-    public TicketPool() {}
+    public TicketPool(int maxcapacity) {
+        this.maxcapacity = maxcapacity;
+    }
 
     public static List<Ticket> getTickets() {
         return tickets;
@@ -32,12 +35,33 @@ public class TicketPool {
     }
 
     public synchronized void addTicket(Ticket ticket) {
+        while (totalTickets >= maxcapacity) {
+            System.out.println("Pool is full. Vendor waiting for space...");
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Vendor thread interrupted while waiting.");
+            }
+        }
         tickets.add(ticket);
         totalTickets++;
+        System.out.println("Ticket added. Current pool size: " + tickets.size());
+        notifyAll();
     }
 
     public synchronized void removeTicket() {
+        while (tickets.isEmpty()) {
+            System.out.println("No tickets available! Customer waiting for vendors...");
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Customer thread interrupted while waiting.");
+            }
+        }
         tickets.removeFirst();
         totalTickets--;
+        System.out.println("Ticket removed. Current pool size: " + totalTickets);
     }
 }
