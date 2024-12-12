@@ -49,42 +49,51 @@ public class TicketService implements Runnable {
                     for (int i = 1; i <= ticketsDetails.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as Early-bird ticket
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
-                        ticket.setTicketType("EarlyBirdTicket");
-                        ticket.setTicketDiscount(ticketsDetails.getEarlyBirdTicket().getDiscount());
-                        ticket.setTicketPool(event.get().getTicketPool());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().addTicket(ticket);
-                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
-                        vendorRepo.save(vendor.get());
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticketRepo.save(ticket);
+                        if (ticket != null) {
+                            ticket.setTicketType("EarlyBirdTicket");
+                            ticket.setTicketDiscount(ticketsDetails.getEarlyBirdTicket().getDiscount());
+                            ticket.setTicketPool(event.get().getTicketPool());
+                            ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().addTicket(ticket);
+                            vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                            vendorRepo.save(vendor.get());
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticketRepo.save(ticket);
+                        }
+
 
                     }
                     for (int i = 1; i <= ticketsDetails.getGeneralTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as  general tickets
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
-                        ticket.setTicketType("GeneralTicket");
-                        ticket.setTicketDiscount(ticketsDetails.getGeneralTicket().getDiscount());
-                        ticket.setTicketPool(event.get().getTicketPool());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().addTicket(ticket);
-                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
-                        vendorRepo.save(vendor.get());
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticketRepo.save(ticket);
+                        if (ticket != null) {
+                            ticket.setTicketType("GeneralTicket");
+                            ticket.setTicketDiscount(ticketsDetails.getGeneralTicket().getDiscount());
+                            ticket.setTicketPool(event.get().getTicketPool());
+                            ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().addTicket(ticket);
+                            vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                            vendorRepo.save(vendor.get());
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticketRepo.save(ticket);
+                        }
+
                     }
                     for (int i = 1; i <= ticketsDetails.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         //Set a ticket as  LastMinute tickets
                         Ticket ticket = ticketRepo.findFirstTicketByVendor_VendorIdAndEvent_eventIDAndTicketType(ticketsDetails.getVendorID(), ticketsDetails.getEventID(),"Ticket");
-                        ticket.setTicketType("LastMinuteTicket");
-                        ticket.setTicketDiscount(ticketsDetails.getLastMinuteTicket().getDiscount());
-                        ticket.setTicketPool(event.get().getTicketPool());
-                        ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
-                        ticket.getTicketPool().addTicket(ticket);
-                        vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
-                        vendorRepo.save(vendor.get());
-                        ticketPoolRepo.save(ticket.getTicketPool());
-                        ticketRepo.save(ticket);
+                        if (ticket != null) {
+                            ticket.setTicketType("LastMinuteTicket");
+                            ticket.setTicketDiscount(ticketsDetails.getLastMinuteTicket().getDiscount());
+                            ticket.setTicketPool(event.get().getTicketPool());
+                            ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            ticket.getTicketPool().addTicket(ticket);
+                            vendor.get().setPurchasedTickets(vendor.get().getPurchasedTickets() - 1);
+                            vendorRepo.save(vendor.get());
+                            ticketPoolRepo.save(ticket.getTicketPool());
+                            ticketRepo.save(ticket);
+                        }
+
                     }
                     //return ResponseEntity.ok("All tickets have been added to the pool");
                     return new Response(vendor.get(),"All tickets have been added to the pool" );
