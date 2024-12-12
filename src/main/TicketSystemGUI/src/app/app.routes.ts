@@ -7,9 +7,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { CheckEventDetailsComponent } from './check-event-details/check-event-details.component';
-import { AllEventsComponent } from './all-events-organizer/all-events-vendor.component';
 import { PurchaseTicketsComponent } from './purchase-tickets/purchase-tickets.component';
 import { AddToTicketPoolComponent } from './add-to-ticket-pool/add-to-ticket-pool.component';
+import { AllEventsVendorComponent } from './all-events-organizer/all-events-vendor.component';
+import { AllEventCustomerComponent } from './all-event-customer/all-event-customer.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'welcomePage', pathMatch: 'full'},
@@ -22,9 +23,10 @@ export const routes: Routes = [
     {path: ':usertype/signOut', component: WelcomePageComponent},
     {path: ':usertype/createEvent', component: CreateEventComponent},
     {path: ':usertype/checkEventDetails', component: CheckEventDetailsComponent},
-    {path: ':usertype/allEvents', component: AllEventsComponent},
+    {path: ':usertype/allEvents', component: AllEventsVendorComponent},
     {path: ':usertype/purchaseTickets', component: PurchaseTicketsComponent},
     {path: ':usertype/addToTicketPool', component: AddToTicketPoolComponent},
+    {path: ':usertype/allEvent', component: AllEventCustomerComponent},
     //
-    {path: ':usertype/buyTickets', component: HomePageComponent}
+    //{path: ':usertype/buyTicket', component: AllEventCustomerComponent}
 ];

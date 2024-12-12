@@ -4,16 +4,16 @@ import { User } from '../app-classes/User/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../Service/user-service.service';
 import { CommonModule } from '@angular/common';
-import { CustomerNavBarComponent } from '../NavBar/customer-nav-bar/customer-nav-bar.component';
+
 
 @Component({
-  selector: 'app-all-events',
+  selector: 'app-all-events-vendor',
   standalone: true,
-  imports: [CommonModule,VendorNavBarComponent, CustomerNavBarComponent],
+  imports: [CommonModule,VendorNavBarComponent],
   templateUrl: './all-events-vendor.component.html',
   styleUrl: './all-events-vendor.component.css'
 })
-export class AllEventsComponent implements OnInit {
+export class AllEventsVendorComponent implements OnInit {
 
   logedInUser: any = {};
   user: User = new User();
