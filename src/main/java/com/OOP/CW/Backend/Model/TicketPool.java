@@ -20,8 +20,7 @@ public class TicketPool {
     private List<Ticket> tickets = Collections.synchronizedList(new ArrayList<>());
 
 
-    public TicketPool() {
-    }
+    public TicketPool() {}
 
     public int getTicketPoolId() {
         return ticketPoolId;

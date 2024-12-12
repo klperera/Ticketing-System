@@ -10,13 +10,11 @@ import com.OOP.CW.Backend.Service.Response;
 import com.OOP.CW.Backend.Service.UserService.CustomerService;
 import com.OOP.CW.Backend.Model.Users.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ticketsystem/customer")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController implements UserController {
 
     private final CustomerRepo customerRepo;

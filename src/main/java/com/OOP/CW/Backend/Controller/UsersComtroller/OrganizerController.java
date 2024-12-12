@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/ticketsystem/organizer")
+@RequestMapping("/ticketsystem/organizer/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class OrganizerController implements UserController {
 
     private final OrganizerRepo organizerRepo;
@@ -114,7 +115,7 @@ public class OrganizerController implements UserController {
     }
 
     // take the current login UserCredentials details from the body
-    @GetMapping("/checkevents")
+    @PostMapping("/checkevents")
     public ResponseEntity<Response> checkEventDetails(@RequestBody UserCredentials userCredentials) {
         OrganizerService organizerService = new OrganizerService(organizerRepo, eventRepo);
         Thread thread = new Thread(organizerService);

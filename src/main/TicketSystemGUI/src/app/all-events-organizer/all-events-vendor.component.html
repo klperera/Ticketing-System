@@ -1,0 +1,20 @@
+<app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
+<h1 class="text-4xl text-white text-center mt-20">All Events</h1>
+@if (this.details.message === "All events have been found") {
+    <div class="flex gap-56 justify-center items-center min-h-screens py-8">
+        <div 
+          class="flex items-center rounded-lg p-10 shadow-lg bg-gray-300 hover:bg-gray-100 focus:outline-none text-black w-[30%] hover:shadow-xl transition duration-300 transform hover:scale-105 mt-10" 
+          *ngFor="let event of this.details.object">
+          <div class="flex-1">
+            <h3 class="text-3xl font-bold text-center mb-3 uppercase underline">{{ event.eventName }}</h3>
+            <p class="mb-2 text-lg"><strong>Location:</strong> {{ event.eventLocation }}</p>
+            <p class="mb-2 text-lg"><strong>Price:</strong> ${{ event.eventPrice }}</p>
+            <p class="mb-2 text-lg"><strong>Organizer:</strong> {{ event.organizerEmail}}</p>
+            <input type="submit" value="Buy Ticket" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="buyTicket(event)"> 
+            <input type="submit" value="Add To TicketPool" class="w-full p-3 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer mt-5" (click)="addToTicketPool(event)">
+          </div>
+        </div>
+      </div>
+}@else if (this.details.message === "No events have been found") {
+    <h1 class="text-3xl text-white text-center mt-10">{{details.message}}</h1>
+}

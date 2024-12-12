@@ -1,0 +1,35 @@
+<app-organizer-nav-bar [logedInUser] = "this.logedInUser" />
+<div class="min-h-screen text-white">
+    <div class="flex justify-center my-20">
+      <div class="bg-gray-700 bg-opacity-50 rounded-lg shadow-lg w-[35%]">
+        <div class="text-center text-3xl py-5">
+          Create Event Form
+        </div>
+        <div class="text-white p-5">
+          <form action="" method="post">
+            <div class="items-center mb-6">
+                <label for="eventName"> Event Name: </label>
+                <input id="eventName" name="eventName" [(ngModel)]="event.eventName" type="text" class="w-full p-4 mt-2 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter event name" required>
+            </div>
+            <div class="items-center mb-6">
+                <label for="eventLocation"> Event Location: </label>
+                <input id="eventLocation" name="eventLocation" [(ngModel)]="event.eventLocation" type="text" class="w-full p-4 mt-2 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter event location" required>
+            </div>
+            <div class="items-center mb-6">
+                <label for="eventPrice"> Event Price: </label>
+                <input id="eventPrice" name="eventPrice" [(ngModel)]="event.eventPrice" type="text" class="w-full p-4 mt-2 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter event Price" required>
+            </div>
+            <div class="items-center mb-6">
+                <label for="maxTicketCapacity"> Max Capacity: </label>
+                <input id="maxTicketCapacity" name="maxTicketCapacity" [(ngModel)]="event.configuration.maxTicketCapacity" type="number" class="w-full p-4 mt-2 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter event Price" required>
+            </div>
+            <div>
+                <input type="submit" value="CREATE EVENT" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="createEvent()">
+              <hr>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+  </div>

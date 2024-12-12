@@ -1,0 +1,26 @@
+<div class = "bg-gray-800 md:flex md:justify-between md:items-center md:px-4 md:py-3">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-11 text-white border-2 p-1">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+    </svg> 
+    
+    <nav class="px-2 pt-2 pb-4 md:flex md:p-0 max-h[120px]">
+        <a (click)="select_method('home')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4 cursor-pointer">Home</a>
+        <a (click)="select_method('allEvents')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 mr-4 cursor-pointer">All Events</a>
+        <div class="relative mt-2 md:mt-0">
+            <button class="text-white bg-gray-600 hover:bg-gray-500 focus:outline-none px-4 py-2 rounded-md inline-flex items-center" (click)="toggleDropDown()">
+                Account
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="w-4 h-4 ml-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>    
+            </button>
+            <div
+            [ngClass]="isDropDownOpen? 'transition ease-out duration-300 transform opacity-100 scale-100':
+            'transition ease-in duration-75 transform opacity-0 scale-95'"
+            class="md:absolute right-0 mt-2 w-48 bg-gray-600 rounded-md shadow-lg z-10">
+                <a (click)="select_method('changePassword')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Change Password</a>
+                <a (click)="select_method('deleteAccount')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Delete Account </a> 
+                <a (click)="select_method('signOut')" class="block px-4 py-2 text-gray-100 hover:bg-amber-500 cursor-pointer">Sign Out</a>
+            </div>
+        </div >
+    </nav>
+</div> 

@@ -1,0 +1,26 @@
+<div class="min-h-screen text-white">
+   <app-organizer-nav-bar [logedInUser] = "this.logedInUser"  /> 
+   <h1 class="text-3xl text-center mt-10">Event Details</h1>
+   <div class="flex justify-center mt-10">
+      <div class="w-1/2">
+         <div class="flex justify-between">
+            <h1 class="text-md">Event Name:</h1>
+            <h1 class="text-md">{{details.object}}</h1>
+         </div>
+         <div class="flex justify-between mt-5">
+            <h1 class="text-md">Event Location:</h1>
+            <h1 class="text-md">{{details.eventLocation}}</h1>
+         </div>
+         <div class="flex justify-between mt-5">
+            <h1 class="text-md">Event Capacity:</h1>
+            <h1 class="text-md">{{details.eventCapacity}}</h1>
+         </div>
+         <div class="flex justify-between mt-5">
+            <h1 class="text-md">Event Price:</h1>
+            <h1 class="text-md">{{details.eventPrice}}</h1>
+         </div>
+         <div class="flex justify-between mt-5">
+            <h1 class="text-md">Event Organizer Email:</h1>
+            <h1 class="text-md">{{details.eventOrganizerEmail}}</h1>
+         </div>
+</div>

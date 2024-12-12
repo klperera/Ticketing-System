@@ -1,0 +1,29 @@
+@if (this.logedInUser.usertype == "organizer") {
+  <app-organizer-nav-bar [logedInUser] = "this.logedInUser" />
+}@else if (this.logedInUser.usertype == "vendor") {
+  <app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
+}@else {
+  <app-customer-nav-bar [logedInUser] = "this.logedInUser"  />
+}
+<div class="min-h-screen text-white">
+  <div class="flex justify-center mt-48">
+    <div class="bg-gray-700 bg-opacity-50 rounded-lg shadow-lg w-96">
+      <div class="text-center text-3xl py-10">
+        Delete Account Form
+      </div>
+      <div class="text-white p-5">
+        <form action="" method="post">
+          <div class="flex items-center mb-6">
+            <input id="email" name="email" [(ngModel)]="user.email" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter email" required>
+          </div>
+          <div class="flex items-center mb-6">
+            <input id="password" name="password" [(ngModel)]="user.password" type="text" class="w-full p-4 rounded-md text-gray-800 focus:outline-none focus:bg-gray-200" placeholder="Enter the  Password" required>
+          </div>
+          <div>
+            <input type="submit" value="Change Password" class="w-full p-4 bg-teal-500 text-white font-bold rounded-md hover:bg-teal-600 focus:outline-none cursor-pointer my-5" (click)="deleteAccount()">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

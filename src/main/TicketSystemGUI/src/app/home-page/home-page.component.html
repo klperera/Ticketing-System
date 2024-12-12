@@ -1,0 +1,8 @@
+@if (this.logedInUser.usertype == "organizer") {
+    <app-organizer-nav-bar [logedInUser] = "this.logedInUser" />
+    
+}@else if (this.logedInUser.usertype == "vendor") {
+    <app-vendor-nav-bar [logedInUser] = "this.logedInUser"  />
+}@else {
+    <app-customer-nav-bar [logedInUser] = "this.logedInUser"  />
+}

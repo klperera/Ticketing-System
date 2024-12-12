@@ -15,10 +15,6 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int eventID;
     private String eventName;
-    //"yyyy-MM-dd"
-    private LocalDate eventDate;
-    // HH:mm:ss
-    private LocalTime eventTime;
     private String eventLocation;
     private double eventPrice;
     @ManyToOne
@@ -33,10 +29,8 @@ public class Event {
 
     public Event(){}
 
-    public Event(String eventName, LocalDate eventDate, LocalTime eventTime, String eventLocation, double eventPrice, Organizer organizer, int maxTicketCapacity ) throws ParseException {
+    public Event(String eventName, LocalDate eventDate, LocalTime eventTime, String eventLocation, double eventPrice, Organizer organizer, int maxTicketCapacity ) {
         this.eventName = eventName;
-        this.eventDate = eventDate;
-        this.eventTime = eventTime;
         this.eventLocation = eventLocation;
         this.eventPrice = eventPrice;
         this.organizer = organizer;
@@ -57,22 +51,6 @@ public class Event {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public LocalDate getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDateTime(LocalDate eventDateTime) {
-        this.eventDate = eventDateTime;
-    }
-
-    public LocalTime getEventTime() {
-        return eventTime;
-    }
-
-    public void setEventTime(LocalTime eventTime) {
-        this.eventTime = eventTime;
     }
 
     public String getEventLocation() {

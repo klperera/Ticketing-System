@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ticketsystem/vendor")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VendorController implements UserController {
 
     private final VendorRepo vendorRepo;
@@ -116,7 +117,7 @@ public class VendorController implements UserController {
     }
 
     @PostMapping("/purchasetickets")
-    public ResponseEntity<String> purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
+    public Response purchaseTickets(@RequestBody TicketRequest ticketsDetails) {
         // Ticket request - Objects of vendor, event, total tickets
         VendorService vendorService = new VendorService(vendorRepo, eventRepo, ticketRepo);
         Thread thread = new Thread(vendorService);
@@ -128,12 +129,12 @@ public class VendorController implements UserController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return vendorService.getResponseEntity();
+        return vendorService.getResponse();
         //return vendorService.purchaseTickets(ticketsDetails);
     }
 
     @PostMapping("/addToTicketPool")
-    public ResponseEntity<String> addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
+    public Response addToTicketPool(@RequestBody TicketRequest ticketsDetails) {
         // Ticket request - earlyBirdTicket, generalTicket, lastMinuteTicket
         TicketService ticketService = new TicketService(ticketRepo, vendorRepo, eventRepo, ticketPoolRepo);
         Thread thread = new Thread(ticketService);
@@ -144,7 +145,7 @@ public class VendorController implements UserController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return ticketService.getResponseEntity();
+        return ticketService.getResponse();
        //return ticketService.addToTicketPool(ticketsDetails);
     }
 
