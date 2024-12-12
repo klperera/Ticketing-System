@@ -1,4 +1,58 @@
 
+# Real-Time Event Ticketing System with Producer-Consumer Pattern
+
+Real-Time Event Ticketing System System is an event management and ticketing platform designed for vendors, organizers, and customers. It features a user-friendly frontend, a robust backend, and a command-line interface (CLI) for simulations and testing.
+
+
+## Features
+
+### Frontend
+
+Built with Angular to provide an intuitive and responsive interface.
+
+#### Key Features:
+
+User registration and login.
+
+Event creation and management for organizers.
+
+Viewing and purchasing tickets for customers.
+
+Displaying available events and ticket pools.
+
+### Backend
+
+Powered by Spring Boot to manage data and APIs.
+
+#### Key Features:
+
+RESTful APIs for user authentication, event management, and ticket purchasing.
+
+Role-based access control for vendors, organizers, and customers.
+
+Database interactions using JPA and Hibernate.
+
+Integration of ticket pools with event management.
+
+### Command-Line Interface (CLI)
+
+Simulates real-world functionalities of the system.
+
+#### Key Features:
+
+Multithreaded simulation of backend processes.
+
+User and vendor simulations for testing core functionalities.
+
+Ticket purchases and event management operations.
+
+## Technologies Used
+
+Frontend: Angular, TypeScript, HTML, CSS
+
+Backend: Spring Boot, Java, Hibernate, MySQL
+
+CLI: Java
 ## API Reference
 
 #### Backend
