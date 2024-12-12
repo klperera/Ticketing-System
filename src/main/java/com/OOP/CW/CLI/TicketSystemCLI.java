@@ -23,40 +23,41 @@ public class TicketSystemCLI {
             ArrayList<Thread> vendorThreads = new ArrayList<>();
             ArrayList<Thread> CustomerThreads = new ArrayList<>();
             int totalNumberOfTickets = 0;
+            System.out.println("Enter System configurations..");
+            System.out.print("Enter Max Capacity :");
+            config.setMaxTicketCapacity(scanner.nextInt());
+            TicketPool ticketPool = new TicketPool(config.getMaxTicketCapacity());
+            System.out.println("Enter number of Vendors to simulate :");
+            int vendorNum = scanner.nextInt();
+            System.out.println("Enter number of Customers to simulate :");
+            int customerNum = scanner.nextInt();
+
+            for (int i = 1; i <= vendorNum; i++) {
+                System.out.println("Vendor " + i +  " - Enter number of tickets to simulate :");
+                int numTickets = scanner.nextInt();
+                System.out.println("Vendor "+ i + " - Enter tickets releaseRate (in milliseconds) :");
+                int releaseRate = scanner.nextInt();
+                Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool, config.getMaxTicketCapacity());
+                Thread thread = new Thread(runnable);
+                vendorThreads.add(thread);
+                thread.setName("Vendor " + i);
+                //thread.start();
+            }
+            for (int i = 1; i <= customerNum; i++) {
+                System.out.println("Customer " + i +  " - Enter number of tickets you buy :");
+                int buyTickets = scanner.nextInt();
+                System.out.println("Customer "+ i + " - Enter Customer RetrievalRate :");
+                int retrievalRate = scanner.nextInt();
+                Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
+                Thread thread = new Thread(runnable);
+                CustomerThreads.add(thread);
+                thread.setName("Customer " + i);
+                //thread.start();
+            }
             System.out.println("Enter 'start' or 'exit' :");
             String entry = scanner.next();
             if (entry.equalsIgnoreCase("start")) {
-                System.out.println("Enter System configurations..");
-                System.out.println("Enter Max Capacity :");
-                config.setMaxTicketCapacity(scanner.nextInt());
-                TicketPool ticketPool = new TicketPool(config.getMaxTicketCapacity());
-                System.out.println("Enter number of Vendors to simulate :");
-                int vendorNum = scanner.nextInt();
-                System.out.println("Enter number of Customers to simulate :");
-                int customerNum = scanner.nextInt();
 
-                for (int i = 1; i <= vendorNum; i++) {
-                    System.out.println("Vendor " + i +  " - Enter number of tickets to simulate :");
-                    int numTickets = scanner.nextInt();
-                    System.out.println("Vendor "+ i + " - Enter tickets releaseRate (in milliseconds) :");
-                    int releaseRate = scanner.nextInt();
-                    Runnable runnable = new Vendor(numTickets, releaseRate, ticketPool, config.getMaxTicketCapacity());
-                    Thread thread = new Thread(runnable);
-                    vendorThreads.add(thread);
-                    thread.setName("Vendor " + i);
-                    //thread.start();
-                }
-                for (int i = 1; i <= customerNum; i++) {
-                    System.out.println("Customer " + i +  " - Enter number of tickets you buy :");
-                    int buyTickets = scanner.nextInt();
-                    System.out.println("Customer "+ i + " - Enter Customer RetrievalRate :");
-                    int retrievalRate = scanner.nextInt();
-                    Runnable runnable = new Customer(buyTickets, retrievalRate, ticketPool);
-                    Thread thread = new Thread(runnable);
-                    CustomerThreads.add(thread);
-                    thread.setName("Customer " + i);
-                    //thread.start();
-                }
 //                for (Thread thread : vendorThreads) {
 //                    thread.start();
 //                }
@@ -66,10 +67,18 @@ public class TicketSystemCLI {
                 try {
                     for (Thread thread : vendorThreads) {
                         thread.start();
-                        thread.join();
+                        //thread.join();
                     }
                     for (Thread thread : CustomerThreads) {
                         thread.start();
+                        //thread.join();
+                    }
+                    for (Thread thread : vendorThreads) {
+                        //thread.start();
+                        thread.join();
+                    }
+                    for (Thread thread : CustomerThreads) {
+                        //thread.start();
                         thread.join();
                     }
                 } catch (InterruptedException e) {

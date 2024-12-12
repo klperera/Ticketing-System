@@ -46,7 +46,7 @@ public class TicketPool {
         }
         tickets.add(ticket);
         totalTickets++;
-        System.out.println("Ticket added. Current pool size: " + tickets.size());
+        System.out.println(Thread.currentThread().getName() + " added a ticket to the TicketPool." + " - Current pool size: " + tickets.size());
         notifyAll();
     }
 
@@ -62,6 +62,6 @@ public class TicketPool {
         }
         tickets.removeFirst();
         totalTickets--;
-        System.out.println("Ticket removed. Current pool size: " + totalTickets);
+        System.out.println(Thread.currentThread().getName() + " removed a ticket from the TicketPool." + " - Current pool size: " + totalTickets);
     }
 }

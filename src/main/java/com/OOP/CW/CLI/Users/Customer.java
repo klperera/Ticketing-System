@@ -41,9 +41,8 @@ public class Customer implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 1; i <= getNumberOfTickets() && TicketPool.getTotalTickets() != 0; i++) {
+        for (int i = 1; i <= getNumberOfTickets(); i++) {
             ticketPool.removeTicket();
-            System.out.println(Thread.currentThread().getName() + " removed a ticket from the TicketPool.");
             try {
                 Thread.sleep(getRetrievalRate());
             } catch (InterruptedException e) {

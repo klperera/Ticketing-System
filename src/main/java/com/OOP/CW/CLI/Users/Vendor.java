@@ -53,10 +53,9 @@ public class Vendor implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < getNumberOfTickets() & TicketPool.getTotalTickets() < getMaxCapacity() ; i++) {
+        for (int i = 0; i < getNumberOfTickets(); i++) {
             Ticket ticket = new Ticket();
             ticketPool.addTicket(ticket);
-            System.out.println(Thread.currentThread().getName() + " added a ticket to the TicketPool");
             try {
                 Thread.sleep(getTicketReleaseRate());
             } catch (InterruptedException e) {
