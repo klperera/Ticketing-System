@@ -24,5 +24,6 @@ export class HomePageComponent implements OnInit {
       this.logedInUser.usertype = params.get('usertype') || 'user';
     });
     this.logedInUser = history.state;
+    console.log(this.logedInUser);
   }
 }
