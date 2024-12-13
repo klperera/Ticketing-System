@@ -14,6 +14,7 @@ import com.OOP.CW.Backend.Repo.TicketRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.CustomerRepo;
 import com.OOP.CW.Backend.Repo.UsersRepository.VendorRepo;
 import com.OOP.CW.Backend.Service.Response;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -136,8 +137,7 @@ public class CustomerService implements UserController, Runnable {
             return new Response(new Customer(), "User not exists, please try again");
         }
     }
-
-    public Response buyTickets(TicketRequest ticketRequest) {
+    public synchronized Response buyTickets(TicketRequest ticketRequest) {
         Optional<Customer> customer = customerRepo.findById(ticketRequest.getCustomerId());
         if (customer.isPresent()) {
                 Optional<Event> event = eventRepo.findById(ticketRequest.getEventID());
@@ -145,45 +145,56 @@ public class CustomerService implements UserController, Runnable {
                     List<Ticket> ticketList = new ArrayList<>();
                     for (int i = 1; i <= ticketRequest.getEarlyBirdTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"EarlyBirdTicket");
-                        if (ticket != null) {
+                        List<Ticket> tickets = ticketRepo.findByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"EarlyBirdTicket");
+                        for (Ticket ticket : tickets) {
+                            if (ticket.getCustomer() == null) {
+                                break;
+                            }
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
                             //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
+                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
+                            System.out.println("Hii");
                             ticketRepo.save(ticket);
-                            //new Response(ticket, "Ticket purchased successfully");
                         }
                     }
                     for (int i = 1; i <= ticketRequest.getGeneralTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"GeneralTicket");
-                        if (ticket != null) {
+                        List<Ticket> tickets = ticketRepo.findByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"GeneralTicket");
+                        for (Ticket ticket : tickets) {
+                            if (ticket.getCustomer() == null) {
+                                break;
+                            }
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
                             //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
+                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
+                            System.out.println("Hii");
                             ticketRepo.save(ticket);
-                            //new Response(ticket, "Ticket purchased successfully");
                         }
-
                     }
                     for (int i = 1; i <= ticketRequest.getLastMinuteTicket().getNumberOfTickets(); i++) {
                         // check request number of tickets are in the ticket pool
-                        Ticket ticket = ticketRepo.findFirstTicketByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"LastMinuteTicket");
-                        if (ticket != null) {
+                        List<Ticket> tickets = ticketRepo.findByEvent_eventIDAndTicketTypeAndCustomerIsNull(event.get().getEventID(),"LastMinuteTicket");
+                        for (Ticket ticket : tickets) {
+                            if (ticket.getCustomer() == null) {
+                                break;
+                            }
                             ticket.setCustomer(customer.get());
                             ticketList.add(ticket);
-                            // ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
+                            //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
+                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
+                            System.out.println("Hii");
                             ticketRepo.save(ticket);
-                            //new Response(ticket, "Ticket purchased successfully");
                         }
                     }
                     return new Response(ticketList, "Tickets are purchased successfully");

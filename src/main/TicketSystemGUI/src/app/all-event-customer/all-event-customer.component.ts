@@ -30,8 +30,9 @@ export class AllEventCustomerComponent implements OnInit {
     });
     this.logedInUser = history.state;
     console.log(this.logedInUser);
-    this.user = this.logedInUser.usercredentials;
+    this.user = this.logedInUser.userCredentials;
     this.user.usertype = this.logedInUser.usertype;
+    console.log(this.user);
     this.userService.user_method(this.user, 'allevents').subscribe(
       (response) => {
         this.details = response;

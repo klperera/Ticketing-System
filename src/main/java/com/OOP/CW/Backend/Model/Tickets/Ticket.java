@@ -17,7 +17,7 @@ public class Ticket {
     @JoinColumn(name = "eventID", nullable = false)
     private Event event;
     @OneToOne
-    @JoinColumn(name = "customerID") // set only when customer purchase the ticket
+    @JoinColumn(name = "customerID", nullable = true) // set only when customer purchase the ticket
     private Customer customer;
     @ManyToOne
     @JoinColumn(name = "ticketPoolId")

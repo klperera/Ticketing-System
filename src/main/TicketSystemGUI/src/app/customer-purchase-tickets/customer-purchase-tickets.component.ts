@@ -23,17 +23,14 @@ export class CustomerPurchaseTicketsComponent implements OnInit {
     earlyBirdTicket :
     {
         numberOfTickets : "",
-        discount : ""
     },
     generalTicket : 
     {
         numberOfTickets : "",
-        discount : ""
     },
     lastMinuteTicket : 
     {
         numberOfTickets : "",
-        discount : ""
     }
   };
 
