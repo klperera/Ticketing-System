@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * This class is for organizer.
+ */
 @RestController
 @RequestMapping("/ticketsystem/organizer/")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,6 +27,9 @@ public class OrganizerController implements UserController {
     private final TicketPoolRepo ticketPoolRepo;
     private final VendorRepo vendorRepo;
 
+    /**
+     * This is organizer constructor.
+     */
     @Autowired
     public OrganizerController(OrganizerRepo organizerRepo, EventRepo eventRepo, VendorRepo vendorRepo, TicketPoolRepo ticketPoolRepo) {
         this.organizerRepo = organizerRepo;
@@ -32,6 +38,9 @@ public class OrganizerController implements UserController {
         this.ticketPoolRepo = ticketPoolRepo;
 
     }
+    /**
+     * This method is for organizer registration.
+     */
     @PostMapping("/register")
     @Override
     public Response register(@RequestBody UserCredentials userCredentials) {
@@ -49,6 +58,9 @@ public class OrganizerController implements UserController {
         return organizerService.getResponse();
         //return organizerService.register(userCredentials) ;
     }
+    /**
+     * This method is for organizer login.
+     */
     @PostMapping("/login")
     @Override
     public Response login(@RequestBody UserCredentials userCredentials) {
@@ -65,7 +77,9 @@ public class OrganizerController implements UserController {
         return organizerService.getResponse();
         //return organizerService.register(userCredentials);
     }
-
+    /**
+     * This method is for organizer password change.
+     */
     @PostMapping("/changepassword")
     @Override
     public Response changePassword(@RequestBody UserCredentials userCredentials) {
@@ -82,7 +96,9 @@ public class OrganizerController implements UserController {
         return organizerService.getResponse();
         //return organizerService.register(userCredentials);
     }
-
+    /**
+     * This method is for organizer delete account.
+     */
     @PostMapping("/deleteaccount")
     @Override
     public Response deleteAccount(@RequestBody UserCredentials userCredentials) {
@@ -99,7 +115,9 @@ public class OrganizerController implements UserController {
         return organizerService.getResponse();
         //return organizerService.register(userCredentials);
     }
-
+    /**
+     * This method is for organizer create event.
+     */
     @PostMapping("/newevent")
     public Response CreateEvent(@RequestBody Event newEvent) {
         EventService eventService = new EventService(eventRepo,organizerRepo,vendorRepo,ticketPoolRepo);
@@ -113,7 +131,9 @@ public class OrganizerController implements UserController {
         }
         return eventService.getResponse();
     }
-
+    /**
+     * This method is for organizer check event details.
+     */
     // take the current login UserCredentials details from the body
     @PostMapping("/checkevents")
     public ResponseEntity<Response> checkEventDetails(@RequestBody UserCredentials userCredentials) {
@@ -130,7 +150,10 @@ public class OrganizerController implements UserController {
         return organizerService.getResponseEntity();
         //return organizerService.register(userCredentials);
     }
-
+    /**
+     * This method is for organizer check event sales.
+     * still implementing
+     */
     public void checkEventSales(@RequestBody UserCredentials userCredentials) {
         OrganizerService organizerService = new OrganizerService(organizerRepo, eventRepo);
         Thread thread = new Thread(organizerService);
