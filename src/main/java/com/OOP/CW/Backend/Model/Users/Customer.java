@@ -21,7 +21,7 @@ public class Customer {
         return customerID;
     }
 
-    public UserCredentials getUsercredentials() {
+    public UserCredentials getUserCredentials() {
         return userCredentials;
     }
 

@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
           console.log(`${this.user.usertype}`+" - Data passed.");
           if (details.message === "Login successful.") {
             alert(details.message);
+            console.log(details.object);
             this.router.navigateByUrl(`${this.user.usertype}/home`,{state: details.object});
           } else {
             alert(details.message);

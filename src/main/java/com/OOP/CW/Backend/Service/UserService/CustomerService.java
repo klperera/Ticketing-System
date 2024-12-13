@@ -88,11 +88,11 @@ public class CustomerService implements UserController, Runnable {
     @Override
     public Response login(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
-        if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
+        if(customer.isPresent() && customer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
             return new Response(customer,"Login successful.");
             //redirect to home page
-        } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
-            return new Response(customer.get().getUsercredentials().getEmail(),"Incorrect password. Try again.");
+        } else if (customer.isPresent() && !(customer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
+            return new Response(customer.get().getUserCredentials().getEmail(),"Incorrect password. Try again.");
         } else {
             return new Response(new Customer(),"User not exists, please register first.");
         }
@@ -102,7 +102,7 @@ public class CustomerService implements UserController, Runnable {
     public Response changePassword(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
         if (customer.isPresent()) {
-            customer.get().getUsercredentials().setPassword(userCredentials.getPassword());
+            customer.get().getUserCredentials().setPassword(userCredentials.getPassword());
             customerRepo.save(customer.get());
             return new Response(customer.get(),"Password changed successfully.");
         }else{
@@ -113,10 +113,10 @@ public class CustomerService implements UserController, Runnable {
     @Override
     public Response deleteAccount(UserCredentials userCredentials) {
         Optional<Customer> customer = customerRepo.findByUserCredentials_Email(userCredentials.getEmail());
-        if(customer.isPresent() && customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()) ) {
+        if(customer.isPresent() && customer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()) ) {
             customerRepo.delete(customer.get());
             return new Response(new Customer(),"Account deleted successfully.");
-        } else if (customer.isPresent() && !(customer.get().getUsercredentials().getPassword().equals(userCredentials.getPassword()))) {
+        } else if (customer.isPresent() && !(customer.get().getUserCredentials().getPassword().equals(userCredentials.getPassword()))) {
             return new Response(new Customer(),"Incorrect password. Try again.");
         } else {
              return new Response(new Customer(),"User not exists, please register first.");
