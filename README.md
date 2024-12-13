@@ -3,6 +3,8 @@
 
 Real-Time Event Ticketing System System is an event management and ticketing platform designed for vendors, organizers, and customers. It features a user-friendly frontend, a robust backend, and a command-line interface (CLI) for simulations and testing.
 
+GutHub Repository - [https://github.com/klperera/Ticketing-System]
+
 
 ## Features
 
@@ -50,7 +52,7 @@ Ticket purchases and event management operations.
 
 Frontend: Angular, TypeScript, HTML, CSS
 
-Backend: Spring Boot, Java, Hibernate, MySQL
+Backend: Spring Boot, Java, Hibernate, PostgreSQL
 
 CLI: Java
 ## API Reference
