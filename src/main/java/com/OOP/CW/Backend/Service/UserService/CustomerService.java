@@ -155,9 +155,7 @@ public class CustomerService implements UserController, Runnable {
                             //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
-                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
-                            System.out.println("Hii");
                             ticketRepo.save(ticket);
                         }
                     }
@@ -173,9 +171,7 @@ public class CustomerService implements UserController, Runnable {
                             //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
-                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
-                            System.out.println("Hii");
                             ticketRepo.save(ticket);
                         }
                     }
@@ -191,9 +187,7 @@ public class CustomerService implements UserController, Runnable {
                             //ticket.getTicketPool().setTickets(ticketRepo.findAllByTicketPool_ticketPoolId(event.get().getTicketPool().getTicketPoolId()));
                             ticket.getTicketPool().removeTicket(ticket);
                             ticketPoolRepo.save(ticket.getTicketPool());
-                            System.out.println("Hii1");
                             ticket.setTicketPool(null);
-                            System.out.println("Hii");
                             ticketRepo.save(ticket);
                         }
                     }
