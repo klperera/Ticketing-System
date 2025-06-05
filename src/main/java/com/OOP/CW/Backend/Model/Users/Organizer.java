@@ -2,7 +2,6 @@ package com.OOP.CW.Backend.Model.Users;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 
 @Entity
